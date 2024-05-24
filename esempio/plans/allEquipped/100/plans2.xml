@@ -1,0 +1,2510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE population SYSTEM "http://www.matsim.org/files/dtd/population_v6.dtd">
+
+<population>
+
+
+
+<!-- ====================================================================== -->
+
+	<person id="0">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >61.90792513602932</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="489" max_dur="07:18:09" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="140" start_time="07:19:49" end_time="17:29:13" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="489" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="1">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >60.336158313943145</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="190" max_dur="08:35:07" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="427" start_time="08:38:07" end_time="18:24:58" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="190" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="10">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >40.180994519056554</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >140.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="316" max_dur="09:52:59" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="431" start_time="09:55:19" end_time="17:17:53" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="316" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="11">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >57.04734873202637</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="187" max_dur="08:29:58" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="353" start_time="08:32:38" end_time="18:12:30" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="187" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="12">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >34.95334262164961</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >80.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="139" max_dur="09:14:12" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="131" start_time="09:15:32" end_time="18:43:17" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="139" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="13">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >17.066064288895205</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >120.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="203" max_dur="08:56:00" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="327" start_time="08:58:00" end_time="18:35:25" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="203" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="14">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >37.431273217398946</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="256" max_dur="09:03:54" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="229" start_time="09:06:54" end_time="19:47:33" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="256" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="15">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >39.01744273559634</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="361" max_dur="07:19:53" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="465" start_time="07:22:53" end_time="19:05:04" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="361" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="16">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >54.56283196497337</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >60.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="255" max_dur="10:17:33" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="457" start_time="10:18:33" end_time="17:36:55" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="255" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="17">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >33.12935061323441</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >140.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="337" max_dur="11:10:21" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="131" start_time="11:12:41" end_time="17:08:39" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="337" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="18">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >36.34839965854903</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="214" max_dur="07:57:30" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="174" start_time="08:00:10" end_time="17:08:57" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="214" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="19">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >52.8023272575228</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >220.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="277" max_dur="08:30:15" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="120" start_time="08:33:55" end_time="17:18:30" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="277" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="2">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >27.877564830657082</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >60.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="296" max_dur="09:22:17" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="190" start_time="09:23:17" end_time="17:54:39" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="296" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="20">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >33.8624856113687</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >120.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="419" max_dur="10:04:38" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="325" start_time="10:06:38" end_time="17:28:11" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="419" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="21">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >43.82137249939807</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >60.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="351" max_dur="08:03:05" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="130" start_time="08:04:05" end_time="18:38:40" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="351" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="22">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >28.143774208443215</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="430" max_dur="08:49:06" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="192" start_time="08:51:46" end_time="19:18:28" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="430" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="23">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >20.31691686222064</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >60.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="118" max_dur="09:45:10" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="241" start_time="09:46:10" end_time="18:07:18" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="118" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="24">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >46.456775454830975</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >120.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="238" max_dur="09:05:20" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="313" start_time="09:07:20" end_time="17:11:38" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="238" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="25">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >60.98173431886526</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >240.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="353" max_dur="08:25:40" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="352" start_time="08:29:40" end_time="19:02:50" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="353" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="26">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >34.35236810471749</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="369" max_dur="08:07:14" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="164" start_time="08:09:54" end_time="16:22:43" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="369" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="27">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >45.1175711164644</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >40.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="428" max_dur="10:38:59" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="407" start_time="10:39:39" end_time="17:19:09" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="428" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="28">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >64.39907178218012</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >240.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="185" max_dur="10:16:22" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="419" start_time="10:20:22" end_time="15:58:11" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="185" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="29">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >61.21001728044725</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >40.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="334" max_dur="08:54:41" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="255" start_time="08:55:21" end_time="18:21:27" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="334" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="3">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >58.0771270389105</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="391" max_dur="09:44:42" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="174" start_time="09:47:42" end_time="17:21:45" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="391" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="30">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >47.64668543314355</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >140.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="185" max_dur="08:15:43" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="343" start_time="08:18:03" end_time="18:13:29" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="185" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="31">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >58.533183277876404</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="341" max_dur="07:21:27" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="136" start_time="07:24:07" end_time="17:16:06" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="341" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="32">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >48.17647809814779</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="489" max_dur="09:18:35" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="126" start_time="09:21:35" end_time="17:18:36" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="489" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="33">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >48.51625148376368</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="318" max_dur="09:54:26" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="325" start_time="09:56:06" end_time="18:09:47" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="318" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="34">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >45.859175684626166</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >240.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="333" max_dur="07:41:06" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="331" start_time="07:45:06" end_time="18:34:23" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="333" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="35">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >43.59841298129202</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="299" max_dur="09:44:23" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="188" start_time="09:47:03" end_time="18:16:45" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="299" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="36">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >47.634730987532606</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >140.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="273" max_dur="09:38:33" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="413" start_time="09:40:53" end_time="17:54:36" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="273" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="37">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >48.02103782823697</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >80.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="490" max_dur="09:07:41" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="368" start_time="09:09:01" end_time="17:07:55" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="490" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="38">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >51.14354309487212</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >40.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="462" max_dur="08:56:30" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="440" start_time="08:57:10" end_time="19:08:17" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="462" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="39">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >51.442448107658976</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >20.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="224" max_dur="09:04:27" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="334" start_time="09:04:47" end_time="17:41:53" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="224" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="4">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >53.729688755569285</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="118" max_dur="08:53:57" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="430" start_time="08:55:37" end_time="17:19:59" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="118" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="40">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >20.0880930565439</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >200.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="324" max_dur="09:49:31" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="330" start_time="09:52:51" end_time="18:23:34" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="324" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="41">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >45.4072412998646</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >80.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="144" max_dur="10:11:47" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="133" start_time="10:13:07" end_time="17:47:50" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="144" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="42">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >46.53389681215456</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >200.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="428" max_dur="09:16:49" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="385" start_time="09:20:09" end_time="16:28:40" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="428" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="43">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >53.0490002105685</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >240.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="271" max_dur="09:20:21" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="412" start_time="09:24:21" end_time="17:21:52" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="271" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="44">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >47.853052820169594</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="206" max_dur="09:50:17" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="120" start_time="09:51:57" end_time="17:12:29" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="206" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="45">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >54.27216424668038</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >220.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="463" max_dur="07:09:24" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="322" start_time="07:13:04" end_time="19:22:25" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="463" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="46">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >55.00276553652939</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >80.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="208" max_dur="09:51:59" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="338" start_time="09:53:19" end_time="17:14:39" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="208" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="47">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >39.810143771082565</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="209" max_dur="09:19:49" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="150" start_time="09:21:29" end_time="17:48:28" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="209" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="48">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >73.1732413740157</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >240.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="220" max_dur="09:36:52" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="284" start_time="09:40:52" end_time="18:09:55" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="220" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="49">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >37.951402192760504</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >80.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="279" max_dur="09:24:11" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="380" start_time="09:25:31" end_time="16:38:02" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="279" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="5">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >51.21505746414465</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >140.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="238" max_dur="09:13:01" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="297" start_time="09:15:21" end_time="17:12:32" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="238" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="50">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >47.45017856154245</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >80.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="224" max_dur="08:48:35" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="413" start_time="08:49:55" end_time="17:41:16" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="224" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="51">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >34.91722171937945</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >60.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="123" max_dur="09:45:43" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="335" start_time="09:46:43" end_time="17:17:42" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="123" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="52">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >31.147356036029237</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="341" max_dur="10:28:10" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="330" start_time="10:29:50" end_time="20:04:06" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="341" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="53">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >46.10807626840159</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="255" max_dur="09:38:54" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="176" start_time="09:40:34" end_time="15:09:43" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="255" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="54">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >50.96807330420437</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >140.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="226" max_dur="09:25:38" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="409" start_time="09:27:58" end_time="17:16:33" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="226" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="55">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >14.370714740395925</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="479" max_dur="08:27:59" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="296" start_time="08:29:39" end_time="17:19:15" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="479" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="56">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >60.2073074135273</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >40.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="371" max_dur="07:30:53" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="471" start_time="07:31:33" end_time="16:45:00" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="371" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="57">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >36.674755288939984</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="466" max_dur="10:44:27" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="489" start_time="10:47:27" end_time="16:21:40" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="466" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="58">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >58.093332024509536</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >120.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="487" max_dur="08:03:17" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="354" start_time="08:05:17" end_time="17:53:53" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="487" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="59">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >70.77349183176581</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >120.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="190" max_dur="07:22:52" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="295" start_time="07:24:52" end_time="18:29:39" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="190" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="6">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >51.927941770742834</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >80.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="151" max_dur="08:22:52" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="381" start_time="08:24:12" end_time="17:10:37" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="151" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="60">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >46.468673619393776</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="499" max_dur="07:02:07" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="457" start_time="07:05:07" end_time="17:31:50" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="499" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="61">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >62.597498596481</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="295" max_dur="08:42:22" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="425" start_time="08:45:22" end_time="18:28:41" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="295" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="62">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >24.70851416784344</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >300.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="293" max_dur="07:57:05" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="209" start_time="08:02:05" end_time="18:30:10" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="293" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="63">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >19.4896135986826</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >140.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="416" max_dur="08:50:20" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="242" start_time="08:52:40" end_time="17:32:09" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="416" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="64">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >52.38784046686975</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >60.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="368" max_dur="09:47:31" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="287" start_time="09:48:31" end_time="19:04:28" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="368" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="65">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >37.40092819977163</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >40.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="494" max_dur="09:19:49" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="176" start_time="09:20:29" end_time="17:02:51" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="494" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="66">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >66.58367527922832</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >220.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="374" max_dur="09:44:25" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="372" start_time="09:48:05" end_time="18:00:13" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="374" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="67">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >35.430295952866466</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="173" max_dur="08:25:00" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="460" start_time="08:27:40" end_time="19:22:17" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="173" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="68">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >25.75584506095223</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="255" max_dur="08:46:02" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="167" start_time="08:47:42" end_time="18:28:52" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="255" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="69">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >41.909995318104066</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="438" max_dur="09:30:47" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="292" start_time="09:33:47" end_time="19:17:40" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="438" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="7">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >52.600981155592535</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="276" max_dur="09:31:02" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="238" start_time="09:33:42" end_time="18:52:57" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="276" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="70">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >83.6355303059826</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="456" max_dur="09:44:40" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="129" start_time="09:47:20" end_time="18:16:30" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="456" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="71">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >46.917941165052675</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="179" max_dur="07:57:18" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="220" start_time="08:00:18" end_time="19:07:12" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="179" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="72">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >35.445601498201086</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >140.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="165" max_dur="08:47:18" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="139" start_time="08:49:38" end_time="19:13:24" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="165" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="73">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >47.657723589159346</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >200.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="483" max_dur="10:10:26" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="115" start_time="10:13:46" end_time="18:34:55" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="483" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="74">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >56.78316284210443</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="280" max_dur="08:24:04" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="291" start_time="08:27:04" end_time="18:56:15" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="280" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="75">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >45.4297215392182</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >80.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="482" max_dur="08:50:34" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="142" start_time="08:51:54" end_time="18:07:25" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="482" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="76">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >75.23158323871348</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="489" max_dur="08:27:39" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="136" start_time="08:30:39" end_time="17:31:15" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="489" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="77">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >34.81396470618661</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >60.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="279" max_dur="08:14:56" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="286" start_time="08:15:56" end_time="16:14:42" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="279" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="78">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >62.682071484859534</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="131" max_dur="11:40:21" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="405" start_time="11:43:01" end_time="17:58:31" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="131" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="79">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >36.44497837811298</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >80.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="386" max_dur="08:27:07" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="274" start_time="08:28:27" end_time="17:14:47" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="386" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="8">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >75.61295829334897</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="274" max_dur="08:20:23" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="299" start_time="08:23:23" end_time="18:00:10" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="274" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="80">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >40.44349757997423</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >200.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="486" max_dur="09:57:01" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="142" start_time="10:00:21" end_time="18:21:42" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="486" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="81">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >45.40572269246617</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >220.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="173" max_dur="08:57:33" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="392" start_time="09:01:13" end_time="19:18:02" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="173" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="82">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >64.5545783085999</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="131" max_dur="08:39:20" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="441" start_time="08:41:00" end_time="18:52:12" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="131" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="83">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >63.266789535506156</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >120.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="322" max_dur="10:45:56" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="324" start_time="10:47:56" end_time="17:00:54" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="322" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="84">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >47.307792197240396</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >300.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="312" max_dur="07:42:47" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="298" start_time="07:47:47" end_time="21:11:56" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="312" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="85">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >60.6830867764936</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="366" max_dur="07:12:15" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="424" start_time="07:13:55" end_time="18:13:49" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="366" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="86">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >30.93788146710333</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="148" max_dur="10:34:06" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="434" start_time="10:36:46" end_time="18:40:37" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="148" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="87">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >69.42434889089887</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="182" max_dur="10:33:50" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="287" start_time="10:35:30" end_time="17:57:06" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="182" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="88">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >37.37613224719587</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >140.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="468" max_dur="09:04:18" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="297" start_time="09:06:38" end_time="17:16:27" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="468" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="89">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >25.523649864762664</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >60.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="280" max_dur="08:32:45" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="471" start_time="08:33:45" end_time="18:20:55" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="280" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="9">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >31.113149518123866</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >200.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="261" max_dur="08:06:59" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="493" start_time="08:10:19" end_time="20:19:59" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="261" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="90">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >53.15338238815682</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >140.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="262" max_dur="08:32:48" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="345" start_time="08:35:08" end_time="17:41:28" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="262" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="91">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >63.86859745258592</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="214" max_dur="10:19:07" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="255" start_time="10:20:47" end_time="18:06:40" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="214" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="92">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >15.591730530046917</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="185" max_dur="07:41:59" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="160" start_time="07:44:39" end_time="17:34:13" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="185" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="93">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >16.431594882519725</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >180.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="205" max_dur="06:57:39" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="369" start_time="07:00:39" end_time="16:41:42" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="205" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="94">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >62.89582798937476</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >160.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="366" max_dur="07:36:45" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="191" start_time="07:39:25" end_time="19:16:03" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="366" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="95">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >53.29015809726666</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >120.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="259" max_dur="08:57:28" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="328" start_time="08:59:28" end_time="19:53:58" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="259" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="96">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >30.901503056100825</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >40.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="486" max_dur="08:38:39" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="167" start_time="08:39:19" end_time="17:10:08" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="486" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="97">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >77.26797669418812</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >100.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="235" max_dur="07:59:25" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="238" start_time="08:01:05" end_time="19:14:32" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="235" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="98">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >60.70560713541229</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >80.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="457" max_dur="09:57:47" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="126" start_time="09:59:07" end_time="17:06:49" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="457" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+	<person id="99">
+		<attributes>
+			<attribute name="bidMode" class="java.lang.String" >nonrandom</attribute>
+			<attribute name="budget" class="java.lang.String" >44.56121773840539</attribute>
+			<attribute name="drivelogic" class="java.lang.String" >org.matsim.contrib.smartcity.agent.BidAgent</attribute>
+			<attribute name="mode" class="java.lang.String" >N</attribute>
+			<attribute name="travelTime" class="java.lang.String" >220.0</attribute>
+		</attributes>
+		<plan selected="yes">
+			<activity type="h" link="413" max_dur="08:35:45" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="w" link="179" start_time="08:39:25" end_time="17:26:01" >
+			</activity>
+			<leg mode="car">
+			</leg>
+			<activity type="h" link="413" >
+			</activity>
+		</plan>
+
+	</person>
+
+<!-- ====================================================================== -->
+
+</population>

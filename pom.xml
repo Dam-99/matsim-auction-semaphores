@@ -1,0 +1,123 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>smartcity</groupId>
+  <artifactId>smartcity</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+<repositories>
+      <!--Note that in general repositories are not transitive, so they need to be repeated at every level where needed.-->
+		<repository>
+			<!-- Geotools is not on Maven central -->
+			<id>osgeo</id>
+			<name>Geotools repository</name>
+			<url>http://download.osgeo.org/webdav/geotools</url>
+		</repository>
+    <repository>
+        <!-- Geotools is not on Maven central -->
+        <id>osgeo</id>
+        <name>MVN repository</name>
+        <url>https://mvnrepository.com/</url>
+    </repository>
+		<repository>
+			<!-- For MATSim releases: -->
+			<id>matsim</id>
+			<url>https://dl.bintray.com/matsim/matsim</url>
+		</repository>
+		<repository>
+		  <!-- For MATSim monthly snapshots: -->
+		  <id>bintray-matsim-eth-matsim</id>
+		  <name>bintray</name>
+		  <url>https://dl.bintray.com/matsim-eth/matsim</url>
+		</repository>
+ 		<repository>
+		  <!-- For MATSim snapshots: -->
+		  <id>ojo-snapshots</id>
+		  <url>http://oss.jfrog.org/libs-snapshot</url>
+		</repository>	
+</repositories> 
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-dependency-plugin</artifactId>
+	    <executions>
+	        <execution>
+	            <id>copy-dependencies</id>
+	            <phase>prepare-package</phase>
+	            <goals>
+	                <goal>copy-dependencies</goal>
+	            </goals>
+	            <configuration>
+	                <outputDirectory>
+	                    ${project.build.directory}/libs
+	                </outputDirectory>
+	            </configuration>
+	        </execution>
+	    </executions>
+	</plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+    	<groupId>org.matsim</groupId>
+    	<artifactId>matsim</artifactId>
+    	<version>0.11.0-2018w39</version>
+    </dependency>
+    <dependency>
+      <groupId>org.matsim.contrib</groupId>
+      <artifactId>signals</artifactId>
+      <version>0.11.0-aug18</version>
+        <exclusions>
+        <exclusion>
+          <groupId>org.matsim</groupId>
+          <artifactId>matsim-examples</artifactId>
+        </exclusion>
+        </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.matsim.contrib</groupId>
+      <artifactId>otfvis</artifactId>
+      <version>0.11.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.matsim.contrib</groupId>
+      <artifactId>dvrp</artifactId>
+      <version>0.10.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.matsim.contrib</groupId>
+      <artifactId>parking</artifactId>
+      <version>0.11.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-math3</artifactId>
+    	<version>3.6.1</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.alex73</groupId>
+    	<artifactId>OSMemory</artifactId>
+    	<version>1.11</version>
+    	<scope>system</scope>
+    	<systemPath>${project.basedir}/lib/OSMemory-1.11.jar</systemPath>
+    </dependency>
+     <dependency>
+	     <groupId>org.reflections</groupId>
+	     <artifactId>reflections</artifactId>
+	     <version>0.9.9-RC1</version>
+     </dependency>
+      <dependency>
+          <groupId>com.vividsolutions</groupId>
+          <artifactId>jts</artifactId>
+          <version>1.13</version>
+      </dependency>
+  </dependencies>
+</project>

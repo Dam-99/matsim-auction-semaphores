@@ -1,0 +1,2 @@
+2024-05-08 10:52:04,411  WARN XY2LinksForFacilities:50 There is no link for at least a facility. Assigning links for such facilities from coords.
+2024-05-08 10:52:04,411  WARN XY2LinksForFacilities:51  This message given only once.

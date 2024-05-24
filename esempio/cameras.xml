@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE perception SYSTEM "./dtd/cameras.dtd">
+<perception>
+	<cameras all="false">
+		<camera class="org.matsim.contrib.smartcity.perception.camera.PassiveCamera" id="camerauno" link="1" />
+	</cameras>
+	<parkings all="false">
+		<camera class="org.matsim.contrib.smartcity.agent.parking.CameraPark" id="cameradue" link="4" />
+	</parkings>
+</perception>

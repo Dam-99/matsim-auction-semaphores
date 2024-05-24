@@ -1,0 +1,10 @@
+<!ELEMENT perception (cameras, parkings) >
+
+<!ELEMENT cameras (camera*)>
+<!ATTLIST cameras all CDATA #IMPLIED class CDATA #IMPLIED >
+
+<!ELEMENT parkings (camera*)>
+<!ATTLIST parkings all CDATA #IMPLIED class CDATA #IMPLIED >
+
+<!ELEMENT camera EMPTY>
+<!ATTLIST camera class CDATA #REQUIRED id ID #REQUIRED link CDATA #IMPLIED park CDATA #IMPLIED>
