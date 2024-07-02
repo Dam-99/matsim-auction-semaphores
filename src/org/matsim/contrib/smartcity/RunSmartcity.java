@@ -51,13 +51,16 @@ public class RunSmartcity {
 		Gbl.assertIf(args.length >=1 && args[0]!="" );
 		Scenario s;
 		s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[0])) ;
+/*
 		Controler controler = new Controler(s);
 		addModules(controler);
 		controler.run();
+*/
 		 // = run(ConfigUtils.loadConfig(args[0]));
-//		args = new String[9];
-		/*for(int i = 2000; i <= 20000; i += 1000) {
-			
+		args = new String[9];
+		for(int i = 2000; i <= 20000; i += 1000) {
+        System.out.println("swag" + System.getProperty("java.version"));
+
 			final int limit = i;
 			List<Person> personList = s.getPopulation().getPersons().values().stream()
 									   .filter(p -> Integer.parseInt(p.getId().toString()) < limit)
@@ -73,50 +76,56 @@ public class RunSmartcity {
 			addModules(controler);
 			controler.run();
 
-		}*/
-//		args[0] = Integer.toString(200);
-//		args[2] = Integer.toString(0);
-//		args[3] = "./scenarioManhattan/config.xml";
-//		args[4] = "./scenarioManhattan/plans_mixed.xml";
-//		args[5] = "org.matsim.contrib.smartcity.agent.BidAgent";
-//		args[6] = "mode=N";
-//		args[7] = "bidMode=nonrandom";
-//		args[8] = "budget=[10-280,380-650,750-1000]";
-//		for(int i = 1; i < 21; i++) {
-//			args[1] = Integer.toString(i*1000);
-//			RandomPlansCreationMixed.main(args);
-//			s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig("./scenarioManhattan/config.xml")) ;
-//			s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory", "output_sem_manhattan_max"+args[1]+"/test/"+i+"/");
-//			Controler controler = new Controler(s);
-//			addModules(controler);
-//			controler.run();
-//		}
-		/*List<Person> sorted = s.getPopulation().getPersons().values().stream()
+		}
+		args[0] = Integer.toString(200);
+		args[2] = Integer.toString(0);
+		args[3] = "./scenarioManhattan/config.xml";
+		args[4] = "./scenarioManhattan/plans_mixed.xml";
+		args[5] = "org.matsim.contrib.smartcity.agent.BidAgent";
+		args[6] = "mode=N";
+		args[7] = "bidMode=nonrandom";
+		args[8] = "budget=[10-280,380-650,750-1000]";
+		for(int i = 1; i < 21; i++) {
+			args[1] = Integer.toString(i*1000); // max popolazione ??? per nome output dir
+			RandomPlansCreationMixed.main(args);
+			s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig("./scenarioManhattan/config.xml"));
+			s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory", "output_sem_manhattan_max"+args[1]+"/test/"+i+"/");
+			Controler controler = new Controler(s);
+			addModules(controler);
+			controler.run();
+		}
+        
+        // UN ALTRO ESPERIMENTO???
+		List<Person> sorted = s.getPopulation().getPersons().values().stream()
 				.sorted(Comparator.comparingLong(p -> (long) p.getAttributes().getAttribute(StaticDriverLogic.N_NODES_ATT)))
 				.collect(Collectors.toList());
 		int n = sorted.size();
-		for (Person p : sorted.subList(n/2, n)){
+		for (Person p : sorted.subList(n/2, n)){ // rendi metà degli agenti... smart?
 			p.getAttributes().putAttribute(SmartAgentFactory.DRIVE_LOGIC_NAME, BidAgent.class.getCanonicalName());
 		}
-		sorted = sorted.subList(n/2, n);
-		long max = sorted.stream().map(p -> (long) p.getAttributes().getAttribute(StaticDriverLogic.N_NODES_ATT)).max(Comparator.comparingLong(l -> l)).get();
+		sorted = sorted.subList(n/2, n); //considera solo gli agenti smart (?)
+		long max = sorted.stream()
+                            .map(p -> (long) p.getAttributes().getAttribute(StaticDriverLogic.N_NODES_ATT)) // TODO: capire cos'è l'attributo "signedCross"
+                            .max(Comparator.comparingLong(l -> l))
+                            .get(); // ottiene la persona con "signedCross" massimo
 
-		sorted = sorted.stream().filter(p -> (long)p.getAttributes().getAttribute(StaticDriverLogic.N_NODES_ATT) == max).collect(Collectors.toList());
+		sorted = sorted.stream().filter(p -> (long)p.getAttributes().getAttribute(StaticDriverLogic.N_NODES_ATT) == max).collect(Collectors.toList()); // considera solo quelli che hanno "signedCross" massimo (??)
 	
 		HashMap<Person, Long> original = new HashMap<Person, Long>();
-
+        // hashmap di budget per ogni agente
 		for (Person p : sorted) {
 			original.put(p, Long.parseLong((String)p.getAttributes().getAttribute(BidAgent.BUDGET_ATT)));
 		}
 
 
 		n = sorted.size();
+        // aumenta il budget per il perc_agent_increased% di agenti in una maniera strana (forse simula una distribuzione particolare?)
 		for (int perc_agent_increased=84; perc_agent_increased>=1; perc_agent_increased--){
 			List<Person> to_increase = sorted.subList(0, n*perc_agent_increased/100);
 			FileWriter fw = null;
 			try {
 				File f = new File("output/"+perc_agent_increased+"/increased.txt");
-				f.getParentFile().mkdirs();
+				f.getParentFile().mkdirs(); // cera le cartelle del path mancanti
 				fw = new FileWriter(f);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -144,11 +153,15 @@ public class RunSmartcity {
 				s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory", "output/"+perc_agent_increased+"/"+perc_budget_increased);
 				Controler c = new Controler(s);
 				addModules(c);
+                // simula un certo numero di diverse distribuzioni di budget?
 				c.run();
 			}
-		}*/
+		}
 		
-		/*List<Person> fourCrossedSem = s.getPopulation().getPersons().values().stream()
+        // UN ALTRO ESPERMIENTO???
+
+        // cerca degli agenti specifico
+		List<Person> fourCrossedSem = s.getPopulation().getPersons().values().stream()
 									   .filter(p ->(long) p.getAttributes().getAttribute(StaticDriverLogic.N_NODES_ATT) == 3)
 									   .collect(Collectors.toList());
 		fourCrossedSem = s.getPopulation().getPersons().values().stream()
@@ -167,11 +180,12 @@ public class RunSmartcity {
 	    }
 		
 		for (int i = 0; i < 1; i++) {
-			Person p = fourCrossedSem.get(i);
-			Person p = s.getPopulation().getPersons().values().stream()
-					   .filter(pers -> pers.getId().toString().equals(Integer.toString(12225)))
-					   .collect(Collectors.toList()).get(0);
+			Person p = fourCrossedSem.get(i); // o uno degli agenti di prima, o uno nuovo... non so cosa siano questi numeri però
+			// Person p = s.getPopulation().getPersons().values().stream()
+			// 		   .filter(pers -> pers.getId().toString().equals(Integer.toString(12225)))
+			// 		   .collect(Collectors.toList()).get(0);
 					   
+            // esperimento di aumento del budget per alcuni agenti (non so come li abbiano scelti)
 			long orig = Long.parseLong((String)p.getAttributes().getAttribute(BidAgent.BUDGET_ATT));
 			for (int increment = 2500; increment <= 40000; increment += 2500){
 				p.getAttributes().putAttribute(BidAgent.BUDGET_ATT, Long.toString(orig + increment));
@@ -181,7 +195,7 @@ public class RunSmartcity {
 				c.run();
 			}
 			p.getAttributes().putAttribute(BidAgent.BUDGET_ATT, Long.toString(orig));
-		}*/
+		}
 	}
 
 	private static void addModules(Controler controler) {
@@ -201,7 +215,7 @@ public class RunSmartcity {
 		//controler.addOverridingModule(new AccidentModule());
 
 		//add auction intersesction module
-		//controler.addOverridingModule(new AuctionIntersectionModule());
+		controler.addOverridingModule(new AuctionIntersectionModule());
 
 		//add restriction module
 		controler.addOverridingModule(new RestrictionsModule());
@@ -228,7 +242,7 @@ public class RunSmartcity {
 	}
 
 	/**
-	 * @param loadConfig
+	 * @param config
 	 */
 	private static Scenario run(Config config) {
 		//get a simple scenario		
