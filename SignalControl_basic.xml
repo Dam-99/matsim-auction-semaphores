@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<signalControl xsi:schemaLocation="http://www.matsim.org/files/dtd http://www.matsim.org/files/dtd/signalControl_v2.0.xsd" xmlns="http://www.matsim.org/files/dtd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">  
+    <signalSystem refId="200000002">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="200000005">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="200000008">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem> 
+    
+    <signalSystem refId="210000000">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="210000003">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="210000006">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+
+    <signalSystem refId="220000002">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="220000005">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="220000008">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>  
+    
+    <signalSystem refId="230000000">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="230000003">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="230000006">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+
+    <signalSystem refId="240000002">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="240000005">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+     <signalSystem refId="240000008">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>  
+    
+     <signalSystem refId="250000000">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="250000003">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="250000006">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="260000002">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="260000005">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+     <signalSystem refId="260000008">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>  
+    
+     <signalSystem refId="270000000">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="270000003">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+    <signalSystem refId="270000006">
+        <signalSystemController>
+            <controllerIdentifier>org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController</controllerIdentifier>
+        </signalSystemController>
+    </signalSystem>
+    
+</signalControl>
+

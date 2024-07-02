@@ -61,95 +61,171 @@ public class RandomPlansCreationMixed {
 	private static final double WORK_VAR = 3600*1;
 	private static final double WORK_START_MEAN = 3600*9;
 
-//	/**
-//     * experiment 1
-//     * Crea un file population secondo i parametri passati e lo salva nel path passato (o il default)
-//	 * @param args
-//	 */
-//	public static void main(String[] args) throws IOException {
-//		for (int i = 100; i <= 1000; i += 100) {
-//			String[] new_args = new String[args.length-2+6];
-//			new_args[0] = "0";
-//			new_args[1] = "0";
-//			new_args[2] = "" + i;
-//			new_args[3] = args[0];
-//			new_args[5] = "";
-//			if (args.length - 2 >= 0) System.arraycopy(args, 2, new_args, 6, args.length - 2);
-//			try {
-//				Files.createDirectories(Paths.get(args[1] + i + "/"));
-//			} catch (IOException e) {
-//				System.exit(1);
-//			}
-//
-//			for (int j = 0; j < 20; j++) {
-//				new_args[4] = args[1] + i + "/plans" + j + ".xml";
-//
-//				main_(new_args, null);
-//			}
-//		}
-//	}
-
-//	/**
-//     * experiment 4
-//     * Crea un file population secondo i parametri passati e lo salva nel path passato (o il default)
-//	 * @param args
-//	 */
-//	public static void main(String[] args) {
-//		for (int emergencyBudget = 0; emergencyBudget <= 2000; emergencyBudget += 200) {
-//			String[] new_args = new String[args.length-2+6];
-//			new_args[0] = "0";
-//			new_args[1] = "0";
-//			new_args[2] = "" + 1000;
-//			new_args[3] = args[0];
-//			new_args[5] = "";
-//			if (args.length - 2 >= 0) System.arraycopy(args, 2, new_args, 6, args.length - 2);
-//			try {
-//				Files.createDirectories(Paths.get(args[1] + emergencyBudget + "/"));
-//			} catch (IOException e) {
-//				System.exit(1);
-//			}
-//
-//			for (int j = 0; j < 20; j++) {
-//				new_args[4] = args[1] + emergencyBudget + "/plans" + j + ".xml";
-//
-//				main_(new_args, emergencyBudget);
-//			}
-//		}
-//	}
+    public static void main(String[] args, int exp, boolean createPlans) { //, boolean isBasic) {
+        if (createPlans) {
+            return;
+        }
+        // if (isBasic) {
+        //     args[1] = "basic/" + args[1];
+        // }
+        switch (exp) {
+            case 1:
+                exp1(args);
+                break;
+            case 2:
+                exp2(args);
+                break;
+            case 3:
+                exp3(args);
+                break;
+            case 4:
+                exp4(args);
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
+        // if (args[3].contains("_basic")) {
+        //     args[1] = args[1].substring(6);
+        // }
+        return;
+    }
 
 	/**
-     * experiment 2
+     * experiment 1: aumento popolazione (all connected)
      * Crea un file population secondo i parametri passati e lo salva nel path passato (o il default)
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		int totalAgents = 1000;
-		for (int i = 200; i < 1000; i += 200) {
+	public static void exp1(String[] args) {
+		// for (int smartAgents = 500; smartAgents <= 5000; smartAgents += 500) {
+        int smartAgents = Integer.parseInt(args[0]);
 			String[] new_args = new String[args.length-2+6];
-			new_args[0] = "" + (totalAgents - i); //non-equipped
-			new_args[1] = "0"; // emergency?
-			new_args[2] = "" + i; //equipped
-			new_args[3] = args[3]; //config path
+			new_args[0] = "0";
+			new_args[1] = "0";
+			new_args[2] = "" + smartAgents;
+			new_args[3] = args[3];
 			new_args[5] = "";
-			// srcPos: indice array, incluso; dstPos: indice array, incluso; dst[dstPos] = src[srcPos];
-			if (args.length - 2 >= 0) System.arraycopy(args, 2, new_args, 6, args.length - 2); // copia i parametri passati, per avere quelli nuovi all'inizio
+			if (args.length - 2 >= 0) System.arraycopy(args, 2, new_args, 6, args.length - 2);
 			try {
-				Files.createDirectories(Paths.get(args[1] + (i * 100 / totalAgents) + "/")); // crea le cartelle per ogni popolazione? e forse anche per gli output
+				Files.createDirectories(Paths.get("plans/" + args[1] + "/" + smartAgents + "agents" + "/"));
 			} catch (IOException e) {
 				System.exit(1);
 			}
 
-			for (int j = 0; j < 5; j++) { // esegue l'esperimento più volte?
-				new_args[4] = args[1] + (i * 100 / totalAgents) + "/plans" + j + ".xml";
+			for (int i = 0; i < 20; i++) {
+				new_args[4] = "plans/" + args[1] + "/" + smartAgents + "agents" + "/" + "plans" + i + ".xml";
 
 				main_(new_args, null);
+			}
+		// }
+	}
+
+	/**
+     * experiment 4: aumento budget per i veicoli di emergenza (aka 3 old)
+     * Crea un file population secondo i parametri passati e lo salva nel path passato (o il default)
+	 * @param args
+	 */
+	public static void exp4(String[] args) {
+		for (int emergencyBudget = 0; emergencyBudget <= 2000; emergencyBudget += 200) {
+			String[] new_args = new String[args.length-2+6];
+			new_args[0] = "0";
+			new_args[1] = "0";
+			new_args[2] = "" + 1000;
+			new_args[3] = args[0];
+			new_args[5] = "";
+			if (args.length - 2 >= 0) System.arraycopy(args, 2, new_args, 6, args.length - 2);
+			try {
+				Files.createDirectories(Paths.get(args[1] + emergencyBudget + "/"));
+			} catch (IOException e) {
+				System.exit(1);
+			}
+
+			for (int i = 0; i < 20; i++) {
+				new_args[4] = args[1] + emergencyBudget + "/plans" + i + ".xml";
+
+				main_(new_args, emergencyBudget);
 			}
 		}
 	}
 
+	/**
+     * experiment 2: aumento non equipped (coesistenza)
+     * Crea un file population secondo i parametri passati e lo salva nel path passato (o il default)
+	 * @param args
+	 */
+	public static void exp2(String[] args) {
+		int totalAgents = Integer.parseInt(args[0]);
+        int smartPercentage = Integer.parseInt(args[2]);
+		// for (int i = 20; i <= 80; i += 20) {
+			String[] new_args = new String[args.length-2+6];
+            int smartAgents = totalAgents * smartPercentage / 100;
+			new_args[0] = "" + (totalAgents - smartAgents); //non-equipped
+			new_args[1] = "0"; // emergency?
+			new_args[2] = "" + smartAgents; //equipped
+			new_args[3] = args[3]; //config path
+			new_args[5] = ""; // emergency? nome classe
+			// srcPos: indice array, incluso; dstPos: indice array, incluso; dst[dstPos] = src[srcPos];
+			if (args.length - 2 >= 0) System.arraycopy(args, 2, new_args, 6, args.length - 2); // copia i parametri passati, per avere quelli nuovi all'inizio
+			try {
+                Files.createDirectories(Paths.get("plans/" + args[1] + "/" + smartAgents + "smart_agents" + "/")); // crea le cartelle per ogni popolazione? e forse anche per gli output
+			} catch (IOException e) {
+				System.exit(1);
+			}
+
+			for (int i = 0; i < 5; i++) { // esegue l'esperimento più volte? magari sono i diversi piani tra cui ogni agent può scegliere
+				new_args[4] = "plans/" + args[1] + "/" + smartAgents + "smart_agents" + "/" + "plans" + i + ".xml";
+
+				main_(new_args, null);
+			}
+		// }
+	}
+
+/**
+     * experiment 3: aumento budget per i veicoli di emergenza
+     * Crea un file population secondo i parametri passati e lo salva nel path passato (o il default)
+	 * @param args
+	 */
+	public static void exp3(String[] args) {
+        int totalAgents = Integer.parseInt(args[0]);
+        int smartPercentage = Integer.parseInt(args[2]);
+        int emergencyBudget = Integer.parseInt(args[4]);
+		// for (int emergencyBudget = 0; emergencyBudget <= 2000; emergencyBudget += 200) {
+			String[] new_args = new String[args.length-2+6];
+            int smartAgents = totalAgents * smartPercentage / 100;
+			new_args[0] = "0";
+			new_args[1] = "1";
+			new_args[2] = "" + smartAgents;
+			new_args[3] = args[3];
+			new_args[5] = "agent.BidAgent";
+			if (args.length - 2 >= 0) System.arraycopy(args, 2, new_args, 6, args.length - 2);
+			try {
+				Files.createDirectories(Paths.get("plans/" + args[1] + "/" + emergencyBudget + "emergency_budget" + "/"));
+			} catch (IOException e) {
+				System.exit(1);
+			}
+
+			for (int i = 0; i < 5; i++) {
+				new_args[4] = "plans/" + args[1] + "/" + emergencyBudget + "emergency_budget" + "/" + "plans" + i + ".xml";
+
+				main_(new_args, emergencyBudget);
+			}
+		// }
+	}
 /**
      * Crea un file population secondo i parametri passati e lo salva nel path passato (o il default)
 	 * @param args passato come "new_args"
+     *             0: num non-equipped,
+     *             1: num emergency,
+     *             2: num equipped,
+     *             3: config file,
+     *             4: plan file output path,
+     *             5: emergency class name,
+     *             6: ?,
+     *             7: config file not used,
+     *             8: plan file not used,
+     *             9: smart agent class name,
+     *             10: mode,
+     *             11: bid_mode,
+     *             12: budget array,
 	 */
 	public static void main_(String[] args, Integer emergencyBudget) {
 		if (args.length < 2) {
@@ -245,7 +321,7 @@ public class RandomPlansCreationMixed {
 				HashMap<String, String> otherAtts = new HashMap<>();
                 // per gli agenti che partecipano attivamente all'asta, passa gli eventuali args aggiuntivi
 				if (agentClass != StaticDriverLogic.class.getCanonicalName() && args.length > 6) {
-					otherAtts = getOtherAtts(args, 12);
+					otherAtts = getOtherAtts(args, 10);
 				}
 				otherAtts.put("travelTime", ""+(routeDur+afterDur));
 	
@@ -281,10 +357,11 @@ public class RandomPlansCreationMixed {
 			}
 		}
 
-		//experiment 4
+		//experiment 3-4
 		if (emergencyBudget != null) {
-			for (int x = 0; x < 4; x++) {
+			for (int x = 0; x < Integer.parseInt(args[1]); x++) {
 				Person p = getRandomFromSet(population.getPersons().values());
+                System.out.println("eeei " + "emergencyBudget id:" + p.getId());
 				p.getAttributes().putAttribute("budget", emergencyBudget.toString());
 			}
 		}

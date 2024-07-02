@@ -1,0 +1,22 @@
+<!ELEMENT servers (server*) >
+
+<!ELEMENT server (comunication?, perception?, parkings?) >
+<!ATTLIST server id ID #REQUIRED class CDATA #REQUIRED >
+
+<!ELEMENT comunication (coord*) >
+<!ATTLIST comunication all CDATA #IMPLIED >
+
+<!ELEMENT coord EMPTY >
+<!ATTLIST coord x CDATA #REQUIRED y CDATA #REQUIRED >
+
+<!ELEMENT perception (camera*) >
+<!ATTLIST perception all CDATA #IMPLIED >
+
+<!ELEMENT camera EMPTY>
+<!ATTLIST camera id ID #REQUIRED >
+
+<!ELEMENT parkings (parkCamera*) >
+<!ATTLIST parkings all CDATA #IMPLIED >
+
+<!ELEMENT parkCamera EMPTY>
+<!ATTLIST parkCamera id ID #REQUIRED >

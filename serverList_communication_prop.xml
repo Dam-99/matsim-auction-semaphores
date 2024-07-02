@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE servers SYSTEM "./dtd/serverList.dtd">
+<servers>
+	 <!-- <server id="semserver" class="org.matsim.contrib.smartcity.comunication.CLASSServer">
+		<comunication all="true">
+			<coord x="10" y="10"/>
+		</comunication>
+	</server>-->
+	<server id="semserver" class="org.matsim.contrib.smartcity.comunication.SemaphoreServerPropagated">
+		<comunication all="true">
+			<coord x="10" y="10"/>
+		</comunication>
+	</server>
+</servers>

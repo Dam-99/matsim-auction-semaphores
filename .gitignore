@@ -4,3 +4,7 @@ target/**
 .factorypath
 .project
 .idea
+
+analisi/**
+output/**
+plans/**

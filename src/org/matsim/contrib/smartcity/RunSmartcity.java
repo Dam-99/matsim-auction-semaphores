@@ -14,6 +14,7 @@ import org.matsim.contrib.smartcity.agent.SmartAgentModule;
 import org.matsim.contrib.smartcity.agent.StaticDriverLogic;
 import org.matsim.contrib.smartcity.analisys.AnalisysModule;
 import org.matsim.contrib.smartcity.auctionIntersections.AuctionIntersectionModule;
+import org.matsim.contrib.smartcity.comunication.ComunicationConfigGroup;
 import org.matsim.contrib.smartcity.comunication.ComunicationModule;
 import org.matsim.contrib.smartcity.perception.SmartPerceptionModule;
 import org.matsim.contrib.smartcity.restriction.RestrictionsModule;
@@ -44,218 +45,252 @@ import java.util.stream.Collectors;
  */
 public class RunSmartcity {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Gbl.assertIf(args.length >=1 && args[0]!="" );
-		Scenario s;
-		s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[0])) ;
-/*
-		Controler controler = new Controler(s);
-		addModules(controler);
-		controler.run();
-*/
-		 // = run(ConfigUtils.loadConfig(args[0]));
-		args = new String[9];
-		for(int i = 2000; i <= 20000; i += 1000) {
-        System.out.println("swag" + System.getProperty("java.version"));
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        // Gbl.assertIf(args.length >= 1 && args[0] != "");
+        String cfg_pth;
+        Scenario s;
+        args = new String[10];
+        args[0] = "manhattan"; // map
+        args[1] = Integer.toString(500); // config file usato da plansCreation
+        // args[1+1] = ...; // ~total population? experiment name? output path?~ "root" dir per i file dell'esperimento
+        args[3] = Integer.toString(0); // boh
+        args[4] = "./config_ftc.xml"; // config path
+        args[5] = "./esempio/plans_mixed.xml"; // plans path
+        args[6] = "org.matsim.contrib.smartcity.agent.BidAgent"; // smart agents class name
+        args[7] = "mode=N"; // mode? traffic light mode?
+        args[8] = "bidMode=nonrandom"; // bid_mode
+        args[9] = "budget=[10-280,380-650,750-1000]"; // budget array
 
-			final int limit = i;
-			List<Person> personList = s.getPopulation().getPersons().values().stream()
-									   .filter(p -> Integer.parseInt(p.getId().toString()) < limit)
-									   .collect(Collectors.toList());
-			for(Person p : personList ) {
-				p.getAttributes().putAttribute(SmartAgentFactory.DRIVE_LOGIC_NAME, StaticDriverLogic.class.getCanonicalName());
-			}
-			//RandomPlansCreationMixed.main(args);
-			s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory", "output/random/"+i+"/");
-			//s.getConfig().getModules().get("plans").addParam("inputPlansFile", "../Risultati sperimentali/MASA/mixed_advanced/"+i+"/output_plans.xml");
-			//s = ScenarioUtils.loadScenario(s.getConfig());
-			Controler controler = new Controler(s);
-			addModules(controler);
-			controler.run();
+        s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[4]));
+        runExperimentsOnSystem(SemaphoreSystem.FTC, args, s);
+        cfg_pth = "./config_basic.xml";
+        args[4] = cfg_pth;
+        s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(cfg_pth));
+        runExperimentsOnSystem(SemaphoreSystem.Basic, args, s);
+        cfg_pth = "./config.xml";
+        args[4] = cfg_pth;
+        s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(cfg_pth));
+        runExperimentsOnSystem(SemaphoreSystem.Coordinated, args, s);
+        s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(cfg_pth));
+        runExperimentsOnSystem(SemaphoreSystem.CoordinatedNoPropagation, args, s);
+        cfg_pth = "./config_proportional.xml";
+        args[4] = cfg_pth;
+        s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(cfg_pth));
+        runExperimentsOnSystem(SemaphoreSystem.CoordinatedProp, args, s);
+        s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(cfg_pth));
+        runExperimentsOnSystem(SemaphoreSystem.CoordinatedPropNoPropagation, args, s);
+    }
 
-		}
-		args[0] = Integer.toString(200);
-		args[2] = Integer.toString(0);
-		args[3] = "./scenarioManhattan/config.xml";
-		args[4] = "./scenarioManhattan/plans_mixed.xml";
-		args[5] = "org.matsim.contrib.smartcity.agent.BidAgent";
-		args[6] = "mode=N";
-		args[7] = "bidMode=nonrandom";
-		args[8] = "budget=[10-280,380-650,750-1000]";
-		for(int i = 1; i < 21; i++) {
-			args[1] = Integer.toString(i*1000); // max popolazione ??? per nome output dir
-			RandomPlansCreationMixed.main(args);
-			s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig("./scenarioManhattan/config.xml"));
-			s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory", "output_sem_manhattan_max"+args[1]+"/test/"+i+"/");
-			Controler controler = new Controler(s);
-			addModules(controler);
-			controler.run();
-		}
-        
-        // UN ALTRO ESPERIMENTO???
-		List<Person> sorted = s.getPopulation().getPersons().values().stream()
-				.sorted(Comparator.comparingLong(p -> (long) p.getAttributes().getAttribute(StaticDriverLogic.N_NODES_ATT)))
-				.collect(Collectors.toList());
-		int n = sorted.size();
-		for (Person p : sorted.subList(n/2, n)){ // rendi metà degli agenti... smart?
-			p.getAttributes().putAttribute(SmartAgentFactory.DRIVE_LOGIC_NAME, BidAgent.class.getCanonicalName());
-		}
-		sorted = sorted.subList(n/2, n); //considera solo gli agenti smart (?)
-		long max = sorted.stream()
-                            .map(p -> (long) p.getAttributes().getAttribute(StaticDriverLogic.N_NODES_ATT)) // TODO: capire cos'è l'attributo "signedCross"
-                            .max(Comparator.comparingLong(l -> l))
-                            .get(); // ottiene la persona con "signedCross" massimo
+    private static void runExperimentsOnSystem(SemaphoreSystem system, String[] args, Scenario s) {
+        if (s == null) {
+            s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[0]));
+        }
+        String map_name = args[0];
+        args = popFirst(args);
+        String outputRoot;
+        String ogServerList = s.getConfig().getModules().get(ComunicationConfigGroup.GROUPNAME).getParams().get(ComunicationConfigGroup.WRAPPER);
+        String serverList = ogServerList;
+        String systemDirName;
+        boolean runNoPropagation = false;
+        outputRoot = "output/" + map_name + "/";
+        switch (system) {
+            case FTC:
+                systemDirName = "ftc";
+                break;
+            case Basic:
+                systemDirName = "basic";
+                break;
+            case CoordinatedNoPropagation:
+                runNoPropagation = true;
+                serverList = "./serverList_communication.xml";
+            case Coordinated:
+                systemDirName = "communication";
+                break;
+            case CoordinatedPropNoPropagation:
+                runNoPropagation = true;
+                serverList = "./serverList_proportional.xml";
+            case CoordinatedProp:
+                systemDirName = "proportional";
+                break;
+            default:
+                systemDirName = "other";
+                break;
+        }
 
-		sorted = sorted.stream().filter(p -> (long)p.getAttributes().getAttribute(StaticDriverLogic.N_NODES_ATT) == max).collect(Collectors.toList()); // considera solo quelli che hanno "signedCross" massimo (??)
-	
-		HashMap<Person, Long> original = new HashMap<Person, Long>();
-        // hashmap di budget per ogni agente
-		for (Person p : sorted) {
-			original.put(p, Long.parseLong((String)p.getAttributes().getAttribute(BidAgent.BUDGET_ATT)));
-		}
+        int exp = 1;
+        boolean createPlans = false;
+        System.out.println("SYSTEM " + systemDirName);
+        if (!runNoPropagation) {
+        // boolean isBasic = args[3].contains("_basic");
+        System.out.println("EXPERIMENT" + exp);
+        for (int totalAgents = 500; totalAgents <= 5000; totalAgents += 500) {
+            args[0] = "" + totalAgents;
+            args[1] = "exp" + exp;
+            System.out.println("aoeu" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
+            RandomPlansCreationMixed.main(args, exp, createPlans);// , isBasic);
+            s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[3]));
+            for (int i = 0; i < 20; i++) {
+                System.out.println("ueoa" + i);
+                s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory",
+                        outputRoot + args[1] + "/" + systemDirName + "/" + totalAgents + "agents" + "/" + i + "/");
+                s.getConfig().getModules().get("plans").addParam("inputPlansFile",
+                        "plans/" + args[1] + "/" + totalAgents + "agents" + "/" + "plans" + i + ".xml");
+                s = ScenarioUtils.loadScenario(s.getConfig());
+                Controler controler = new Controler(s);
+                addModules(controler);
+                System.out.println("agents: " + totalAgents + " i: " + i);
+                controler.run();
+            }
+        }
+        exp = 2;
+        System.out.println("EXPERIMENT" + exp);
+        for (int totalAgents = 1000; totalAgents <= 4000; totalAgents += 1500) {
+            args[0] = "" + totalAgents;
+            args[1] = "exp" + exp + "traffic" + totalAgents;
+            System.out.println("aoeu" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
+            s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[3]));
+            for (int smartPercentage = 20; smartPercentage <= 80; smartPercentage += 20) {
+                args[2] = "" + smartPercentage;
+                RandomPlansCreationMixed.main(args, exp, createPlans);// , isBasic);
+                int smartAgents = totalAgents * smartPercentage / 100;
+                for (int i = 0; i < 5; i++) {
+                    System.out.println("ueoa " + smartPercentage + i);
+                    s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory",
+                            outputRoot + args[1] + "/" + systemDirName + "/" + smartAgents + "smart_agents" + "/" + i + "/");
+                    s.getConfig().getModules().get("plans").addParam("inputPlansFile",
+                            "plans/" + args[1] + "/" + smartAgents + "smart_agents" + "/" + "plans" + i + ".xml");
+                    s = ScenarioUtils.loadScenario(s.getConfig());
+                    Controler controler = new Controler(s);
+                    addModules(controler);
+                System.out.println("agents: " + totalAgents + " i: " + i + "smart: " + smartAgents);
+                    controler.run();
+                }
+            }
+        }
 
+        }
+        exp = 3;
+        System.out.println("EXPERIMENT" + exp);
+        for (int totalAgents = 1000; totalAgents <= 4000; totalAgents += 1500) {
+            args[0] = "" + totalAgents;
+            args[1] = "exp" + exp + "traffic" + totalAgents;
+            s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[3]));
+            System.out.println("aoeu" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
+            int smartPercentage = 60;
+            args[2] = "" + smartPercentage;
+            int emergencyBudget = 210000;
+            args[4] = "" + emergencyBudget;
+            RandomPlansCreationMixed.main(args, exp, createPlans);// , isBasic);
+            // int smartAgents = totalAgents * smartPercentage / 100;
+            for (int i = 0; i < 5; i++) {
+                System.out.println("ueoa" + i);
+                if (runNoPropagation) {
+                    s.getConfig().getModules().get(ComunicationConfigGroup.GROUPNAME)
+                            .addParam(ComunicationConfigGroup.SERVERLIST, serverList);
+                    s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory",
+                            outputRoot + "exp" + exp + "_no_prop/" + systemDirName + "/" + totalAgents + "traffic" + emergencyBudget + "emergency_budget" + "/" + i + "/");
+                } else {
+                    s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory",
+                            outputRoot + "exp" + exp + "/" +  systemDirName + "/" + totalAgents + "traffic" + emergencyBudget + "emergency_budget" + "/" + i + "/");
+                }
+                s.getConfig().getModules().get("plans").addParam("inputPlansFile",
+                        "plans/" + args[1] + "/" + emergencyBudget + "emergency_budget" + "/" + "plans" + i + ".xml");
+                s = ScenarioUtils.loadScenario(s.getConfig());
+                Controler controler = new Controler(s);
+                addModules(controler);
+                controler.run();
+                System.out.println("agents: " + totalAgents + " i: " + i + "propagation: " + runNoPropagation);
+                s.getConfig().getModules().get(ComunicationConfigGroup.GROUPNAME).addParam(ComunicationConfigGroup.WRAPPER, ogServerList);
+            }
+        }
+        args = pushFirst(args, map_name);
+    }
 
-		n = sorted.size();
-        // aumenta il budget per il perc_agent_increased% di agenti in una maniera strana (forse simula una distribuzione particolare?)
-		for (int perc_agent_increased=84; perc_agent_increased>=1; perc_agent_increased--){
-			List<Person> to_increase = sorted.subList(0, n*perc_agent_increased/100);
-			FileWriter fw = null;
-			try {
-				File f = new File("output/"+perc_agent_increased+"/increased.txt");
-				f.getParentFile().mkdirs(); // cera le cartelle del path mancanti
-				fw = new FileWriter(f);
-			} catch (IOException e) {
-				e.printStackTrace();
-				return;
-			}
-			for (Person p : to_increase){
-				try {
-					fw.write(p.getId().toString()+"\n");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			try {
-				fw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			for (int perc_budget_increased=1; perc_budget_increased<=100; perc_budget_increased++){
-				for (Person p : to_increase){
-					long orig = original.get(p);
-					p.getAttributes().removeAttribute("signedCross");
-					p.getAttributes().putAttribute(BidAgent.BUDGET_ATT, Long.toString(orig + (orig * perc_budget_increased / 100)));
-				}
+    private static void addModules(Controler controler) {
+        // add perception module
+        controler.addOverridingModule(new SmartPerceptionModule());
 
-				s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory", "output/"+perc_agent_increased+"/"+perc_budget_increased);
-				Controler c = new Controler(s);
-				addModules(c);
-                // simula un certo numero di diverse distribuzioni di budget?
-				c.run();
-			}
-		}
-		
-        // UN ALTRO ESPERMIENTO???
+        // add signal module
+        controler.addOverridingModule(new SmartSemaphoreModule());
 
-        // cerca degli agenti specifico
-		List<Person> fourCrossedSem = s.getPopulation().getPersons().values().stream()
-									   .filter(p ->(long) p.getAttributes().getAttribute(StaticDriverLogic.N_NODES_ATT) == 3)
-									   .collect(Collectors.toList());
-		fourCrossedSem = s.getPopulation().getPersons().values().stream()
-						  .filter(p -> p.getId().toString().equals(Integer.toString(4970)) ||
-								  		p.getId().toString().equals(Integer.toString(2302)) ||
-								  		p.getId().toString().equals(Integer.toString(3632)) ||
-								  		p.getId().toString().equals(Integer.toString(3660)))
-						  .collect(Collectors.toList());
-		try {
-	      FileWriter myWriter = new FileWriter("./output/incrementedAgent.txt");
-	      for (int j = 0; j < 4; j++)
-	    	  myWriter.write(fourCrossedSem.get(j).getId().toString() + "\n");
-	      myWriter.close();
-	    } catch (IOException e) {
-	      e.printStackTrace();
-	    }
-		
-		for (int i = 0; i < 1; i++) {
-			Person p = fourCrossedSem.get(i); // o uno degli agenti di prima, o uno nuovo... non so cosa siano questi numeri però
-			// Person p = s.getPopulation().getPersons().values().stream()
-			// 		   .filter(pers -> pers.getId().toString().equals(Integer.toString(12225)))
-			// 		   .collect(Collectors.toList()).get(0);
-					   
-            // esperimento di aumento del budget per alcuni agenti (non so come li abbiano scelti)
-			long orig = Long.parseLong((String)p.getAttributes().getAttribute(BidAgent.BUDGET_ATT));
-			for (int increment = 2500; increment <= 40000; increment += 2500){
-				p.getAttributes().putAttribute(BidAgent.BUDGET_ATT, Long.toString(orig + increment));
-				s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory", "output/"+ p.getId() + "/" + increment+"/");
-				Controler c = new Controler(s);
-				addModules(c);
-				c.run();
-			}
-			p.getAttributes().putAttribute(BidAgent.BUDGET_ATT, Long.toString(orig));
-		}
-	}
+        // add smartagent module
+        controler.addOverridingModule(new SmartAgentModule());
 
-	private static void addModules(Controler controler) {
-		//add perception module
-		controler.addOverridingModule(new SmartPerceptionModule());
+        // add comunication module
+        controler.addOverridingModule(new ComunicationModule());
 
-		//add signal module
-		controler.addOverridingModule(new SmartSemaphoreModule());
+        // add accident module
+        // controler.addOverridingModule(new AccidentModule());
 
-		//add smartagent module
-		controler.addOverridingModule(new SmartAgentModule());
+        // add auction intersesction module
+        controler.addOverridingModule(new AuctionIntersectionModule());
 
-		//add comunication module
-		controler.addOverridingModule(new ComunicationModule());
+        // add restriction module
+        controler.addOverridingModule(new RestrictionsModule());
 
-		//add accident module
-		//controler.addOverridingModule(new AccidentModule());
+        controler.addOverridingModule(new AnalisysModule());
 
-		//add auction intersesction module
-		controler.addOverridingModule(new AuctionIntersectionModule());
+        // add vis module
+        if (controler.getConfig().getModules().containsKey(OTFVisConfigGroup.GROUP_NAME)) {
+            ConfigUtils.addOrGetModule(controler.getConfig(), OTFVisConfigGroup.class);
 
-		//add restriction module
-		controler.addOverridingModule(new RestrictionsModule());
+            // controler.addOverridingModule(new OTFVisLiveModule());
+            /*
+             * controler.addOverridingModule(new AbstractModule() {
+             * 
+             * @Override
+             * public void install() {
+             * ParkingSlotVisualiser visualiser = new ParkingSlotVisualiser(scenario);
+             * addEventHandlerBinding().toInstance(visualiser);
+             * addControlerListenerBinding().toInstance(visualiser);
+             * }
+             * });
+             */
 
-		controler.addOverridingModule(new AnalisysModule());
+            controler.addOverridingModule(new OTFVisWithSignalsLiveModule());
+        }
+    }
 
-		//add vis module
-		if (controler.getConfig().getModules().containsKey(OTFVisConfigGroup.GROUP_NAME)) {
-			ConfigUtils.addOrGetModule(controler.getConfig(), OTFVisConfigGroup.class);
+    private enum SemaphoreSystem {
+        FTC,
+        Basic,
+        Coordinated,
+        CoordinatedProp,
+        CoordinatedNoPropagation,
+        CoordinatedPropNoPropagation
+    }
 
-			//controler.addOverridingModule(new OTFVisLiveModule());
-			/*controler.addOverridingModule(new AbstractModule() {
+    private static String[] popFirst(String[] arr) {
+        String[] new_arr = new String[arr.length - 1];
+        System.arraycopy(arr, 1, new_arr, 0, new_arr.length);
+        return new_arr;
+    }
 
-				@Override
-				public void install() {
-					ParkingSlotVisualiser visualiser = new ParkingSlotVisualiser(scenario);
-					addEventHandlerBinding().toInstance(visualiser);
-					addControlerListenerBinding().toInstance(visualiser);
-				}
-			});*/
+    private static String[] pushFirst(String[] arr, String el) {
+        String[] new_arr = new String[arr.length + 1];
+        new_arr[0] = el;
+        System.arraycopy(arr, 0, new_arr, 1, arr.length);
+        return new_arr;
+    }
 
-			controler.addOverridingModule(new OTFVisWithSignalsLiveModule());
-		}
-	}
+    /**
+     * @param config
+     */
+    private static Scenario run(Config config) {
+        // get a simple scenario
+        Scenario scenario = ScenarioUtils.loadScenario(config);
 
-	/**
-	 * @param config
-	 */
-	private static Scenario run(Config config) {
-		//get a simple scenario		
-		Scenario scenario = ScenarioUtils.loadScenario(config) ;
-				
-		Controler controler = new Controler(scenario) ;
-		
-		addModules(controler);
-		
-		controler.run();
+        Controler controler = new Controler(scenario);
 
-		return scenario;
-		
-	}
+        addModules(controler);
+
+        controler.run();
+
+        return scenario;
+
+    }
 
 }

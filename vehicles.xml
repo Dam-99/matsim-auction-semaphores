@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vehicleDefinitions xmlns="http://www.matsim.org/files/dtd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.matsim.org/files/dtd http://www.matsim.org/files/dtd/vehicleDefinitions_v1.0.xsd">
+	<vehicleType id="car" >
+		<description>private_vehicle</description>
+		<length meter="4.0"/>
+		<width meter="1.8"/>
+		<maximumVelocity meterPerSecond="13.67"/>
+		<accessTime secondsPerPerson="1.0"/>
+		<egressTime secondsPerPerson="1.0"/>
+		<passengerCarEquivalents pce="1.0"/>
+	</vehicleType>
+	<vehicleType id="ambulance">
+		<description>emergency_vehicle</description>
+		<length meter="5.0"/>
+		<width meter="2.0"/>
+		<!-- 19.44 mps equals to 70kmh. Italian law set this limit for emergency vehicles in urban area -->
+		<maximumVelocity meterPerSecond="19.44"/>
+		<accessTime secondsPerPerson="1.0"/>
+		<egressTime secondsPerPerson="1.0"/>
+		<passengerCarEquivalents pce="1"/>
+	</vehicleType>
+</vehicleDefinitions>
