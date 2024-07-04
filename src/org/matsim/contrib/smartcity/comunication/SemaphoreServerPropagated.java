@@ -21,7 +21,7 @@ import org.matsim.contrib.smartcity.comunication.wrapper.ComunicationFixedWrappe
 import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.utils.collections.Tuple;
 
-public class SemaphoreServerPropagated implements ComunicationServer {
+public class SemaphoreServerPropagated extends SemaphoreServer implements ComunicationServer {
 
 	private ComunicationFixedWrapper wrapper;
 	private ConcurrentHashMap<Id<SignalGroup>, PriorityQueue<IncomingAgent>> incomingBid;
@@ -37,6 +37,7 @@ public class SemaphoreServerPropagated implements ComunicationServer {
 	private int maxPropagation = 5;
 	
 	public SemaphoreServerPropagated(ComunicationFixedWrapper wrapper, ComunicationServerFactory.ServerData data) {
+        super(wrapper, data);
 		Set<Coord> positions = data.coord;
 		this.wrapper = wrapper;
 		this.wrapper.addFixedComunicator(this, positions);

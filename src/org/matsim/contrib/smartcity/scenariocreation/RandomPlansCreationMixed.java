@@ -62,7 +62,7 @@ public class RandomPlansCreationMixed {
 	private static final double WORK_START_MEAN = 3600*9;
 
     public static void main(String[] args, int exp, boolean createPlans) { //, boolean isBasic) {
-        if (createPlans) {
+        if (!createPlans) {
             return;
         }
         // if (isBasic) {
