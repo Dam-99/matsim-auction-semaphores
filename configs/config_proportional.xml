@@ -3,17 +3,11 @@
 <config>
     <module name="comunication">
         <param name="range" value="1000" />
-        <!-- Basic is the server list file where no server is defined, making it usable in cases
-        where you don't want signals to communicate-->
-        <param name="serverlist" value="serverList_basic.xml" />
-        <param name="wrapper"
-            value="org.matsim.contrib.smartcity.comunication.wrapper.ComunicationFixedWrapper" />
+        <param name="serverlist" value="serverList_proportional_prop.xml" />
+        <param name="wrapper" value="org.matsim.contrib.smartcity.comunication.wrapper.ComunicationFixedWrapper" />
     </module>
     <module name="controler">
-        <param name="outputDirectory" value="./output/all_equipped/prova/" />
-        <!-- Default=false. If enabled, the router takes travel times needed for turning moves into
-        account. Cannot be used if the (Fast)AStarLandmarks routing or
-        TravelTimeCalculator.separateModes is enabled. -->
+        <!-- Default=false. If enabled, the router takes travel times needed for turning moves into account. Cannot be used if the (Fast)AStarLandmarks routing or TravelTimeCalculator.separateModes is enabled. -->
         <param name="enableLinkToLinkRouting" value="true" />
         <!-- Default=1000;  -->
         <param name="lastIteration" value="0" />
@@ -25,9 +19,7 @@
     </module>
     <module name="global">
         <param name="coordinateSystem" value="EPSG:32632" />
-        <!-- "global" number of threads.  This number is used, e.g., for replanning, but NOT in the
-        mobsim.  This can typically be set to as many cores as you have available, or possibly even
-        slightly more. -->
+        <!-- "global" number of threads.  This number is used, e.g., for replanning, but NOT in the mobsim.  This can typically be set to as many cores as you have available, or possibly even slightly more. -->
         <param name="numberOfThreads" value="1" />
     </module>
     <module name="network">
@@ -35,18 +27,15 @@
         <param name="timeVariantNetwork" value="true" />
     </module>
     <module name="parallelEventHandling">
-        <!-- Number of threads for parallel events handler. _null_ means the framework decides by
-        itself. 0 is currently not possible. -->
+        <!-- Number of threads for parallel events handler. _null_ means the framework decides by itself. 0 is currently not possible. -->
         <param name="numberOfThreads" value="1" />
     </module>
     <module name="perception">
         <param name="camerafile" value="cameras.xml" />
-        <param name="wrapper"
-            value="org.matsim.contrib.smartcity.perception.wrapper.ActivePerceptionWrapperImpl" />
+        <param name="wrapper" value="org.matsim.contrib.smartcity.perception.wrapper.ActivePerceptionWrapperImpl" />
     </module>
     <module name="planCalcScore">
-        <!-- logit model scale parameter. default: 1.  Has name and default value for historical
-        reasons (see Bryan Raney's phd thesis). -->
+        <!-- logit model scale parameter. default: 1.  Has name and default value for historical reasons (see Bryan Raney's phd thesis). -->
         <param name="BrainExpBeta" value="2.0" />
         <parameterset type="scoringParameters">
             <param name="earlyDeparture" value="0.0" />
@@ -77,29 +66,21 @@
             </parameterset>
         </parameterset>
     </module>
-    <module name="plans">
-        <param name="inputPlansFile" value="./plans/allEquipped/100/plans0.xml" />
-    </module>
     <module name="vehicles">
         <param name="vehiclesFile" value="vehicles.xml" />
     </module>
-    <!--module
-    name="travelTimeCalculator" >
+    <!--module name="travelTimeCalculator" >
 		<param name="analyzedModes" value="car,ambulance" />
 		<param name="separateModes" value="true" />
 	</module-->
     <module name="qsim">
         <param name="endTime" value="00:00:00" />
-        <!-- Number of threads used for the QSim.  Note that this setting is independent from the
-        "global" threads setting.  In contrast to earlier versions, the non-parallel special version
-        is no longer there. -->
+        <!-- Number of threads used for the QSim.  Note that this setting is independent from the "global" threads setting.  In contrast to earlier versions, the non-parallel special version is no longer there. -->
         <param name="numberOfThreads" value="1" />
         <param name="startTime" value="00:00:00" />
         <!-- Set this parameter to true if lanes should be used, false if not. -->
         <param name="useLanes" value="true" />
-        <!-- If false, the qsim accumulates fractional flows up to one flow unit in every time step.
-        If true, flows are updated only if an agent wants to enter the link or an agent is added to
-        buffer. Default is true. -->
+        <!-- If false, the qsim accumulates fractional flows up to one flow unit in every time step. If true, flows are updated only if an agent wants to enter the link or an agent is added to buffer. Default is true. -->
         <param name="usingFastCapacityUpdate" value="false" />
     </module>
     <module name="signalsystems">
@@ -110,10 +91,9 @@
         <param name="ambertimes" value="null" />
         <param name="conflictingDirections" value="null" />
         <param name="intergreentimes" value="null" />
-        <!-- Possible values: NONE, CONFLICTING_DIRECTIONS_NO_TURN_RESTRICTIONS,
-        CONFLICTING_DIRECTIONS_AND_TURN_RESTRICTIONS -->
+        <!-- Possible values: NONE, CONFLICTING_DIRECTIONS_NO_TURN_RESTRICTIONS, CONFLICTING_DIRECTIONS_AND_TURN_RESTRICTIONS -->
         <param name="intersectionLogic" value="NONE" />
-        <param name="signalcontrol" value="SignalControl_basic.xml" />
+        <param name="signalcontrol" value="SignalControl_communication.xml" />
         <param name="signalgroups" value="SignalGroups.xml" />
         <param name="signalsystems" value="SignalsSystem.xml" />
         <param name="useAmbertimes" value="false" />
@@ -122,14 +102,9 @@
     </module>
     <module name="strategy">
         <parameterset type="strategysettings">
-            <!-- strategyName of strategy.  Possible default names:
-            SelectRandomBestScoreKeepLastSelectedChangeExpBetaSelectExpBetaSelectPathSizeLogit
-            (selectors),
-            ReRouteTimeAllocationMutatorTimeAllocationMutator_ReRouteChangeSingleTripModeChangeTripModeSubtourModeChoice
-            (innovative strategies). -->
+            <!-- strategyName of strategy.  Possible default names: SelectRandomBestScoreKeepLastSelectedChangeExpBetaSelectExpBetaSelectPathSizeLogit (selectors), ReRouteTimeAllocationMutatorTimeAllocationMutator_ReRouteChangeSingleTripModeChangeTripModeSubtourModeChoice (innovative strategies). -->
             <param name="strategyName" value="BestScore" />
-            <!-- weight of a strategy: for each agent, a strategy will be selected with a
-            probability proportional to its weight -->
+            <!-- weight of a strategy: for each agent, a strategy will be selected with a probability proportional to its weight -->
             <param name="weight" value="0.9" />
         </parameterset>
         <parameterset type="strategysettings">
@@ -140,14 +115,12 @@
     <module name="travelTimeCalculator">
         <param name="calculateLinkToLinkTravelTimes" value="true" />
     </module>
-    <!--module
-    name="travelTimeCalculator" >
+    <!--module name="travelTimeCalculator" >
 	     	<param name="analyzedModes" value="car,ambulance" />
 	     	<param name="separateModes" value="true" />
 	 </module-->
 
-    <!--<module
-    name="otfvis"> </module>-->
+    <!--<module name="otfvis"> </module>-->
 
 
 </config>

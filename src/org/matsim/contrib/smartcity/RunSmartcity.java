@@ -57,7 +57,7 @@ public class RunSmartcity {
         args[1] = Integer.toString(500); // config file usato da plansCreation
         // args[1+1] = ...; // ~total population? experiment name? output path?~ "root" dir per i file dell'esperimento
         args[3] = Integer.toString(0); // boh
-        args[4] = "./config_ftc.xml"; // config path
+        args[4] = "./configs/config_ftc.xml"; // config path
         args[5] = "./esempio/plans_mixed.xml"; // plans path
         args[6] = "org.matsim.contrib.smartcity.agent.BidAgent"; // smart agents class name
         args[7] = "mode=N"; // mode? traffic light mode?
@@ -66,17 +66,17 @@ public class RunSmartcity {
 
         s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[4]));
         runExperimentsOnSystem(SemaphoreSystem.FTC, args, s);
-        cfg_pth = "./config_basic.xml";
+        cfg_pth = "./configs/config_basic.xml";
         args[4] = cfg_pth;
         s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(cfg_pth));
         runExperimentsOnSystem(SemaphoreSystem.Basic, args, s);
-        cfg_pth = "./config.xml";
+        cfg_pth = "./configs/config.xml";
         args[4] = cfg_pth;
         s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(cfg_pth));
         runExperimentsOnSystem(SemaphoreSystem.Coordinated, args, s);
         s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(cfg_pth));
         runExperimentsOnSystem(SemaphoreSystem.CoordinatedNoPropagation, args, s);
-        cfg_pth = "./config_proportional.xml";
+        cfg_pth = "./configs/config_proportional.xml";
         args[4] = cfg_pth;
         s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(cfg_pth));
         runExperimentsOnSystem(SemaphoreSystem.CoordinatedProp, args, s);
@@ -122,50 +122,50 @@ public class RunSmartcity {
 
         int exp = 1;
         boolean createPlans = false;
-        System.out.println("SYSTEM " + systemDirName);
+        System.out.println("SEMAPHORE " + systemDirName + (runNoPropagation ? " - NO propagation" : ""));
         if (!runNoPropagation) {
         // boolean isBasic = args[3].contains("_basic");
-        System.out.println("EXPERIMENT" + exp);
+        System.out.println("EXPERIMENT " + exp);
         for (int totalAgents = 500; totalAgents <= 5000; totalAgents += 500) {
             args[0] = "" + totalAgents;
             args[1] = "exp" + exp;
-            System.out.println("aoeu" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
+            System.out.println("SETTING" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
             RandomPlansCreationMixed.main(args, exp, createPlans);// , isBasic);
             s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[3]));
             for (int i = 0; i < 20; i++) {
-                System.out.println("ueoa" + i);
+                System.out.println("PLANS " + i);
                 s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory",
                         outputRoot + args[1] + "/" + systemDirName + "/" + totalAgents + "agents" + "/" + i + "/");
                 s.getConfig().getModules().get("plans").addParam("inputPlansFile",
-                        "plans/" + args[1] + "/" + totalAgents + "agents" + "/" + "plans" + i + ".xml");
+                        "../plans/" + args[1] + "/" + totalAgents + "agents" + "/" + "plans" + i + ".xml");
                 s = ScenarioUtils.loadScenario(s.getConfig());
                 Controler controler = new Controler(s);
                 addModules(controler);
-                System.out.println("agents: " + totalAgents + " i: " + i);
+                System.out.println("ENDRUN agents: " + totalAgents + " i: " + i);
                 controler.run();
             }
         }
         exp = 2;
-        System.out.println("EXPERIMENT" + exp);
+        System.out.println("EXPERIMENT " + exp);
         for (int totalAgents = 1000; totalAgents <= 4000; totalAgents += 1500) {
             args[0] = "" + totalAgents;
             args[1] = "exp" + exp + "traffic" + totalAgents;
-            System.out.println("aoeu" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
+            System.out.println("SETTING" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
             s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[3]));
             for (int smartPercentage = 20; smartPercentage <= 80; smartPercentage += 20) {
                 args[2] = "" + smartPercentage;
                 RandomPlansCreationMixed.main(args, exp, createPlans);// , isBasic);
                 int smartAgents = totalAgents * smartPercentage / 100;
                 for (int i = 0; i < 5; i++) {
-                    System.out.println("ueoa " + smartPercentage + i);
+                    System.out.println("PLANS " + smartPercentage + i);
                     s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory",
                             outputRoot + args[1] + "/" + systemDirName + "/" + smartAgents + "smart_agents" + "/" + i + "/");
                     s.getConfig().getModules().get("plans").addParam("inputPlansFile",
-                            "plans/" + args[1] + "/" + smartAgents + "smart_agents" + "/" + "plans" + i + ".xml");
+                            "../plans/" + args[1] + "/" + smartAgents + "smart_agents" + "/" + "plans" + i + ".xml");
                     s = ScenarioUtils.loadScenario(s.getConfig());
                     Controler controler = new Controler(s);
                     addModules(controler);
-                System.out.println("agents: " + totalAgents + " i: " + i + "smart: " + smartAgents);
+                    System.out.println("ENDRUN agents: " + totalAgents + " i: " + i + " smart: " + smartAgents);
                     controler.run();
                 }
             }
@@ -173,12 +173,12 @@ public class RunSmartcity {
 
         }
         exp = 3;
-        System.out.println("EXPERIMENT" + exp);
+        System.out.println("EXPERIMENT " + exp);
         for (int totalAgents = 1000; totalAgents <= 4000; totalAgents += 1500) {
             args[0] = "" + totalAgents;
             args[1] = "exp" + exp + "traffic" + totalAgents;
             s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[3]));
-            System.out.println("aoeu" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
+            System.out.println("SETTING" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
             int smartPercentage = 60;
             args[2] = "" + smartPercentage;
             int emergencyBudget = 210000;
@@ -186,7 +186,7 @@ public class RunSmartcity {
             RandomPlansCreationMixed.main(args, exp, createPlans);// , isBasic);
             // int smartAgents = totalAgents * smartPercentage / 100;
             for (int i = 0; i < 5; i++) {
-                System.out.println("ueoa" + i);
+                System.out.println("PLANS " + i);
                 if (runNoPropagation) {
                     s.getConfig().getModules().get(ComunicationConfigGroup.GROUPNAME)
                             .addParam(ComunicationConfigGroup.SERVERLIST, serverList);
@@ -197,12 +197,12 @@ public class RunSmartcity {
                             outputRoot + "exp" + exp + "/" +  systemDirName + "/" + totalAgents + "traffic" + emergencyBudget + "emergency_budget" + "/" + i + "/");
                 }
                 s.getConfig().getModules().get("plans").addParam("inputPlansFile",
-                        "plans/" + args[1] + "/" + emergencyBudget + "emergency_budget" + "/" + "plans" + i + ".xml");
+                        "../plans/" + args[1] + "/" + emergencyBudget + "emergency_budget" + "/" + "plans" + i + ".xml");
                 s = ScenarioUtils.loadScenario(s.getConfig());
                 Controler controler = new Controler(s);
                 addModules(controler);
                 controler.run();
-                System.out.println("agents: " + totalAgents + " i: " + i + "propagation: " + runNoPropagation);
+                System.out.println("ENDRUN agents: " + totalAgents + " i: " + i + " propagation: " + runNoPropagation);
                 s.getConfig().getModules().get(ComunicationConfigGroup.GROUPNAME).addParam(ComunicationConfigGroup.WRAPPER, ogServerList);
             }
         }
