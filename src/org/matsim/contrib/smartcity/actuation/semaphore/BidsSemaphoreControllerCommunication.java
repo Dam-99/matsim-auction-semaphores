@@ -38,9 +38,12 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.log4j.Logger;
+
 public class BidsSemaphoreControllerCommunication extends BidsSemaphoreController implements SignalController, ComunicationServer, CameraListener, ComunicationClient {
 
     public static final String IDENTIFIER = "SmartSemphoreController";
+    private static final Logger log = Logger.getLogger(BidsSemaphoreControllerCommunication.class);
 
     private double minimunGreenTime = 20;
 
@@ -185,26 +188,52 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         
         int max = 0;
         Id<Link> link = null;
+        Id<Link> foundAgentLink = null;
+        boolean foundAgent = false;
+        String bids = " and all bids are: ";
         int starvationBonus = 0;
         for (Map.Entry<Id<Link>, Integer> e : this.bidMap.entrySet()){    
-        	if (e.getKey() != null 
-        			&& this.agentMap.get(e.getKey()) != null 
-        			&& timeSeconds > this.lastGreen.getOrDefault(e.getKey(),0.0) + 600 
+            if (e.getKey() != null && this.agentMap.get(e.getKey()) != null) {
+                boolean curFoundAgent = this.agentMap.get(e.getKey()).stream().filter(bid -> bid.getAgent() != null && bid.getAgent().getPerson().getId()
+                        .toString().equals("3640")).collect(Collectors.toList()).size() > 0;
+                if (curFoundAgent) {
+                    foundAgent = true;
+                    foundAgentLink = e.getKey();
+                    log.error("getNextGreen: found bid by 3640 on link " + e.getKey() + ": " + e.getValue());
+                }
+            }
+            if (e.getKey() != null
+        			&& this.agentMap.get(e.getKey()) != null
+        			&& timeSeconds > this.lastGreen.getOrDefault(e.getKey(),0.0) + 600
         			&& this.agentMap.get(e.getKey()).size() > 0)
         		starvationBonus = 30000;        	
         	if(e.getValue() > 0) {
 	            if (e.getValue() + this.incomingBid.getOrDefault(e.getKey(),0) + starvationBonus > max){
+                    bids += " " + e.getValue();
 	                max = e.getValue() + this.incomingBid.getOrDefault(e.getKey(),0) + starvationBonus;
 	                link = e.getKey();
 	            }
         	}
+            else { bids += " " + e.getValue(); }
             starvationBonus = 0;
         }
-        
         if (link != null){
+            if (foundAgent) {
+                log.error("getNextGreen: green link is " + link.toString() + " with bid " + max);
+                log.error("getNextGreen: 3640 is on " + (foundAgentLink != null ? foundAgentLink.toString() : null) + bids);
+                if(!link.toString().equals(foundAgentLink.toString())) {
+                    String sgGroupIds = this.signalMap.get(link).getSignals().values().stream()
+                            .map(Signal::getLinkId).map(Id::toString).map(s -> s + " ").reduce(String::concat).orElse("Empty SignalGroup").trim();
+                    log.error("Signal group containing link but not agent's link, all IDs: " + sgGroupIds);
+                }
+            }
         	this.lastGreen.put(link, timeSeconds);
             return new NextGreen(this.signalMap.get(link).getId(), link);
         } else {
+            if (foundAgent) {
+                log.error("getNextGreen: green link is null with bid ");
+                log.error("getNextGreen: 3640 is on " + (foundAgentLink != null ? foundAgentLink.toString() : null) + bids);
+            }
             return new NextGreen(getRandomSignal(), null);
         }
     }
@@ -280,6 +309,8 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             Id<Link> link = ((BidMessage) message).getLink();
             int bid = ((BidMessage) message).getBid();
             BidAgent agent = (BidAgent) ((BidMessage) message).getSender();
+            if (agent.getPerson().getId().toString().equals("3640"))
+                log.error("sendToMe(BidMessage): 3640 bids " + bid + " on link " + link);
             if (link == agent.getDestinationLinkId())
             	return;
             double time = ((BidMessage) message).getTime();
@@ -287,6 +318,8 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             em.processEvent(new BidEvent(link, agent, bid, time));
 
             if (bid <= 0) {
+                if (agent.getPerson().getId().toString().equals("3640"))
+                    log.error("sendToMe(BidMessage): bid ignored (<=0)");
                 return;
             }
 
@@ -306,6 +339,9 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         	int index = ((RideMessage) message).getIndex();
         	BidAgent agent = (BidAgent) ((RideMessage) message).getSender();
         	if (index <= agentRoute.size() && index > 0 ) {
+                if (agent.getPerson().getId().toString().equals("3640"))
+                    log.error("sendToMe(RideMessage): 3640 (on link " + agentRoute.get(index-1) + ") communicates path: " +
+                            agentRoute.stream().map(Id::toString).map(s -> s + " ").reduce(String::concat).orElse("empty path").trim());
 	        	Id<Link> actualLink = agentRoute.get(index-1);
 	        	List<Tuple<List<Id<Link>>,Integer>> actual = this.agentsRouteAndBid.get(actualLink);
 	        	if (actual == null) {
@@ -319,7 +355,10 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         	this.incomingBid = ((IncomingResponse)message).getIncomingAgent();
         	this.wait = false;
         } else if (message instanceof CrossedMessage) {
+            BidAgent senderAgent = (BidAgent) message.getSender();
         	Id<Link> link = ((CrossedMessage)message).getLink();
+            if (senderAgent.getPerson().getId().toString().equals("3640"))
+                log.error("sendToMe(CrossedMessage): 3640 crossed intersection from " + link);
         	double time = ((CrossedMessage)message).getTime();
         	synchronized(this.agentMap.get(link)) {
 	        	addOrRemoveBidToBidMap(false,((CrossedMessage)message).getBid(),link);
@@ -328,11 +367,11 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
 	        		List<Tuple<List<Id<Link>>,Integer>> actualRouteAndBid = this.agentsRouteAndBid.get(link);
 	        		if (this.agentMap.get(link).get(0).getAgent() == null) {
 	        			/*
-	        			 * A causa della concorrenza puÚ succedere che un agente statico abbia gi‡ attraversato 
+	        			 * A causa della concorrenza pu√≤ succedere che un agente statico abbia gi√† attraversato
 	        			 * il semaforo ma il thread che gestisce l'agente dinamico dietro a lui invece acquisisce
 	        			 * prima del thread che gestisce l'agente statico il lock sulla lista e quindi andrebbe 
 	        			 * a rimuovere l'agente sbagliato.
-	        			 * Questa soluzione Ë semplice ma funzionante
+	        			 * Questa soluzione √® semplice ma funzionante
 	        			 */
 	        			for (int i = 0; i < this.agentMap.get(link).size(); i++) {
 	        				if(this.agentMap.get(link).get(i).getAgent() != null) {
@@ -358,6 +397,12 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         }
     }
 
+    /**
+     * Add bid to the list of bids made by agents for the given link
+     * @param link link where the agent is located and bids
+     * @param agent agent making the bid
+     * @param bid amount of the bid
+     */
     private void addBidToMap(Id<Link> link, BidAgent agent, int bid, BidAgent.BidAgentMode mode) {
         List<Bid> bidForLink = this.agentMap.get(link);
         if (bidForLink == null) {
@@ -383,7 +428,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
 	    	synchronized(this.agentMap.get(link)) {
 	    		if(oldTotal > newTotal && this.agentMap.get(link).size() > 0) {
 	    			/*
-	    			 * Nel sendtome al CrossedMessage ho spiegato perchË non posso
+	    			 * Nel sendtome al CrossedMessage ho spiegato perch√© non posso
 	    			 * eliminare in testa come sarebbe logico.
 	    			 */
 	    			for (int i = 0; i < this.agentMap.get(link).size() && i < oldTotal - newTotal; i++) {
@@ -402,7 +447,13 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
     }
     
     /*
-     * Ho dovuto aggiungere questo metodo perchË accessi concorrenti alla mappa provocavano inconsistenze
+     * Ho dovuto aggiungere questo metodo perch√© accessi concorrenti alla mappa provocavano inconsistenze
+     */
+    /**
+     * Add bid to the total bid for the link
+     * @param add sum (true) or subtract (false) bid from the total
+     * @param bid amount to change
+     * @param link link for which the bid is being modified
      */
     public synchronized void addOrRemoveBidToBidMap(Boolean add, int bid,Id<Link> link) {
     	if (add)

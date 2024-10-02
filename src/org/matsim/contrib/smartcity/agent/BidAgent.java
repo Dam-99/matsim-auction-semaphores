@@ -6,6 +6,7 @@ import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Leg;
 import org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController;
+import org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreControllerCommunication;
 import org.matsim.contrib.smartcity.comunication.*;
 import org.matsim.contrib.smartcity.comunication.wrapper.ComunicationWrapper;
 import org.matsim.core.gbl.MatsimRandom;
@@ -15,6 +16,8 @@ import org.matsim.core.utils.collections.Tuple;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+
 public class BidAgent extends StaticDriverLogic implements ComunicationClient, ComunicationServer {
 
     public static final String REDISTRIBUTION = "REDISTRIBUTION";
@@ -22,6 +25,7 @@ public class BidAgent extends StaticDriverLogic implements ComunicationClient, C
     public static final String BUDGET_ATT = "budget";
     private static final String BID_MODE_ATT = "bidMode";
     public static final String SPONSORSHIP = "SPONSORSHIP";
+    private static final Logger log = Logger.getLogger(BidAgent.class);
 
     private final int originalBudget;
     private final String calcBidMode;
@@ -58,6 +62,8 @@ public class BidAgent extends StaticDriverLogic implements ComunicationClient, C
     @Override
     public void sendToMe(ComunicationMessage message) {
         if (message instanceof DecriseBudget) {
+            int beforeBudget = this.budget;
+            int amount = ((DecriseBudget) message).getAmount();
             if (SPONSORSHIP.equals(((DecriseBudget) message).getReason()) && !this.calcBidMode.equals("random")) {
                 this.usedBudgetForSponsor += ((DecriseBudget) message).getAmount();
             } else if (REDISTRIBUTION.equals(((DecriseBudget) message).getReason())) {
@@ -68,6 +74,9 @@ public class BidAgent extends StaticDriverLogic implements ComunicationClient, C
                 this.budget = this.budget - ((DecriseBudget) message).getAmount();
                 this.budget -= this.usedBudgetForSponsor;
                 this.usedBudgetForSponsor = 0;
+            }
+            if(this.getPerson().getId().toString().equals("3640")) {
+                log.error("sendToMe(DecriseBudget): 3640 budget " + beforeBudget + "-" + amount + "=" + this.budget + " (og: " + this.originalBudget + ")");
             }
         }
     }
