@@ -63,6 +63,31 @@
 	        </execution>
 	    </executions>
 	</plugin>
+      <plugin> 
+        <groupId>org.apache.maven.plugins</groupId> 
+        <artifactId>maven-jar-plugin</artifactId> 
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <!-- <goals> -->
+            <!--   <goal>single</goal> -->
+            <!-- </goals> -->
+          </execution>
+        </executions>
+         <configuration>  
+          <!-- <descriptorRefs> -->
+          <!--   <descriptorRef>jar-with-dependencies</descriptorRef> -->
+          <!-- </descriptorRefs> -->
+          <archive>
+            <manifest> 
+              <mainClass>org.matsim.contrib.smartcity.RunSmartcity</mainClass> 
+              <addClasspath>true</addClasspath> 
+              <classpathPrefix>libs</classpathPrefix>
+            </manifest> 
+          </archive>
+          <!-- <appendAssemblyId>false</appendAssemblyId> -->
+         </configuration>  
+      </plugin> 
     </plugins>
   </build>
   <dependencies>

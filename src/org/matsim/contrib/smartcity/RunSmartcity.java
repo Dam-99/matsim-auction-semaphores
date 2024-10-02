@@ -49,9 +49,13 @@ public class RunSmartcity {
      * @param args
      */
     public static void main(String[] args) {
-        // Gbl.assertIf(args.length >= 1 && args[0] != "");
+        Gbl.assertIf(args.length >= 1 && args[0] != "");
         String cfg_pth;
-        Scenario s;
+        Scenario s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[0]));
+        Controler controler = new Controler(s);
+        addModules(controler);
+        controler.run();
+        System.exit(0);
         args = new String[10];
         args[0] = "manhattan"; // map
         args[1] = Integer.toString(500); // config file usato da plansCreation
