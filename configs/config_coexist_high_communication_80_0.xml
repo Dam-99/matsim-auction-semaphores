@@ -3,7 +3,7 @@
 <config>
 	<module name="comunication" >
 		<param name="range" value="1000" />
-		<param name="serverlist" value="serverList_communication.xml" />
+		<param name="serverlist" value="serverList_communication_prop.xml" />
 		<!-- ComunicationV2VWrapper or ComunicationFixedWrapper -->
 		<param name="wrapper" value="org.matsim.contrib.smartcity.comunication.wrapper.ComunicationFixedWrapper" />
 	</module>
