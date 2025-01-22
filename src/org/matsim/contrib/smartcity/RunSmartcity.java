@@ -312,7 +312,7 @@ public class RunSmartcity {
         // controler.addOverridingModule(new AccidentModule());
 
         // add auction intersesction module
-        controler.addOverridingModule(new AuctionIntersectionModule());
+        // controler.addOverridingModule(new AuctionIntersectionModule());
 
         // add restriction module
         controler.addOverridingModule(new RestrictionsModule());
