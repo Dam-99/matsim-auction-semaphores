@@ -154,6 +154,10 @@ public class RandomPlansCreationMixed {
 	 */
 	public static void exp2(String[] args) {
 		int totalAgents = Integer.parseInt(args[0]);
+        String traffic;
+        switch(totalAgents) {
+            case 1000: traffic = "low"; break; case 2500: traffic = "medium"; break; case 4000: traffic = "high"; break; default: traffic = "boh";
+        };
         int smartPercentage = Integer.parseInt(args[2]);
 		// for (int i = 20; i <= 80; i += 20) {
 			String[] new_args = new String[args.length-2+6];
@@ -166,13 +170,14 @@ public class RandomPlansCreationMixed {
 			// srcPos: indice array, incluso; dstPos: indice array, incluso; dst[dstPos] = src[srcPos];
 			if (args.length - 2 >= 0) System.arraycopy(args, 2, new_args, 6, args.length - 2); // copia i parametri passati, per avere quelli nuovi all'inizio
 			try {
-                Files.createDirectories(Paths.get("plans/" + args[1] + "/" + smartAgents + "smart_agents" + "/")); // crea le cartelle per ogni popolazione? e forse anche per gli output
+                // Files.createDirectories(Paths.get("plans/" + args[1] + "/" + smartAgents + "smart_agents" + "/")); // crea le cartelle per ogni popolazione? e forse anche per gli output
+                Files.createDirectories(Paths.get("plans/coexist_" + traffic + "/" + smartPercentage + "/")); // crea le cartelle per ogni popolazione? e forse anche per gli output
 			} catch (IOException e) {
 				System.exit(1);
 			}
 
-			for (int i = 0; i < 5; i++) { // esegue l'esperimento più volte? magari sono i diversi piani tra cui ogni agent può scegliere
-				new_args[4] = "plans/" + args[1] + "/" + smartAgents + "smart_agents" + "/" + "plans" + i + ".xml";
+			for (int i = 5; i < 20; i++) { // esegue l'esperimento più volte? magari sono i diversi piani tra cui ogni agent può scegliere
+				new_args[4] = "plans/coexist_" + traffic + "/" + smartPercentage + "/" + "plans" + i + ".xml";
 
 				main_(new_args, null);
 			}

@@ -3,6 +3,7 @@
  */
 package org.matsim.contrib.smartcity;
 
+import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.population.Person;
 import org.matsim.contrib.signals.otfvis.OTFVisWithSignalsLiveModule;
@@ -18,6 +19,7 @@ import org.matsim.contrib.smartcity.comunication.ComunicationConfigGroup;
 import org.matsim.contrib.smartcity.comunication.ComunicationModule;
 import org.matsim.contrib.smartcity.perception.SmartPerceptionModule;
 import org.matsim.contrib.smartcity.restriction.RestrictionsModule;
+import org.matsim.contrib.smartcity.scenariocreation.FixResTripDur;
 import org.matsim.contrib.smartcity.scenariocreation.RandomPlansCreation;
 import org.matsim.contrib.smartcity.scenariocreation.RandomPlansCreationMixed;
 import org.matsim.core.config.Config;
@@ -31,11 +33,14 @@ import org.matsim.vis.otfvis.OTFVisConfigGroup;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -52,6 +57,7 @@ public class RunSmartcity {
         Gbl.assertIf(args.length >= 1 && args[0] != "");
         String cfg_pth;
         Scenario s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[0]));
+        // FixResTripDur.main(s);
         Controler controler = new Controler(s);
         addModules(controler);
         controler.run();
@@ -69,6 +75,8 @@ public class RunSmartcity {
         args[9] = "budget=[10-280,380-650,750-1000]"; // budget array
 
         s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[4]));
+        // FixResTripDur.main(s);
+        // System.exit(0);
         runExperimentsOnSystem(SemaphoreSystem.FTC, args, s);
         cfg_pth = "./configs/config_basic.xml";
         args[4] = cfg_pth;
@@ -128,68 +136,130 @@ public class RunSmartcity {
         boolean createPlans = false;
         System.out.println("SEMAPHORE " + systemDirName + (runNoPropagation ? " - NO propagation" : ""));
         if (!runNoPropagation) {
+            boolean skip = false; //systemDirName == "ftc";
+        if (!skip) {
         // boolean isBasic = args[3].contains("_basic");
         System.out.println("EXPERIMENT " + exp);
+        String plansSys = systemDirName != "ftc" ? systemDirName : "fixed";
         for (int totalAgents = 500; totalAgents <= 5000; totalAgents += 500) {
+            if (true) continue;
+            if (!Files.exists(Paths.get("plans/allEquipped/" + plansSys + "/" + totalAgents + "/")))
+            // if (!Files.exists(Paths.get("../plans/exp1/" + totalAgents + "agents/")))
+                continue;
             args[0] = "" + totalAgents;
             args[1] = "exp" + exp;
-            System.out.println("SETTING" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
+            System.out.println("SETTING" + " " + systemDirName + " " + totalAgents + " " + runNoPropagation + " " + args[1]);
             RandomPlansCreationMixed.main(args, exp, createPlans);// , isBasic);
             s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[3]));
             for (int i = 0; i < 20; i++) {
+                 if (!Files.exists(Paths.get("plans/allEquipped/" + plansSys + "/" + totalAgents + "/plans" + i + ".xml"))) {
+                // if (!Files.exists(Paths.get("../plans/exp1/" + totalAgents + "agents/plans" + i + ".xml"))) {
+                    System.out.println("SKIPPED " + i);
+                    continue;
+                }
                 System.out.println("PLANS " + i);
                 s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory",
                         outputRoot + args[1] + "/" + systemDirName + "/" + totalAgents + "agents" + "/" + i + "/");
+                // s.getConfig().getModules().get("plans").addParam("inputPlansFile",
+                //         "../../plans/" + args[1] + "/" + totalAgents + "agents" + "/" + "plans" + i + ".xml");
                 s.getConfig().getModules().get("plans").addParam("inputPlansFile",
-                        "../plans/" + args[1] + "/" + totalAgents + "agents" + "/" + "plans" + i + ".xml");
+                    "../plans/allEquipped/" + plansSys + "/" + totalAgents + "/plans" + i + ".xml");
+                boolean loaded = false;
+                while(!loaded) {
+                try{
                 s = ScenarioUtils.loadScenario(s.getConfig());
+                loaded = true;
+            }catch (RuntimeException e)
+                        { System.out.println("----------failed to load: SETTING" + " " + systemDirName + " " + totalAgents + " " + runNoPropagation + " " + args[1]); }
+                }
                 Controler controler = new Controler(s);
                 addModules(controler);
-                System.out.println("ENDRUN agents: " + totalAgents + " i: " + i);
+                System.out.println("ENDRUN " + systemDirName + " agents: " + totalAgents + " i: " + i);
                 controler.run();
             }
         }
+        boolean exit = false;
+        if (exit)
+            return;
         exp = 2;
         System.out.println("EXPERIMENT " + exp);
         for (int totalAgents = 1000; totalAgents <= 4000; totalAgents += 1500) {
+            String traf = "low";
+            switch (totalAgents) {
+                case 1000:
+                    traf = "low";
+                    break;
+                case 2500:
+                    traf = "medium";
+                    break;
+                case 4000:
+                    traf = "high";
+                    break;
+            }
             args[0] = "" + totalAgents;
             args[1] = "exp" + exp + "traffic" + totalAgents;
-            System.out.println("SETTING" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
+            System.out.println("SETTING" + " " + systemDirName + " " + totalAgents + " " + runNoPropagation + " " + args[1]);
+            boolean loaded = false;
+            while(!loaded) {
+            try{
             s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[3]));
+            loaded = true;
+            }catch (RuntimeException e)
+                    { System.out.println("----------failed to load: SETTING" + " " + systemDirName + " " + totalAgents + " " + runNoPropagation + " " + args[1]); }
+            }
+            // s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[3]));
             for (int smartPercentage = 20; smartPercentage <= 80; smartPercentage += 20) {
                 args[2] = "" + smartPercentage;
-                RandomPlansCreationMixed.main(args, exp, createPlans);// , isBasic);
+                RandomPlansCreationMixed.main(args, exp, true);// , isBasic);
                 int smartAgents = totalAgents * smartPercentage / 100;
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 20; i++) {
                     System.out.println("PLANS " + smartPercentage + i);
                     s.getConfig().getModules().get(ControlerConfigGroup.GROUP_NAME).addParam("outputDirectory",
                             outputRoot + args[1] + "/" + systemDirName + "/" + smartAgents + "smart_agents" + "/" + i + "/");
-                    s.getConfig().getModules().get("plans").addParam("inputPlansFile",
-                            "../plans/" + args[1] + "/" + smartAgents + "smart_agents" + "/" + "plans" + i + ".xml");
+                     // s.getConfig().getModules().get("plans").addParam("inputPlansFile",
+                     //         "../plans/" + args[1] + "/" + smartAgents + "smart_agents" + "/" + "plans" + i + ".xml");
+                     s.getConfig().getModules().get("plans").addParam("inputPlansFile",
+                         "../plans/coexist_" + traf + "/" + smartPercentage + "/plans" + i + ".xml");
+                    loaded = false;
+                    while(!loaded) {
+                    try{
                     s = ScenarioUtils.loadScenario(s.getConfig());
+                    loaded = true;
+                    }catch (RuntimeException e)
+                            { System.out.println("----------failed to load: SETTING" + " " + systemDirName + " " + totalAgents + " " + runNoPropagation + " " + args[1]); }
+                    }
                     Controler controler = new Controler(s);
                     addModules(controler);
-                    System.out.println("ENDRUN agents: " + totalAgents + " i: " + i + " smart: " + smartAgents);
+                    // try {
+                    //     Files.write(Paths.get(outputRoot + "exp2_log.txt"), (systemDirName + " " + smartPercentage + "%" + totalAgents + " " + i + "\n\t" + controler.getConfig().getModules().get("comunication").getParams().get("serverlist") + " " + controler.getConfig().getModules().get("signalsystems").getParams().get("signalcontrol") + "\n").getBytes(), java.nio.file.StandardOpenOption.APPEND);
+                    // } catch (IOException e) {
+                    //     e.printStackTrace();
+                    // }
+                    System.out.println("ENDRUN " + systemDirName + " agents: " + totalAgents + " i: " + i + " smart: " + smartAgents);
                     controler.run();
                 }
             }
         }
-
         }
+        }
+         boolean exit = true;
+         if (exit)
+             return;
         exp = 3;
+        String plansSys = systemDirName != "ftc" ? systemDirName : "fixed";
         System.out.println("EXPERIMENT " + exp);
         for (int totalAgents = 1000; totalAgents <= 4000; totalAgents += 1500) {
             args[0] = "" + totalAgents;
             args[1] = "exp" + exp + "traffic" + totalAgents;
             s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(args[3]));
-            System.out.println("SETTING" + " " + systemDirName + " " + runNoPropagation + " " + args[1]);
+            System.out.println("SETTING" + " " + systemDirName + " " + totalAgents + " " + runNoPropagation + " " + args[1]);
             int smartPercentage = 60;
             args[2] = "" + smartPercentage;
-            int emergencyBudget = 210000;
+            Integer emergencyBudget = 210000;
             args[4] = "" + emergencyBudget;
             RandomPlansCreationMixed.main(args, exp, createPlans);// , isBasic);
             // int smartAgents = totalAgents * smartPercentage / 100;
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 20; i++) {
                 System.out.println("PLANS " + i);
                 if (runNoPropagation) {
                     s.getConfig().getModules().get(ComunicationConfigGroup.GROUPNAME)
@@ -201,12 +271,24 @@ public class RunSmartcity {
                             outputRoot + "exp" + exp + "/" +  systemDirName + "/" + totalAgents + "traffic" + emergencyBudget + "emergency_budget" + "/" + i + "/");
                 }
                 s.getConfig().getModules().get("plans").addParam("inputPlansFile",
-                        "../plans/" + args[1] + "/" + emergencyBudget + "emergency_budget" + "/" + "plans" + i + ".xml");
+                         "../plans/allEquipped/" + plansSys + "/" + totalAgents + "/plans" + i + ".xml");
+                         // "../plans/" + args[1] + "/" + emergencyBudget + "emergency_budget" + "/" + "plans" + i + ".xml");
+                boolean loaded = false;
+                while(!loaded) {
+                try{
                 s = ScenarioUtils.loadScenario(s.getConfig());
+                loaded = true;
+                }catch (RuntimeException e)
+                        { System.out.println("----------failed to load: SETTING" + " " + systemDirName + " " + totalAgents + " " + runNoPropagation + " " + args[1]); }
+                }
+                Person em_ve;
+                int rand = ThreadLocalRandom.current().nextInt(0, totalAgents + 1);
+                em_ve = s.getPopulation().getPersons().get(Id.createPersonId(rand));
+                em_ve.getAttributes().putAttribute("budget", emergencyBudget.toString());
                 Controler controler = new Controler(s);
                 addModules(controler);
                 controler.run();
-                System.out.println("ENDRUN agents: " + totalAgents + " i: " + i + " propagation: " + runNoPropagation);
+                System.out.println("ENDRUN " + systemDirName + " agents: " + totalAgents + " i: " + i + " propagation: " + runNoPropagation);
                 s.getConfig().getModules().get(ComunicationConfigGroup.GROUPNAME).addParam(ComunicationConfigGroup.WRAPPER, ogServerList);
             }
         }

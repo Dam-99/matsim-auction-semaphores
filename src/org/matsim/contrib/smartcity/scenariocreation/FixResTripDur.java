@@ -30,7 +30,10 @@ import org.matsim.facilities.ActivityFacilitiesFactoryImpl;
 import org.matsim.facilities.ActivityFacility;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,10 +68,10 @@ public class FixResTripDur {
         return router.get();
     }
 
-    public static void main(String[] args) {
-        String[] scenari = {"MASA","Manhattan"};
+    public static void main(Scenario s){
+        String[] scenari = {"manhattan"};
         String[] exps = {"all_equipped"};
-        Map<String, String[]> xs = new HashMap<>();
+        Map<String, String[]> exps_populs = new HashMap<>();
 //        String[] all_equipped = {"100", "200", "300", "400", "500", "600", "700", "800", "900", "1000"};
 //        xs.put("all_equipped", all_equipped);
 //        String[] coexist = {"0", "10", "20", "30", "40", "50", "60", "70", "80", "90"};
@@ -77,44 +80,51 @@ public class FixResTripDur {
 //        xs.put("emergency", emergency);
 
         //old
-        String[] all_equipped = {"1000", "1500", "2000", "2500", "3000", "3500", "4000", "4500", "5000"};
-        xs.put("all_equipped", all_equipped);
+         String[] all_equipped = {"1000", "1500", "2000", "2500", "3000", "3500", "4000", "4500", "5000"};
+        // String[] all_equipped = {"500"};
+        exps_populs.put("all_equipped", all_equipped);
 //        String[] coexist = {"10", "20", "30", "40", "50", "60", "70", "80", "90"};
 //        xs.put("coexist", coexist);
 //        String[] prop_coexist = {"1"};
 //        xs.put("emergency_coexist", prop_coexist);
 
-        String[] runs = {"5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"};
 
         for (String scenario : scenari) {
             Network network = NetworkUtils.createNetwork();
             MatsimNetworkReader netReader = new MatsimNetworkReader(network);
-            netReader.readFile(scenario+"/network.xml");
+            netReader.readFile("configs/network.xml");
 
             for (String exp : exps) {
                 String expFold;
                 if (exp.equals("all_equipped")){
-                    expFold = "all_equipped";
+                    expFold = "allEquipped";
                 } else if (exp.equals("prop_coexist")) {
                     expFold = "coexist";
                 }
                 else {
                     expFold = exp;
                 }
-                for (String x : xs.get(exp)) {
-                    for (String run : runs) {
-                        String[] modes = {"basic", "communication", "proportional", "fixed"};
-                        for (String mode : modes) {
-                            Scenario s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(scenario + "/config_prova.xml"));
+                String[] modes = {"basic", "communication", "proportional", "fixed"};
+                for (String mode : modes) {
+                for (String x : exps_populs.get(exp)) {
+                    for (int run = 0; run < 20; run++) {
+                            // Scenario s = ScenarioUtils.loadScenario(ConfigUtils.loadConfig(scenario + "/config_prova.xml"));
                             s.getPopulation().getPersons().clear();
                             PopulationReader r = new PopulationReader(s);
 //                        r.readFile(scenario+"/output/"+expFold+"/"+"210000"+"/plans"+run+".xml");
-                            r.readFile(scenario + "/output/" + exp + "/" + mode + "/" + x + "/" + run + "/ITERS/it.0/0.plans.xml.gz");
+                            String plansPath = "plans/"+expFold+"/"+ mode + "/" + x + "/plans"+run+".xml";
+                            String resDir = "output/all_equipped/"+(mode=="fixed"?"ftc":mode)+"/"+x+"agents/"+run+"/ITERS/it.0/";
+                  if (!Files.exists(Paths.get(plansPath))) {
+                  // if (!Files.exists(Paths.get(resDir+"0.tripdurations.txt"))) {
+                    System.out.println("FIXING - SKIPPED " + resDir + " " + run); continue; }
+                             r.readFile(plansPath);
 
                             PopulationFactory factory = s.getPopulation().getFactory();
                             RoutingModule routing = getRouting(factory, network, s);
 
                             ActivityFacilitiesFactoryImpl activityFac = new ActivityFacilitiesFactoryImpl();
+                            HashMap<Integer,String> popAttrMap = getPopulationAttributeMap(resDir, Integer.parseInt(x));
+
 
                             for (Person p : s.getPopulation().getPersons().values()) {
                                 ActivityFacility home = activityFac.createActivityFacility(null, ((Activity) p.getPlans().get(0).getPlanElements().get(0)).getLinkId());
@@ -124,50 +134,65 @@ public class FixResTripDur {
                                 double routeDur1 = ((Leg) morningPlan.get(0)).getTravelTime();
                                 double routeDur2 = ((Leg) returnPlan.get(0)).getTravelTime();
 
-                                double dur = routeDur1 + routeDur2;
+                                double tripTrav = routeDur1 + routeDur2;
 
-                                //p.getAttributes().putAttribute("travelTime", dur);
-
-                                updateTravelTime(p, dur, scenario, exp, x, run);
-
+                                // ------ UPDATETRAVELTIME OUTPUT ------
+                                p.getAttributes().putAttribute("travelTime", tripTrav);
+                                Integer pId = Integer.parseInt(p.getId().toString());
+                                String dur = popAttrMap.get(pId).split("\t")[0];
+                                String attrs = popAttrMap.get(pId).split("\t")[1];
+                                String[] newAttrs = new String[6];
+                                int i = 0;
+                                boolean found = false;
+                                for (String attr : attrs.split(";")) {
+                                    String name = attr.split("=")[0];
+                                    String value = attr.split("=")[1];
+                                    if (name.equals("travelTime")) {
+                                        value = "" + tripTrav;
+                                        found = true;
+                                    }
+                                    newAttrs[i] = name + "=" + value;
+                                    i++;
+                                }
+                                if (!found) {
+                                    newAttrs[i] = "travelTime=" + tripTrav;
+                                }
+                                popAttrMap.put(pId, dur + "\t" + String.join(";", newAttrs));
+                                // -------------------------------------
                             }
+                             updateTravelTime(popAttrMap, Integer.parseInt(x), resDir);
+                            // PopulationWriter pw = new PopulationWriter(s.getPopulation());
+                            // pw.write(plansPath);
                         }
-//                        PopulationWriter pw = new PopulationWriter(s.getPopulation());
-//                        pw.write(scenario+"/plans/"+expFold+"/"+"210000"+"/plans"+run+".xml");
                     }
                 }
             }
         }
     }
 
-    private static void updateTravelTime(Person p, double dur, String scenario, String exp, String x, String run) {
-        String[] modes = {"basic", "communication", "proportional", "fixed"};
-        for (String mode : modes){
-            String outfile = scenario+"/output/"+exp+"/"+mode+"/"+x+"/"+run+"/ITERS/it.0/0.tripdurations.txt";
+    private static void updateTravelTime(HashMap<Integer,String> popAttrMap, Integer popSize, String resDir) {
             try {
-                BufferedReader file = new BufferedReader(new FileReader(outfile));
+                String resPath = resDir+"0.tripdurations.txt";
+                BufferedReader file = new BufferedReader(new FileReader(resPath));
                 StringBuffer inputBuffer = new StringBuffer();
                 String line;
+                int count = 0;
+                boolean flushedPop = false;
                 while ((line = file.readLine()) != null) {
-                    if (line.split("\t")[0].equals(p.getId().toString())) {
-                        String[] attrs = line.split("\t")[2].split(";");
-                        inputBuffer.append(line.split("\t")[0]+"\t"+line.split("\t")[1]+"\t");
-                        for (String att : attrs) {
-                            String name = att.split("=")[0];
-                            String value = att.split("=")[1];
-                            if (name.equals("travelTime")) {
-                                continue;
-                            }
-                            inputBuffer.append(name+"="+value+";");
+                    if (count > 0 && count <= popSize) {
+                        if (!flushedPop) {
+                            popAttrMap.forEach((id, attrs) -> {
+                                inputBuffer.append(id + "\t" + attrs + "\n");
+                            });
+                            flushedPop = true;
                         }
-                        inputBuffer.append("travelTime"+"="+dur);
                     } else {
-                        inputBuffer.append(line);
+                        inputBuffer.append(line + "\n");
                     }
-                    inputBuffer.append("\n");
+                    count++;
                 }
                 file.close();
-                FileOutputStream fileOut = new FileOutputStream(outfile);
+                FileOutputStream fileOut = new FileOutputStream(resPath);
                 fileOut.write(inputBuffer.toString().getBytes());
                 fileOut.close();
             } catch (FileNotFoundException e) {
@@ -178,7 +203,34 @@ public class FixResTripDur {
             //leggere file
             //per ogni riga splitto sugli spazi e vedo il primo per controllare persona
             //se è lei splitto gli attributi e aggiorno travel time
+
+    }
+
+    private static HashMap<Integer, String> getPopulationAttributeMap(String resDir, Integer popSize) {
+        HashMap<Integer,String> popAttrMap = new LinkedHashMap<Integer, String>();
+        String resPath = resDir+"0.tripdurations.txt";
+        try {
+            BufferedReader file = new BufferedReader(new FileReader(resPath));
+            String line;
+            int count = 0;
+            while ((line = file.readLine()) != null) {
+                if (count == 0 || count > popSize) { // salta le righe che non contengono dati della popolazione
+                    count++;
+                    continue;
+                }
+                popAttrMap.put(Integer.parseInt(line.split("\t")[0]),  line.split("\t")[1] + "\t" + line.split("\t")[2]);
+
+                count++;
+            }
+            file.close();
+        }
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
+        return popAttrMap;
     }
 }
