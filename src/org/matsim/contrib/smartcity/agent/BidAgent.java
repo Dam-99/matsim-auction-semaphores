@@ -85,8 +85,8 @@ public class BidAgent extends StaticDriverLogic implements ComunicationClient, C
     public void setActualLink(Id<Link> actualLink) {
     	Id<Link> previousLink = super.actualLink;
     	if (previousLink != null && this.previousSem != null) {
-    		if(this.agent.getId().toString().equals(Integer.toString(13896)))
-        		System.out.println();
+    		if(this.agent.getId().toString().equals(Integer.toString(3640)))
+                log.error("setActualLink: 3640 is changing from link " + previousLink + ", next links: " + this.getLinksList());
 	    	this.previousSem.sendToMe(new CrossedMessage(this,this.getBid(),previousLink,this.qSim.getSimTimer().getTimeOfDay()));
 	    	this.previousSem = null;
     	}

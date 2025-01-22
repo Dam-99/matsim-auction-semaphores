@@ -261,6 +261,9 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
         this.agentMap.put(link, bidForLink);
     }
 
+    /**
+     * check if link is on this semaphore
+     */
     public boolean controlLink(Id<Link> link) {
         return this.signalMap.containsKey(link);
     }

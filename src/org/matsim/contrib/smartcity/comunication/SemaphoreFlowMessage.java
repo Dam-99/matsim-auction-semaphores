@@ -13,6 +13,7 @@ public class SemaphoreFlowMessage extends ComunicationMessage {
 	private double time;
 	private Id<Link> actualLink;
 	private Boolean equipped;
+	public boolean is3640Message;
 	
 	/**
 	 * Costruttore per messaggi di agenti equipaggiati
@@ -26,6 +27,7 @@ public class SemaphoreFlowMessage extends ComunicationMessage {
 		this.setTime(time); 
 		this.equipped = true;
 		this.setActualLink(actualLink);
+		this.is3640Message = false;
 	}
 	
 	/**
@@ -40,6 +42,12 @@ public class SemaphoreFlowMessage extends ComunicationMessage {
 		this.setTotalBidOfNotEquippedAgent(totalNotEquippedAgent);
 		this.setTime(time);
 		this.equipped = false;
+		this.is3640Message = false;
+	}
+
+	public SemaphoreFlowMessage(ComunicationEntity sender, List<Tuple<List<Id<Link>>,Integer>> agentRoute,Id<Link> actualLink,double time,boolean is3640AgentMessage) {
+        this(sender, agentRoute, actualLink, time);
+        this.is3640Message = is3640AgentMessage;
 	}
 
 	public int getTotalBidOfNotEquippedAgent() {

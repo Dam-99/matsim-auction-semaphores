@@ -8,20 +8,25 @@ import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+
+import org.apache.log4j.Logger;
 import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
 import org.matsim.contrib.signals.model.SignalGroup;
 import org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController;
+import org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreControllerCommunication;
 import org.matsim.contrib.smartcity.analisys.SemaphorePredictionEvent;
 import org.matsim.contrib.smartcity.comunication.wrapper.ComunicationFixedWrapper;
 import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.utils.collections.Tuple;
 
 public class SemaphoreServerPropagated extends SemaphoreServer implements ComunicationServer {
+	private static final Logger log = Logger.getLogger(SemaphoreServerProportional.class);
 
 	private ComunicationFixedWrapper wrapper;
 	private ConcurrentHashMap<Id<SignalGroup>, PriorityQueue<IncomingAgent>> incomingBid;
@@ -67,19 +72,25 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 				}
 				return;
 			}
+			boolean isFollowedAgent = ((SemaphoreFlowMessage) message).is3640Message;
+			if(isFollowedAgent)
+				log.error("sendToMe(SemaphoreFlow): " + ((SemaphoreFlowMessage) message).getActualLink() + " set flow of 3640");
 
+			// compute propagation on the following signalsystems
 			Id<Link> actualLink =  ((SemaphoreFlowMessage) message).getActualLink();
 			if (agentsRouteAndBid != null) {
 				for(Tuple<List<Id<Link>>,Integer> routeAndBid : agentsRouteAndBid) {
 					double estimatedTripTime = 0;
 					int propagationAdded = 0;
+					if(isFollowedAgent)
+						log.error("sendToMe(SemaphoreFlow): route is " + routeAndBid.getFirst().stream().map(Object::toString).collect(Collectors.joining(",")));
 					for(Id<Link> link : routeAndBid.getFirst()) {
 						SignalGroup sg = signalMap.get(link);
 						double length = this.network.getLinks().get(link).getLength();
 						double speed = this.network.getLinks().get(link).getFreespeed();
 						double estimatedCrossingTime = length/speed ;
 						estimatedTripTime += estimatedCrossingTime;
-						if (sg != null && estimatedTripTime > 20) {
+						if (sg != null && estimatedTripTime > 20) { // crea e aggiungilo se non esisteva
 							PriorityQueue<IncomingAgent> actual = this.incomingBid.get(sg.getId());
 							if (actual == null) {
 								actual = new PriorityQueue<IncomingAgent>();
@@ -113,8 +124,13 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 				if (queue != null) {
 					while(queue.peek() != null) {
 						IncomingAgent agent = queue.peek();
-						if (agent.getEstimatedArrivalTime() - time <= 40 || agent.getEstimatedArrivalTime() == 0)
+						if (agent.getEstimatedArrivalTime() - time <= 40 || agent.getEstimatedArrivalTime() == 0) {
+							if (agent.is3640agent) {
+								log.error("sendToMe(IncomingRequest): sender is link among " + ((BidsSemaphoreControllerCommunication) sender).getSignalMap().keySet());
+								log.error("sendToMe(IncomingRequest): propagated bid added to the IncomingResponse for link " + link + " (" + queue.peek().getBid() + ")");
+							}
 							sum += queue.poll().getBid();
+						}
 						else 
 							break;
 					}
@@ -127,13 +143,19 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 	
 	private static class IncomingAgent implements Comparable<IncomingAgent> {
 		private Integer bid;
-		private double estimatedArrivalTime; 
+		private double estimatedArrivalTime;
+		public boolean is3640agent;
 
 		public IncomingAgent(Integer bid,double estimatedArrivalTime) {
 			this.setBid(bid);
 			this.setEstimatedArrivalTime(estimatedArrivalTime);
+			this.is3640agent = false;
 		}
-		
+		public IncomingAgent(Integer bid,double estimatedArrivalTime, boolean is3640agent) {
+			this(bid, estimatedArrivalTime);
+			this.is3640agent = is3640agent;
+		}
+
 		public Integer getBid() {
 			return bid;
 		}
