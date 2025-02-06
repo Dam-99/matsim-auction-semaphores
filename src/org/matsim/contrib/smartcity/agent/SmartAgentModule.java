@@ -19,7 +19,6 @@ import org.matsim.contrib.smartcity.agent.parking.CameraPark;
 import org.matsim.contrib.smartcity.agent.parking.FacilityWithMoreEntranceParkingManager;
 import org.matsim.contrib.smartcity.agent.parking.ParkData;
 import org.matsim.contrib.smartcity.agent.parking.ParksContainer;
-import org.matsim.contrib.smartcity.auctionIntersections.AuctionIntersectionConfigGroup;
 import org.matsim.contrib.smartcity.perception.CameraData;
 import org.matsim.contrib.smartcity.perception.CameraStartupListener;
 import org.matsim.contrib.smartcity.perception.CameraXMLReader;
