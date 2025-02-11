@@ -169,7 +169,7 @@
 	     	<param name="separateModes" value="true" />
 	 </module-->
 
-	<module name="otfvis"> </module>
+	<!--<module name="otfvis"> </module>-->
 
 
 </config>

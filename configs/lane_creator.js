@@ -3,7 +3,7 @@ import { parse, stringify } from 'jsr:@libs/xml';
 // const parser = new DOMParser();
 
 const lenLink = 300.0;
-const lenLane = lenLink / 10.0; // for some reason they make it as half the lane in the examples...
+const lenLane = lenLink / 2.0; // for some reason they make it as half the lane in the examples...
 const vphLink = 800.0; // divided by two in lanes??
 const vph = vphLink / 2.0;
 const ext = process.argv[2] === undefined ? "lanes" : process.argv[2];
@@ -91,7 +91,7 @@ function singleLane(link) {
             representedLanes: { '@number': "1.0" },
             capacity: { '@vehiclesPerHour': vphLink },
             startsAt: { '@meterFromLinkEnd': lenLink },
-            alignment: "1",
+            alignment: "0",
             attributes: {},
         }
     }

@@ -27,7 +27,7 @@
 	</module>
 	<module name="network" >
 		<param name="inputNetworkFile" value="network.xml" />
-		<param name="laneDefinitionsFile" value="lanes_single.xml"/>
+		<param name="laneDefinitionsFile" value="lanes_singles.xml"/>
 		<param name="timeVariantNetwork" value="true" />
 	</module>
 	<module name="parallelEventHandling" >
@@ -138,8 +138,8 @@
 		<!-- Possible values: NONE, CONFLICTING_DIRECTIONS_NO_TURN_RESTRICTIONS, CONFLICTING_DIRECTIONS_AND_TURN_RESTRICTIONS -->
 		<param name="intersectionLogic" value="NONE" />
 		<param name="signalcontrol" value="SignalControl_basic.xml" />
-		<param name="signalgroups" value="SignalGroups_single.xml" />
-		<param name="signalsystems" value="SignalsSystem_single.xml" />
+		<param name="signalgroups" value="SignalGroups_lanes.xml" />
+		<param name="signalsystems" value="SignalsSystem_lanes.xml" />
 		<param name="useAmbertimes" value="false" />
 		<param name="useIntergreentimes" value="false" />
 		<param name="useSignalsystems" value="true" />
