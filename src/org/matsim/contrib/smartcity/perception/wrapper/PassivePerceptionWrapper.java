@@ -8,6 +8,7 @@ import org.matsim.api.core.v01.events.handler.LinkLeaveEventHandler;
 import org.matsim.api.core.v01.events.handler.VehicleEntersTrafficEventHandler;
 import org.matsim.api.core.v01.events.handler.VehicleLeavesTrafficEventHandler;
 import org.matsim.api.core.v01.network.Link;
+import org.matsim.lanes.Lane;
 import org.matsim.vehicles.VehicleType;
 
 /**
@@ -30,19 +31,19 @@ public interface PassivePerceptionWrapper extends LinkEnterEventHandler, LinkLea
 	 * @param idLink Id of Link that want to get the status
 	 * @return Status of Link
 	 */
-	public LinkTrafficStatus getLinkTrafficStatus(Id<Link> idLink);
+	public LinkTrafficStatus getLinkTrafficStatus(Id<Lane> idLink);
 	
 	/**
 	 * Return a complete map of flow
 	 */
-	public HashMap<Id<Link>, LinkTrafficStatus> getTrafficMap();
+	public HashMap<Id<Lane>, LinkTrafficStatus> getTrafficMap();
 	/**
 	 * Return the total number of vehicles on link
 	 * 
 	 * @param idLink Id of link that want to get the number of vehicles
 	 * @return The total number of vehicles
 	 */
-	public int getTotalVehicleOnLink(Id<Link> idLink);
+	public int getTotalVehicleOnLink(Id<Lane> idLink);
 	
 	/**
 	 * Return the number of specified type vehicles on link 
@@ -51,6 +52,6 @@ public interface PassivePerceptionWrapper extends LinkEnterEventHandler, LinkLea
 	 * @param idType Type of vehicles
 	 * @return Number of vehicles
 	 */
-	public int getTypeVehicleOnLink(Id<Link> idLink, Id<VehicleType> idType);
+	public int getTypeVehicleOnLink(Id<Lane> idLink, Id<VehicleType> idType);
 	
 }

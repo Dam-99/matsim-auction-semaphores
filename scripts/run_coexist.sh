@@ -1,3 +1,9 @@
+# use directional lanes or not
+if [ -z "$1" ]; then
+    lanes="lanes"
+else
+    lanes=$1
+fi
 cp ./configs/config_template_coexist.xml ./configs/config.xml
 for traffic in 'high' 'medium' 'low'
 do
@@ -33,6 +39,7 @@ do
                 sed -i -e "s/TO_SET_MODE/${mode}/g" ./configs/config.xml
                 sed -i -e "s/TO_SET_OUTMODE/${mode_output}/g" ./configs/config.xml
                 sed -i -e "s/_PROPAGATION/${propagated}/g" ./configs/config.xml
+                sed -i -e "s/TO_SET_LANES/${lanes}/g" ./configs/config.xml
                 java -Xmx6g -cp ./target/smartcity-0.0.1-SNAPSHOT.jar org.matsim.contrib.smartcity.RunSmartcity ./configs/config.xml
                 cp ./configs/config_template_coexist.xml ./configs/config.xml
             done

@@ -33,6 +33,7 @@ import org.matsim.core.api.internal.HasPersonId;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.network.NetworkUtils;
+import org.matsim.lanes.Lane;
 import org.matsim.vehicles.Vehicle;
 
 import com.google.inject.Inject;
@@ -64,8 +65,8 @@ VehicleEntersTrafficEventHandler, VehicleLeavesTrafficEventHandler {
 	 * @see org.matsim.contrib.smartcity.comunication.ComunicationWrapper#discover(org.matsim.api.core.v01.Id)
 	 */
 	@Override
-	public Set<ComunicationServer> discover(Id<Link> position) {
-		Link actualLink = network.getLinks().get(position);
+	public Set<ComunicationServer> discover(Id<Lane> position) {
+		Link actualLink = network.getLinks().get(Id.create(position.toString().split("\\.")[0], Lane.class));
 		return fixed.entrySet().stream().filter(
 				c -> NetworkUtils.getEuclideanDistance(actualLink.getCoord(), c.getKey()) <= range 
 				).map(e -> e.getValue()).flatMap(s -> s.stream()).collect(Collectors.toSet());

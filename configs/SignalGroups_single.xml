@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<signalGroups xsi:schemaLocation="http://www.matsim.org/files/dtd http://www.matsim.org/files/dtd/signalGroups_v2.0.xsd" xmlns="http://www.matsim.org/files/dtd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <signalSystem refId="200000002">
+    <signalGroup id="414">
+      <signal refId="414.ol"/>
+    </signalGroup>
+    <signalGroup id="204">
+      <signal refId="204.ol"/>
+    </signalGroup>
+    <signalGroup id="113">
+      <signal refId="113.ol"/>
+    </signalGroup>
+    <signalGroup id="314">
+      <signal refId="314.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="200000005">
+    <signalGroup id="417">
+      <signal refId="417.ol"/>
+    </signalGroup>
+    <signalGroup id="207">
+      <signal refId="207.ol"/>
+    </signalGroup>
+    <signalGroup id="116">
+      <signal refId="116.ol"/>
+    </signalGroup>
+    <signalGroup id="317">
+      <signal refId="317.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="200000008">
+    <signalGroup id="420">
+      <signal refId="420.ol"/>
+    </signalGroup>
+    <signalGroup id="210">
+      <signal refId="210.ol"/>
+    </signalGroup>
+    <signalGroup id="119">
+      <signal refId="119.ol"/>
+    </signalGroup>
+    <signalGroup id="320">
+      <signal refId="320.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="210000000">
+    <signalGroup id="423">
+      <signal refId="423.ol"/>
+    </signalGroup>
+    <signalGroup id="212">
+      <signal refId="212.ol"/>
+    </signalGroup>
+    <signalGroup id="122">
+      <signal refId="122.ol"/>
+    </signalGroup>
+    <signalGroup id="323">
+      <signal refId="323.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="210000003">
+    <signalGroup id="426">
+      <signal refId="426.ol"/>
+    </signalGroup>
+    <signalGroup id="215">
+      <signal refId="215.ol"/>
+    </signalGroup>
+    <signalGroup id="125">
+      <signal refId="125.ol"/>
+    </signalGroup>
+    <signalGroup id="326">
+      <signal refId="326.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="210000006">
+    <signalGroup id="429">
+      <signal refId="429.ol"/>
+    </signalGroup>
+    <signalGroup id="218">
+      <signal refId="218.ol"/>
+    </signalGroup>
+    <signalGroup id="128">
+      <signal refId="128.ol"/>
+    </signalGroup>
+    <signalGroup id="329">
+      <signal refId="329.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="220000002">
+    <signalGroup id="436">
+      <signal refId="436.ol"/>
+    </signalGroup>
+    <signalGroup id="225">
+      <signal refId="225.ol"/>
+    </signalGroup>
+    <signalGroup id="135">
+      <signal refId="135.ol"/>
+    </signalGroup>
+    <signalGroup id="336">
+      <signal refId="336.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="220000005">
+    <signalGroup id="439">
+      <signal refId="439.ol"/>
+    </signalGroup>
+    <signalGroup id="228">
+      <signal refId="228.ol"/>
+    </signalGroup>
+    <signalGroup id="138">
+      <signal refId="138.ol"/>
+    </signalGroup>
+    <signalGroup id="339">
+      <signal refId="339.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="220000008">
+    <signalGroup id="442">
+      <signal refId="442.ol"/>
+    </signalGroup>
+    <signalGroup id="231">
+      <signal refId="231.ol"/>
+    </signalGroup>
+    <signalGroup id="141">
+      <signal refId="141.ol"/>
+    </signalGroup>
+    <signalGroup id="342">
+      <signal refId="342.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="230000000">
+    <signalGroup id="455">
+      <signal refId="455.ol"/>
+    </signalGroup>
+    <signalGroup id="234">
+      <signal refId="234.ol"/>
+    </signalGroup>
+    <signalGroup id="143">
+      <signal refId="143.ol"/>
+    </signalGroup>
+    <signalGroup id="344">
+      <signal refId="344.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="230000003">
+    <signalGroup id="458">
+      <signal refId="458.ol"/>
+    </signalGroup>
+    <signalGroup id="237">
+      <signal refId="237.ol"/>
+    </signalGroup>
+    <signalGroup id="146">
+      <signal refId="146.ol"/>
+    </signalGroup>
+    <signalGroup id="347">
+      <signal refId="347.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="230000006">
+    <signalGroup id="461">
+      <signal refId="461.ol"/>
+    </signalGroup>
+    <signalGroup id="240">
+      <signal refId="240.ol"/>
+    </signalGroup>
+    <signalGroup id="149">
+      <signal refId="149.ol"/>
+    </signalGroup>
+    <signalGroup id="350">
+      <signal refId="350.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="240000002">
+    <signalGroup id="467">
+      <signal refId="467.ol"/>
+    </signalGroup>
+    <signalGroup id="257">
+      <signal refId="257.ol"/>
+    </signalGroup>
+    <signalGroup id="155">
+      <signal refId="155.ol"/>
+    </signalGroup>
+    <signalGroup id="356">
+      <signal refId="356.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="240000005">
+    <signalGroup id="470">
+      <signal refId="470.ol"/>
+    </signalGroup>
+    <signalGroup id="260">
+      <signal refId="260.ol"/>
+    </signalGroup>
+    <signalGroup id="158">
+      <signal refId="158.ol"/>
+    </signalGroup>
+    <signalGroup id="359">
+      <signal refId="359.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="240000008">
+    <signalGroup id="473">
+      <signal refId="473.ol"/>
+    </signalGroup>
+    <signalGroup id="263">
+      <signal refId="263.ol"/>
+    </signalGroup>
+    <signalGroup id="161">
+      <signal refId="161.ol"/>
+    </signalGroup>
+    <signalGroup id="362">
+      <signal refId="362.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="250000000">
+    <signalGroup id="474">
+      <signal refId="474.ol"/>
+    </signalGroup>
+    <signalGroup id="264">
+      <signal refId="264.ol"/>
+    </signalGroup>
+    <signalGroup id="163">
+      <signal refId="163.ol"/>
+    </signalGroup>
+    <signalGroup id="364">
+      <signal refId="364.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="250000003">
+    <signalGroup id="477">
+      <signal refId="477.ol"/>
+    </signalGroup>
+    <signalGroup id="267">
+      <signal refId="267.ol"/>
+    </signalGroup>
+    <signalGroup id="166">
+      <signal refId="166.ol"/>
+    </signalGroup>
+    <signalGroup id="367">
+      <signal refId="367.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="250000006">
+    <signalGroup id="480">
+      <signal refId="480.ol"/>
+    </signalGroup>
+    <signalGroup id="270">
+      <signal refId="270.ol"/>
+    </signalGroup>
+    <signalGroup id="169">
+      <signal refId="169.ol"/>
+    </signalGroup>
+    <signalGroup id="370">
+      <signal refId="370.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="260000002">
+    <signalGroup id="485">
+      <signal refId="485.ol"/>
+    </signalGroup>
+    <signalGroup id="275">
+      <signal refId="275.ol"/>
+    </signalGroup>
+    <signalGroup id="175">
+      <signal refId="175.ol"/>
+    </signalGroup>
+    <signalGroup id="376">
+      <signal refId="376.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="260000005">
+    <signalGroup id="488">
+      <signal refId="488.ol"/>
+    </signalGroup>
+    <signalGroup id="278">
+      <signal refId="278.ol"/>
+    </signalGroup>
+    <signalGroup id="178">
+      <signal refId="178.ol"/>
+    </signalGroup>
+    <signalGroup id="379">
+      <signal refId="379.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="260000008">
+    <signalGroup id="491">
+      <signal refId="491.ol"/>
+    </signalGroup>
+    <signalGroup id="281">
+      <signal refId="281.ol"/>
+    </signalGroup>
+    <signalGroup id="181">
+      <signal refId="181.ol"/>
+    </signalGroup>
+    <signalGroup id="382">
+      <signal refId="382.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="270000000">
+    <signalGroup id="492">
+      <signal refId="492.ol"/>
+    </signalGroup>
+    <signalGroup id="282">
+      <signal refId="282.ol"/>
+    </signalGroup>
+    <signalGroup id="183">
+      <signal refId="183.ol"/>
+    </signalGroup>
+    <signalGroup id="384">
+      <signal refId="384.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="270000003">
+    <signalGroup id="495">
+      <signal refId="495.ol"/>
+    </signalGroup>
+    <signalGroup id="285">
+      <signal refId="285.ol"/>
+    </signalGroup>
+    <signalGroup id="186">
+      <signal refId="186.ol"/>
+    </signalGroup>
+    <signalGroup id="387">
+      <signal refId="387.ol"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="270000006">
+    <signalGroup id="498">
+      <signal refId="498.ol"/>
+    </signalGroup>
+    <signalGroup id="288">
+      <signal refId="288.ol"/>
+    </signalGroup>
+    <signalGroup id="189">
+      <signal refId="189.ol"/>
+    </signalGroup>
+    <signalGroup id="390">
+      <signal refId="390.ol"/>
+    </signalGroup>
+  </signalSystem>
+</signalGroups>

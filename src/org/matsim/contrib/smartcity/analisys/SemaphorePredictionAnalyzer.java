@@ -20,6 +20,7 @@ import org.matsim.core.controler.OutputDirectoryHierarchy;
 import org.matsim.core.controler.events.ShutdownEvent;
 import org.matsim.core.controler.listener.ShutdownListener;
 import org.matsim.core.utils.collections.Tuple;
+import org.matsim.lanes.Lane;
 import org.matsim.vehicles.Vehicle;
 
 import java.io.FileNotFoundException;
@@ -38,7 +39,7 @@ public class SemaphorePredictionAnalyzer implements LinkEnterEventHandler, LinkL
     protected HashMap<Id<Vehicle>, Id<Link>> beforeVehicleMapping;
     protected Scenario scenario;
     protected HashMap<Id<Vehicle>, Prediction> toFollow;
-    protected HashMap<Tuple<Id<Link>, Double>, Prediction> predictions;
+    protected HashMap<Tuple<Id<Lane>, Double>, Prediction> predictions;
     private HashMap<Id<Link>,SignalGroup> signalMap;
 
     @Inject
@@ -48,7 +49,7 @@ public class SemaphorePredictionAnalyzer implements LinkEnterEventHandler, LinkL
     public SemaphorePredictionAnalyzer(Network network, Scenario scenario) {
         this.scenario = scenario;
         this.toFollow = new HashMap<Id<Vehicle>, Prediction>();
-        this.predictions = new HashMap<Tuple<Id<Link>, Double>, Prediction>();
+        this.predictions = new HashMap<Tuple<Id<Lane>, Double>, Prediction>();
         this.trafficMap = new HashMap<Id<Link>, List<Id<Vehicle>>>();
         this.beforeTrafficMap = new HashMap<Id<Link>, List<Id<Vehicle>>>();
         for (Id<Link> id : network.getLinks().keySet()) {
@@ -67,7 +68,7 @@ public class SemaphorePredictionAnalyzer implements LinkEnterEventHandler, LinkL
         if (this.toFollow.containsKey(event.getVehicleId())){
             Prediction v = this.toFollow.get(event.getVehicleId());
             if (v.predicted.containsKey(event.getLinkId())){
-                v.addArrived(event.getLinkId());
+                v.addArrived(Id.create(event.getLinkId().toString()+ ".ol", Lane.class));
                 this.toFollow.remove(event.getVehicleId());
             }
         }
@@ -95,11 +96,11 @@ public class SemaphorePredictionAnalyzer implements LinkEnterEventHandler, LinkL
         try {
             PrintWriter writer = new PrintWriter(controlerIO.getOutputFilename(SEMAPHORE_PREDICTION_ANALYZER_FILENAME));
             writer.write("Time\tLinkStart\tLinkPred\tPredicted\tArrived\n");
-            for (Tuple<Id<Link>, Double> t : this.predictions.keySet()) {
+            for (Tuple<Id<Lane>, Double> t : this.predictions.keySet()) {
                 Prediction p = this.predictions.get(t);
-                Set<Id<Link>> keySet = new HashSet<Id<Link>>(p.predicted.keySet());
+                Set<Id<Lane>> keySet = new HashSet<Id<Lane>>(p.predicted.keySet());
                 //keySet.addAll(p.arrived.keySet());
-                for (Id<Link> linkPred : keySet) {
+                for (Id<Lane> linkPred : keySet) {
                     writer.write(t.getSecond().toString() + '\t' + t.getFirst().toString() + '\t' + linkPred.toString() + '\t' + p.predicted.getOrDefault(linkPred, 0) + '\t' + p.arrived.getOrDefault(linkPred, 0) +  "\n");
                 }
             }
@@ -136,22 +137,22 @@ public class SemaphorePredictionAnalyzer implements LinkEnterEventHandler, LinkL
                 }
                 agent = this.beforeTrafficMap.get(event.getActualLink()).get(0);
             }
-            Tuple<Id<Link>, Double> key = new Tuple<>(event.getActualLink(), event.getTime());
+            Tuple<Id<Lane>, Double> key = new Tuple<>(event.getActualLink(), event.getTime());
             if (!predictions.containsKey(key)){
                 predictions.put(key, new Prediction());
             }
             Prediction pred = predictions.get(key);
-            pred.addPrediction(Id.create(event.getPrediction().get(i), Link.class));
+            pred.addPrediction(Id.create(event.getPrediction().get(i).toString() + ".ol", Lane.class));
             toFollow.put(agent, pred);
         }
     }
 
     public class Prediction {
 
-        private HashMap<Id<Link>, Integer> predicted = new HashMap<Id<Link>, Integer>();
-        private HashMap<Id<Link>, Integer> arrived = new HashMap<Id<Link>, Integer>();
+        private HashMap<Id<Lane>, Integer> predicted = new HashMap<Id<Lane>, Integer>();
+        private HashMap<Id<Lane>, Integer> arrived = new HashMap<Id<Lane>, Integer>();
 
-        public synchronized void addPrediction(Id<Link> link){
+        public synchronized void addPrediction(Id<Lane> link){
             if (!this.predicted.containsKey(link)){
                 this.predicted.put(link, 0);
                 this.arrived.put(link, 0);
@@ -159,7 +160,7 @@ public class SemaphorePredictionAnalyzer implements LinkEnterEventHandler, LinkL
             this.predicted.put(link, this.predicted.get(link) + 1);
         }
 
-        public synchronized void addArrived(Id<Link> link){
+        public synchronized void addArrived(Id<Lane> link){
             this.arrived.put(link, this.arrived.getOrDefault(link, 0)+1);
         }
     }

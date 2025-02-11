@@ -4,16 +4,17 @@ import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.events.Event;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.contrib.signals.model.SignalGroup;
+import org.matsim.lanes.Lane;
 
 import java.util.List;
 
 public class SemaphorePredictionEvent extends Event {
 
     private static final String SEM_PRED_EVENT_TYPE = "BID_EVENT";
-    private Id<Link> actualLink;
+    private Id<Lane> actualLink;
     private List<Id<SignalGroup>> prediction;
 
-    public SemaphorePredictionEvent(Id<Link> actualLink, List<Id<SignalGroup>> prediction, double time) {
+    public SemaphorePredictionEvent(Id<Lane> actualLink, List<Id<SignalGroup>> prediction, double time) {
         super(time);
 
         this.actualLink = actualLink;
@@ -25,11 +26,11 @@ public class SemaphorePredictionEvent extends Event {
         return SEM_PRED_EVENT_TYPE;
     }
 
-    public Id<Link> getActualLink() {
+    public Id<Lane> getActualLink() {
         return actualLink;
     }
 
-    public void setActualLink(Id<Link> actualLink) {
+    public void setActualLink(Id<Lane> actualLink) {
         this.actualLink = actualLink;
     }
 

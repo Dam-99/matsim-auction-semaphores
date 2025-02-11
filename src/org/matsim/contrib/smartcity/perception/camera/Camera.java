@@ -3,6 +3,7 @@ package org.matsim.contrib.smartcity.perception.camera;
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.contrib.smartcity.perception.wrapper.LinkTrafficStatus;
+import org.matsim.lanes.Lane;
 
 /**
  * Generic camera that watch a link
@@ -20,7 +21,7 @@ public abstract class Camera {
 	 * @param idCameraStr arbitrary id for camera
 	 * @param linkId id of link that camera watch
 	 */
-	public Camera(Id<Camera> idCamera, Id<Link> linkId) {
+	public Camera(Id<Camera> idCamera, Id<Lane> linkId) {
 		this.status = new CameraStatus(idCamera, linkId);
 	}
 	
@@ -37,7 +38,7 @@ public abstract class Camera {
 		return this.status;
 	}
 	
-	public Id<Link> getLinkId(){
+	public Id<Lane> getLinkId(){
 		return this.status.getIdLink();
 	}
 

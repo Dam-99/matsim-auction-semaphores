@@ -1,7 +1,7 @@
 package org.matsim.contrib.smartcity.perception.wrapper;
 
 import org.matsim.api.core.v01.Id;
-import org.matsim.api.core.v01.network.Link;
+import org.matsim.lanes.Lane;
 
 /**
  * This is the active version of PassivePerceptionWrapper.
@@ -21,7 +21,7 @@ public interface ActivePerceptionWrapper extends PassivePerceptionWrapper {
 	 * @param listener the listener
 	 * @param linkId the link
 	 */
-	public void addLinkChangedListener(LinkChangedListener listener, Id<Link> linkId);
+	public void addLinkChangedListener(LinkChangedListener listener, Id<Lane> linkId);
 
 	/**
 	 * Add a listener to notify a change of every link
@@ -36,6 +36,6 @@ public interface ActivePerceptionWrapper extends PassivePerceptionWrapper {
 	 * @param listener listener
 	 * @param links list of links
 	 */
-	void addLinkChangedListener(LinkChangedListener listener, Iterable<Id<Link>> links);
+	void addLinkChangedListener(LinkChangedListener listener, Iterable<Id<Lane>> links);
 
 }

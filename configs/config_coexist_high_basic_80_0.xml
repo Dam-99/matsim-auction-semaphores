@@ -15,6 +15,7 @@
 		<param name="lastIteration" value="0" />
 		<!-- Possible values: failIfDirectoryExists, overwriteExistingFiles, deleteDirectoryIfExists -->
 		<param name="overwriteFiles" value="deleteDirectoryIfExists" />
+		<!--		<param name="mobsim" value="qsim"/>-->
 	</module>
 	<module name="facilities" >
 		<param name="inputFacilitiesFile" value="facilities.xml" />
@@ -26,6 +27,7 @@
 	</module>
 	<module name="network" >
 		<param name="inputNetworkFile" value="network.xml" />
+		<param name="laneDefinitionsFile" value="lanes_single.xml"/>
 		<param name="timeVariantNetwork" value="true" />
 	</module>
 	<module name="parallelEventHandling" >
@@ -136,8 +138,8 @@
 		<!-- Possible values: NONE, CONFLICTING_DIRECTIONS_NO_TURN_RESTRICTIONS, CONFLICTING_DIRECTIONS_AND_TURN_RESTRICTIONS -->
 		<param name="intersectionLogic" value="NONE" />
 		<param name="signalcontrol" value="SignalControl_basic.xml" />
-		<param name="signalgroups" value="SignalGroups.xml" />
-		<param name="signalsystems" value="SignalsSystem.xml" />
+		<param name="signalgroups" value="SignalGroups_single.xml" />
+		<param name="signalsystems" value="SignalsSystem_single.xml" />
 		<param name="useAmbertimes" value="false" />
 		<param name="useIntergreentimes" value="false" />
 		<param name="useSignalsystems" value="true" />
@@ -167,7 +169,7 @@
 	     	<param name="separateModes" value="true" />
 	 </module-->
 
-	<!--module name="otfvis"> </module-->
+	<!--<module name="otfvis"> </module>-->
 
 
 </config>

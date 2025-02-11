@@ -2,6 +2,7 @@ package org.matsim.contrib.smartcity.perception.wrapper;
 
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.network.Link;
+import org.matsim.lanes.Lane;
 
 /**
  * Listener for ActivePerceptionWrapper
@@ -19,6 +20,6 @@ public interface LinkChangedListener {
 	 * @param idLink id of link
 	 * @param status state of link
 	 */
-	public void publishLinkChanged(Id<Link> idLink, LinkTrafficStatus status, double time);
+	public void publishLinkChanged(Id<Lane> idLink, LinkTrafficStatus status, double time);
 
 }

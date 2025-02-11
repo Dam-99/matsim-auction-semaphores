@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<signalGroups xsi:schemaLocation="http://www.matsim.org/files/dtd http://www.matsim.org/files/dtd/signalGroups_v2.0.xsd" xmlns="http://www.matsim.org/files/dtd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <signalSystem refId="200000002">
+    <signalGroup id="sr1">
+      <signal refId="414.s"/>
+      <signal refId="414.r"/>
+      <signal refId="204.s"/>
+      <signal refId="204.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="113.s"/>
+      <signal refId="113.r"/>
+      <signal refId="314.s"/>
+      <signal refId="314.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="414.l"/>
+      <signal refId="204.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="113.l"/>
+      <signal refId="314.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="200000005">
+    <signalGroup id="sr1">
+      <signal refId="417.s"/>
+      <signal refId="417.r"/>
+      <signal refId="207.s"/>
+      <signal refId="207.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="116.s"/>
+      <signal refId="116.r"/>
+      <signal refId="317.s"/>
+      <signal refId="317.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="417.l"/>
+      <signal refId="207.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="116.l"/>
+      <signal refId="317.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="200000008">
+    <signalGroup id="sr1">
+      <signal refId="420.s"/>
+      <signal refId="420.r"/>
+      <signal refId="210.s"/>
+      <signal refId="210.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="119.s"/>
+      <signal refId="119.r"/>
+      <signal refId="320.s"/>
+      <signal refId="320.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="420.l"/>
+      <signal refId="210.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="119.l"/>
+      <signal refId="320.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="210000000">
+    <signalGroup id="sr1">
+      <signal refId="423.s"/>
+      <signal refId="423.r"/>
+      <signal refId="212.s"/>
+      <signal refId="212.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="122.s"/>
+      <signal refId="122.r"/>
+      <signal refId="323.s"/>
+      <signal refId="323.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="423.l"/>
+      <signal refId="212.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="122.l"/>
+      <signal refId="323.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="210000003">
+    <signalGroup id="sr1">
+      <signal refId="426.s"/>
+      <signal refId="426.r"/>
+      <signal refId="215.s"/>
+      <signal refId="215.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="125.s"/>
+      <signal refId="125.r"/>
+      <signal refId="326.s"/>
+      <signal refId="326.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="426.l"/>
+      <signal refId="215.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="125.l"/>
+      <signal refId="326.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="210000006">
+    <signalGroup id="sr1">
+      <signal refId="429.s"/>
+      <signal refId="429.r"/>
+      <signal refId="218.s"/>
+      <signal refId="218.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="128.s"/>
+      <signal refId="128.r"/>
+      <signal refId="329.s"/>
+      <signal refId="329.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="429.l"/>
+      <signal refId="218.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="128.l"/>
+      <signal refId="329.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="220000002">
+    <signalGroup id="sr1">
+      <signal refId="436.s"/>
+      <signal refId="436.r"/>
+      <signal refId="225.s"/>
+      <signal refId="225.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="135.s"/>
+      <signal refId="135.r"/>
+      <signal refId="336.s"/>
+      <signal refId="336.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="436.l"/>
+      <signal refId="225.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="135.l"/>
+      <signal refId="336.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="220000005">
+    <signalGroup id="sr1">
+      <signal refId="439.s"/>
+      <signal refId="439.r"/>
+      <signal refId="228.s"/>
+      <signal refId="228.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="138.s"/>
+      <signal refId="138.r"/>
+      <signal refId="339.s"/>
+      <signal refId="339.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="439.l"/>
+      <signal refId="228.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="138.l"/>
+      <signal refId="339.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="220000008">
+    <signalGroup id="sr1">
+      <signal refId="442.s"/>
+      <signal refId="442.r"/>
+      <signal refId="231.s"/>
+      <signal refId="231.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="141.s"/>
+      <signal refId="141.r"/>
+      <signal refId="342.s"/>
+      <signal refId="342.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="442.l"/>
+      <signal refId="231.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="141.l"/>
+      <signal refId="342.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="230000000">
+    <signalGroup id="sr1">
+      <signal refId="455.s"/>
+      <signal refId="455.r"/>
+      <signal refId="234.s"/>
+      <signal refId="234.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="143.s"/>
+      <signal refId="143.r"/>
+      <signal refId="344.s"/>
+      <signal refId="344.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="455.l"/>
+      <signal refId="234.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="143.l"/>
+      <signal refId="344.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="230000003">
+    <signalGroup id="sr1">
+      <signal refId="458.s"/>
+      <signal refId="458.r"/>
+      <signal refId="237.s"/>
+      <signal refId="237.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="146.s"/>
+      <signal refId="146.r"/>
+      <signal refId="347.s"/>
+      <signal refId="347.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="458.l"/>
+      <signal refId="237.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="146.l"/>
+      <signal refId="347.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="230000006">
+    <signalGroup id="sr1">
+      <signal refId="461.s"/>
+      <signal refId="461.r"/>
+      <signal refId="240.s"/>
+      <signal refId="240.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="149.s"/>
+      <signal refId="149.r"/>
+      <signal refId="350.s"/>
+      <signal refId="350.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="461.l"/>
+      <signal refId="240.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="149.l"/>
+      <signal refId="350.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="240000002">
+    <signalGroup id="sr1">
+      <signal refId="467.s"/>
+      <signal refId="467.r"/>
+      <signal refId="257.s"/>
+      <signal refId="257.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="155.s"/>
+      <signal refId="155.r"/>
+      <signal refId="356.s"/>
+      <signal refId="356.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="467.l"/>
+      <signal refId="257.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="155.l"/>
+      <signal refId="356.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="240000005">
+    <signalGroup id="sr1">
+      <signal refId="470.s"/>
+      <signal refId="470.r"/>
+      <signal refId="260.s"/>
+      <signal refId="260.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="158.s"/>
+      <signal refId="158.r"/>
+      <signal refId="359.s"/>
+      <signal refId="359.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="470.l"/>
+      <signal refId="260.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="158.l"/>
+      <signal refId="359.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="240000008">
+    <signalGroup id="sr1">
+      <signal refId="473.s"/>
+      <signal refId="473.r"/>
+      <signal refId="263.s"/>
+      <signal refId="263.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="161.s"/>
+      <signal refId="161.r"/>
+      <signal refId="362.s"/>
+      <signal refId="362.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="473.l"/>
+      <signal refId="263.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="161.l"/>
+      <signal refId="362.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="250000000">
+    <signalGroup id="sr1">
+      <signal refId="474.s"/>
+      <signal refId="474.r"/>
+      <signal refId="264.s"/>
+      <signal refId="264.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="163.s"/>
+      <signal refId="163.r"/>
+      <signal refId="364.s"/>
+      <signal refId="364.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="474.l"/>
+      <signal refId="264.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="163.l"/>
+      <signal refId="364.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="250000003">
+    <signalGroup id="sr1">
+      <signal refId="477.s"/>
+      <signal refId="477.r"/>
+      <signal refId="267.s"/>
+      <signal refId="267.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="166.s"/>
+      <signal refId="166.r"/>
+      <signal refId="367.s"/>
+      <signal refId="367.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="477.l"/>
+      <signal refId="267.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="166.l"/>
+      <signal refId="367.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="250000006">
+    <signalGroup id="sr1">
+      <signal refId="480.s"/>
+      <signal refId="480.r"/>
+      <signal refId="270.s"/>
+      <signal refId="270.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="169.s"/>
+      <signal refId="169.r"/>
+      <signal refId="370.s"/>
+      <signal refId="370.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="480.l"/>
+      <signal refId="270.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="169.l"/>
+      <signal refId="370.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="260000002">
+    <signalGroup id="sr1">
+      <signal refId="485.s"/>
+      <signal refId="485.r"/>
+      <signal refId="275.s"/>
+      <signal refId="275.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="175.s"/>
+      <signal refId="175.r"/>
+      <signal refId="376.s"/>
+      <signal refId="376.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="485.l"/>
+      <signal refId="275.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="175.l"/>
+      <signal refId="376.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="260000005">
+    <signalGroup id="sr1">
+      <signal refId="488.s"/>
+      <signal refId="488.r"/>
+      <signal refId="278.s"/>
+      <signal refId="278.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="178.s"/>
+      <signal refId="178.r"/>
+      <signal refId="379.s"/>
+      <signal refId="379.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="488.l"/>
+      <signal refId="278.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="178.l"/>
+      <signal refId="379.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="260000008">
+    <signalGroup id="sr1">
+      <signal refId="491.s"/>
+      <signal refId="491.r"/>
+      <signal refId="281.s"/>
+      <signal refId="281.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="181.s"/>
+      <signal refId="181.r"/>
+      <signal refId="382.s"/>
+      <signal refId="382.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="491.l"/>
+      <signal refId="281.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="181.l"/>
+      <signal refId="382.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="270000000">
+    <signalGroup id="sr1">
+      <signal refId="492.s"/>
+      <signal refId="492.r"/>
+      <signal refId="282.s"/>
+      <signal refId="282.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="183.s"/>
+      <signal refId="183.r"/>
+      <signal refId="384.s"/>
+      <signal refId="384.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="492.l"/>
+      <signal refId="282.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="183.l"/>
+      <signal refId="384.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="270000003">
+    <signalGroup id="sr1">
+      <signal refId="495.s"/>
+      <signal refId="495.r"/>
+      <signal refId="285.s"/>
+      <signal refId="285.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="186.s"/>
+      <signal refId="186.r"/>
+      <signal refId="387.s"/>
+      <signal refId="387.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="495.l"/>
+      <signal refId="285.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="186.l"/>
+      <signal refId="387.l"/>
+    </signalGroup>
+  </signalSystem>
+  <signalSystem refId="270000006">
+    <signalGroup id="sr1">
+      <signal refId="498.s"/>
+      <signal refId="498.r"/>
+      <signal refId="288.s"/>
+      <signal refId="288.r"/>
+    </signalGroup>
+    <signalGroup id="sr2">
+      <signal refId="189.s"/>
+      <signal refId="189.r"/>
+      <signal refId="390.s"/>
+      <signal refId="390.r"/>
+    </signalGroup>
+    <signalGroup id="l1">
+      <signal refId="498.l"/>
+      <signal refId="288.l"/>
+    </signalGroup>
+    <signalGroup id="l2">
+      <signal refId="189.l"/>
+      <signal refId="390.l"/>
+    </signalGroup>
+  </signalSystem>
+</signalGroups>

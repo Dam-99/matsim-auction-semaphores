@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.network.Link;
+import org.matsim.lanes.Lane;
 
 /**
  * @author Filippo Muzzini
@@ -14,13 +15,13 @@ import org.matsim.api.core.v01.network.Link;
  */
 public class TrafficFlow {
 	
-	private HashMap<Id<Link>, Double> flow = new HashMap<Id<Link>, Double>();
+	private HashMap<Id<Lane>, Double> flow = new HashMap<Id<Lane>, Double>();
 	
-	public void addFlow(Id<Link> link, Double flow) {
+	public void addFlow(Id<Lane> link, Double flow) {
 		this.flow.put(link, flow);
 	}
 	
-	public Double getFlow(Id<Link> link) {
+	public Double getFlow(Id<Lane> link) {
 		return this.flow.get(link);
 	}
 

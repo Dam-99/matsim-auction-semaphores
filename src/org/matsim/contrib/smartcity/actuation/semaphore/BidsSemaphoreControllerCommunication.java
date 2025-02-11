@@ -28,6 +28,7 @@ import org.matsim.contrib.smartcity.perception.camera.CameraStatus;
 import org.matsim.contrib.smartcity.perception.wrapper.ActivePerceptionWrapper;
 import org.matsim.contrib.smartcity.perception.wrapper.LinkTrafficStatus;
 import org.matsim.core.api.experimental.events.EventsManager;
+import org.matsim.core.gbl.Gbl;
 import org.matsim.core.gbl.MatsimRandom;
 import org.matsim.core.utils.collections.Tuple;
 
@@ -39,6 +40,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.log4j.Logger;
+import org.matsim.lanes.Lane;
 
 public class BidsSemaphoreControllerCommunication extends BidsSemaphoreController implements SignalController, ComunicationServer, CameraListener, ComunicationClient {
 
@@ -57,29 +59,28 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
     private EventsManager em;
     
     private SignalSystem system;
-    private HashMap<Integer, Id<Link>> links;
     private boolean isSignalSystem;
     /**
      * @TODO: change to log only when agent is in system
      */
     private boolean has3640;
     private boolean logActive;
-    private HashMap<Id<Link>, Integer> bidMap;
-    private HashMap<Id<Link>, SignalGroup> signalMap;
-    private ConcurrentHashMap<Id<Link>, List<Bid>> agentMap;
-    private ConcurrentHashMap<Id<Link>, Integer> totalAgents;
-    private ConcurrentHashMap<Id<Link>, List<Tuple<List<Id<Link>>, Integer>>> agentsRouteAndBid;
+    private HashMap<Id<Lane>, Integer> bidMap;
+    private HashMap<Id<Lane>, SignalGroup> signalMap;
+    private ConcurrentHashMap<Id<Lane>, List<Bid>> agentMap;
+    private ConcurrentHashMap<Id<Lane>, Integer> totalAgents;
+    private ConcurrentHashMap<Id<Lane>, List<Tuple<List<Id<Lane>>, Integer>>> agentsRouteAndBid;
     private Id<SignalGroup> actualGreen;
     private double lastChange;
     private float m = 0;
     private float M = 1.1f;
     private Boolean wait = false;
-    private HashMap<Id<Link>, Integer> incomingBid;
+    private HashMap<Id<Lane>, Integer> incomingBid;
     private SemaphoreServer semaphoreServer;
-    private HashMap<Id<Link>, Double> lastGreen;
-    private HashMap<Id<Link>, Camera> camMap;
-    private HashMap<Id<Link>, Double> lastCameraUpdate;
-    private HashMap<Id<Link>, List<Tuple<Double, Integer>>> changeFromLastUpdate;
+    private HashMap<Id<Lane>, Double> lastGreen;
+    private HashMap<Id<Lane>, Camera> camMap;
+    private HashMap<Id<Lane>, Double> lastCameraUpdate;
+    private HashMap<Id<Lane>, List<Tuple<Double, Integer>>> changeFromLastUpdate;
     private Lock changeFromLastUpdateLock = new ReentrantLock();
 
     @Override
@@ -92,8 +93,8 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         
         NextGreen nextGreen = getNextGreen(timeSeconds);
         Id<SignalGroup> nextGreenGroup = nextGreen.getGroup();
-        List<Id<Link>> nextGreenLink = this.system.getSignalGroups().get(nextGreenGroup).getSignals().values().stream()
-                .map(Signal::getLinkId).collect(Collectors.toList());
+        List<Id<Lane>> nextGreenLink = this.system.getSignalGroups().get(nextGreenGroup).getSignals().values().stream()
+                .flatMap(s -> s.getLaneIds().stream()).collect(Collectors.toList());
 
         this.system.scheduleOnset(timeSeconds, nextGreenGroup); // set the change to happen to the system
         if (this.actualGreen != null && this.actualGreen != nextGreenGroup)
@@ -133,7 +134,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
     }
 
     private void setBidForStaticAgents(double time) {
-        for (Map.Entry<Id<Link>, Integer> e : this.bidMap.entrySet()){
+        for (Map.Entry<Id<Lane>, Integer> e : this.bidMap.entrySet()){
             this.updateTotalAgents(e.getKey());
             this.changeFromLastUpdateLock.lock();
             int changed = this.getChangedFromLastUpdate(e.getKey(), time);
@@ -157,15 +158,15 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
                 addBidToMap(e.getKey(), null, bid, null); // add to list of bids by agents on this link
                 addOrRemoveBidToBidMap(true, bid, e.getKey()); // add bid to the total bid for the link
                 if (this.agentsRouteAndBid.get(e.getKey()) == null)
-                    this.agentsRouteAndBid.put(e.getKey(), new Vector<Tuple<List<Id<Link>>, Integer>>());
+                    this.agentsRouteAndBid.put(e.getKey(), new Vector<Tuple<List<Id<Lane>>, Integer>>());
                 // placeholder per mantenere la coerenza tra le due mappe
                 // add to the list of routes the agents who bid for the given link
-                this.agentsRouteAndBid.get(e.getKey()).add(new Tuple<List<Id<Link>>, Integer>(new ArrayList(), bid));
+                this.agentsRouteAndBid.get(e.getKey()).add(new Tuple<List<Id<Lane>>, Integer>(new ArrayList(), bid));
             }
         }
     }
 
-    private int getChangedFromLastUpdate(Id<Link> link, double actualTime) {
+    private int getChangedFromLastUpdate(Id<Lane> link, double actualTime) {
         Double lastUpdate = this.lastCameraUpdate.get(link);
         List<Tuple<Double, Integer>> list = this.changeFromLastUpdate.get(link);
         if (lastUpdate == null || list == null) {
@@ -183,7 +184,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         return res;
     }
 
-    private void updateTotalAgents(Id<Link> link) {
+    private void updateTotalAgents(Id<Lane> link) {
         LinkTrafficStatus linkStatus = this.camMap.get(link).getCameraStatus().getLinkStatus();
         Tuple<Double, Integer> snap = linkStatus.getTotalSnap();
         int total = snap.getSecond();
@@ -191,12 +192,12 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         this.changeTotalAgent(link, total, lastUpdate);
     }
 
-    private synchronized void changeTotalAgent(Id<Link> link, int total, double lastUpdate) {
+    private synchronized void changeTotalAgent(Id<Lane> link, int total, double lastUpdate) {
         this.totalAgents.put(link, total);
         this.lastCameraUpdate.put(link, lastUpdate);
     }
 
-    private synchronized void changeFromLastUpdate(Id<Link> link, boolean inc, double time) {
+    private synchronized void changeFromLastUpdate(Id<Lane> link, boolean inc, double time) {
         this.changeFromLastUpdateLock.lock();
         List<Tuple<Double, Integer>> old = this.changeFromLastUpdate.get(link);
         if (inc)
@@ -213,13 +214,13 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
     	while(this.wait) {} // continua fino a quando non riceve un IncomingResponse per la IncomingRequest inviata sopra
 
         int max = 0;
-        Id<Link> link = null;
-        Id<Link> foundAgentLink = null;
+        Id<Lane> link = null;
+        Id<Lane> foundAgentLink = null;
         boolean foundAgent = false;
         String bids = " and all bids are: ";
         int starvationBonus = 0;
         boolean debug_stop = false;
-        for (Map.Entry<Id<Link>, Integer> e : this.bidMap.entrySet()){
+        for (Map.Entry<Id<Lane>, Integer> e : this.bidMap.entrySet()){
             if (e.getKey() != null && this.agentMap.get(e.getKey()) != null) {
                 boolean curFoundAgent = this.agentMap.get(e.getKey()).stream().filter(bid -> bid.getAgent() != null && bid.getAgent().getPerson().getId()
                         .toString().equals("3640")).collect(Collectors.toList()).size() > 0;
@@ -303,7 +304,6 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
     @Override
     public void setSignalSystem(SignalSystem signalSystem) {
         this.system = signalSystem;
-        this.links = new HashMap<>();
         this.isSignalSystem = false;
         this.has3640 = false;
         this.logActive = false;
@@ -312,7 +312,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         this.agentMap = new ConcurrentHashMap<>();
         this.totalAgents = new ConcurrentHashMap<>();
         this.agentsRouteAndBid = new ConcurrentHashMap<>();
-        this.lastCameraUpdate = new HashMap<Id<Link>, Double>();
+        this.lastCameraUpdate = new HashMap<Id<Lane>, Double>();
         this.incomingBid = new HashMap<>();
         this.lastGreen = new HashMap<>();
         this.camMap = new HashMap<>();
@@ -322,11 +322,12 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         signals.forEach(tupla -> {
             Signal s = tupla.getSecond();
             SignalGroup sg = tupla.getFirst();
-            Id<Link> link = s.getLinkId();
+            Gbl.assertIf(s.getLaneIds().size() == 1);
+            Id<Lane> link = s.getLaneIds().iterator().next();
             this.signalMap.put(link, sg);
             this.bidMap.put(link, 0);
 
-            Coord pos = network.getLinks().get(link).getCoord();
+            Coord pos = network.getLinks().get(Id.create(link.toString().split("\\.")[0], Link.class)).getCoord();
             commWrapper.addFixedComunicator(this, Collections.singleton(pos));
             ActiveCamera cam = new ActiveCamera(Id.create(link.toString(), Camera.class), link, percWrapper);
             cam.addCameraListener(this);
@@ -346,10 +347,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
 
         List<String> linksStringsIds = signalSystem.getSignals().values().stream().map(Signal::getLinkId)
                 .map(Id::toString).collect(Collectors.toList());
-        List<Id<Link>> links = signalSystem.getSignals().values().stream().map(Signal::getLinkId)
-                .collect(Collectors.toList());
         if (linksStringsIds.contains("225") && linksStringsIds.contains("436")) {
-            links.forEach(l -> this.links.put(Integer.parseInt(l.toString()), l));
             this.isSignalSystem = true;
         }
     }
@@ -357,7 +355,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
     @Override
     public void sendToMe(ComunicationMessage message) {
         if (message instanceof BidMessage) {
-            Id<Link> link = ((BidMessage) message).getLink();
+            Id<Lane> link = ((BidMessage) message).getLink();
             int bid = ((BidMessage) message).getBid();
             BidAgent agent = (BidAgent) ((BidMessage) message).getSender();
             if (agent.getPerson().getId().toString().equals("3640"))
@@ -388,7 +386,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             // Object a = new Object();
             this.changeFromLastUpdate(link, true, ((BidMessage) message).getTime());
         } else if (message instanceof RideMessage) { // ricevuto mess in cui agente comunica il suo percorso
-            List<Id<Link>> agentRoute = ((RideMessage) message).getRoute();
+            List<Id<Lane>> agentRoute = ((RideMessage) message).getRoute();
             int index = ((RideMessage) message).getIndex();
             BidAgent agent = (BidAgent) ((RideMessage) message).getSender();
             if (index <= agentRoute.size() && index > 0) {
@@ -397,13 +395,13 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
                             + ") communicates path: " +
                             agentRoute.stream().map(Id::toString).map(s -> s + " ").reduce(String::concat)
                                     .orElse("empty path").trim());
-                Id<Link> actualLink = agentRoute.get(index - 1);
-                List<Tuple<List<Id<Link>>, Integer>> actual = this.agentsRouteAndBid.get(actualLink);
+                Id<Lane> actualLink = agentRoute.get(index - 1);
+                List<Tuple<List<Id<Lane>>, Integer>> actual = this.agentsRouteAndBid.get(actualLink);
                 if (actual == null) {
-                    actual = new Vector<Tuple<List<Id<Link>>, Integer>>();
+                    actual = new Vector<Tuple<List<Id<Lane>>, Integer>>();
                     this.agentsRouteAndBid.put(actualLink, actual);
                 }
-                actual.add(new Tuple<List<Id<Link>>, Integer>(agentRoute.subList(index, agentRoute.size()),
+                actual.add(new Tuple<List<Id<Lane>>, Integer>(agentRoute.subList(index, agentRoute.size()),
                         agent.getBid()));
             }
 
@@ -413,7 +411,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             this.wait = false; // sblocca while in getNextGreen (riga 187 circa)
         } else if (message instanceof CrossedMessage) { // agente ha attraversato l'incrocio di questo semaforo
             BidAgent senderAgent = (BidAgent) message.getSender();
-            Id<Link> link = ((CrossedMessage) message).getLink();
+            Id<Lane> link = ((CrossedMessage) message).getLink();
             boolean isFollowedAgent = senderAgent.getPerson().getId().toString().equals("3640");
             if (isFollowedAgent) {
                 log.error("sendToMe(CrossedMessage): 3640 crossed intersection from " + link);
@@ -424,8 +422,8 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             synchronized (this.agentMap.get(link)) {
                 addOrRemoveBidToBidMap(false, ((CrossedMessage) message).getBid(), link);
                 if (this.agentMap != null && this.agentMap.get(link) != null && this.agentMap.get(link).size() > 0) {
-                    List<Tuple<List<Id<Link>>, Integer>> flow = new ArrayList<Tuple<List<Id<Link>>, Integer>>();
-                    List<Tuple<List<Id<Link>>, Integer>> actualRouteAndBid = this.agentsRouteAndBid.get(link);
+                    List<Tuple<List<Id<Lane>>, Integer>> flow = new ArrayList<Tuple<List<Id<Lane>>, Integer>>();
+                    List<Tuple<List<Id<Lane>>, Integer>> actualRouteAndBid = this.agentsRouteAndBid.get(link);
                     if (this.agentMap.get(link).get(0).getAgent() == null) {
                         /*
                          * A causa della concorrenza può succedere che un agente statico abbia già
@@ -479,7 +477,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
      * @param agent agent making the bid
      * @param bid   amount of the bid
      */
-    private void addBidToMap(Id<Link> link, BidAgent agent, int bid, BidAgent.BidAgentMode mode) {
+    private void addBidToMap(Id<Lane> link, BidAgent agent, int bid, BidAgent.BidAgentMode mode) {
         List<Bid> bidForLink = this.agentMap.get(link);
         if (bidForLink == null) {
             bidForLink = new Vector<Bid>();
@@ -489,7 +487,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         this.agentMap.put(link, bidForLink);
     }
 
-    public boolean controlLink(Id<Link> link) {
+    public boolean controlLink(Id<Lane> link) {
         return this.signalMap.containsKey(link);
     }
 
@@ -498,7 +496,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         Tuple<Double, Integer> snap = status.getLinkStatus().getTotalSnap();
         int newTotal = snap.getSecond();
         double lu = snap.getFirst();
-        Id<Link> link = status.getIdLink();
+        Id<Lane> link = status.getIdLink();
         int oldTotal = this.totalAgents.getOrDefault(link, 0);
         if (this.agentMap.get(link) != null) {
             synchronized (this.agentMap.get(link)) {
@@ -533,7 +531,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
      * @param bid  amount to change
      * @param link link for which the bid is being modified
      */
-    public synchronized void addOrRemoveBidToBidMap(Boolean add, int bid, Id<Link> link) {
+    public synchronized void addOrRemoveBidToBidMap(Boolean add, int bid, Id<Lane> link) {
         if (add)
             this.bidMap.put(link, this.bidMap.get(link) + bid);
         else
@@ -542,10 +540,14 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
 
     @Override
     public Set<ComunicationServer> discover() {
-        return this.commWrapper.discover(this.network.getLinks().get(this.actualGreen).getId());
+        return signalMap.entrySet().stream()
+                .filter(e -> e.getValue().getId() == this.actualGreen)
+                .map(Map.Entry::getKey)
+                .map(lane -> this.commWrapper.discover(lane))
+                .reduce(new HashSet<>(), (acc, newSet) -> {acc.addAll(newSet); return acc; });
     }
 
-    public HashMap<Id<Link>, SignalGroup> getSignalMap() {
+    public HashMap<Id<Lane>, SignalGroup> getSignalMap() {
         return this.signalMap;
     }
 
@@ -585,9 +587,9 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
     private static class NextGreen {
 
         private Id<SignalGroup> group;
-        private Id<Link> link;
+        private Id<Lane> link;
 
-        NextGreen(Id<SignalGroup> group, Id<Link> link) {
+        NextGreen(Id<SignalGroup> group, Id<Lane> link) {
             this.group = group;
             this.link = link;
         }
@@ -600,11 +602,11 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             this.group = group;
         }
 
-        public Id<Link> getLink() {
+        public Id<Lane> getLink() {
             return link;
         }
 
-        public void setLink(Id<Link> link) {
+        public void setLink(Id<Lane> link) {
             this.link = link;
         }
     }

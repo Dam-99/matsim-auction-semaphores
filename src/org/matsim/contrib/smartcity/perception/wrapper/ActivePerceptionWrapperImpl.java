@@ -13,6 +13,7 @@ import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
 
 import com.google.inject.Inject;
+import org.matsim.lanes.Lane;
 
 /**
  * Implementation of an ActivePerceptionWrapper.
@@ -20,14 +21,14 @@ import com.google.inject.Inject;
  * like PassivePerceptionWrapperImpl, also notify to listeners that there is a change.
  * 
  * @author Filippo Muzzini
- * 
+ *
  * @see ActivePerceptionWrapper
  * @see PassivePerceptionWrapperImpl
  *
  */
 public class ActivePerceptionWrapperImpl extends PerceptionWrapper implements ActivePerceptionWrapper {
 	
-	private HashMap<Id<Link>,ArrayList<LinkChangedListener>> listeners;
+	private HashMap<Id<Lane>,ArrayList<LinkChangedListener>> listeners;
 	/**
 	 * Constructor of ActivePerceptionWrapper.
 	 * It creates the data structure that represents the network and the vehicles
@@ -38,47 +39,50 @@ public class ActivePerceptionWrapperImpl extends PerceptionWrapper implements Ac
 	@Inject
 	public ActivePerceptionWrapperImpl(Network network, Scenario scenario) {
 		super(network, scenario);
-		this.listeners = new HashMap<Id<Link>, ArrayList<LinkChangedListener>>();
+		this.listeners = new HashMap<Id<Lane>, ArrayList<LinkChangedListener>>();
 		for (Id<Link> link : network.getLinks().keySet()) {
-			this.listeners.put(link, new ArrayList<LinkChangedListener>());
+			String[] laneExtensions = {".l", ".s", ".r", ".ol"};
+			for (String lane : laneExtensions) {
+				this.listeners.put(Id.create(link.toString() + lane, Lane.class), new ArrayList<LinkChangedListener>());
+			}
 		}
 	}
 
 	@Override
-	public void addLinkChangedListener(LinkChangedListener listener, Id<Link> linkId) {
+	public void addLinkChangedListener(LinkChangedListener listener, Id<Lane> linkId) {
 		this.listeners.get(linkId).add(listener);
 	}
 	
 	@Override
 	public void handleEvent(VehicleEntersTrafficEvent event) {
-		Id<Link> idLink = event.getLinkId();
+		Id<Lane> idLink = Id.create(event.getLinkId().toString() + ".ol", Lane.class);
 		super.handleEvent(event);
 		linkChanged(idLink, event.getTime());
 	}
 
 	@Override
 	public void handleEvent(VehicleLeavesTrafficEvent event) {
-		Id<Link> idLink = event.getLinkId();
+		Id<Lane> idLink = Id.create(event.getLinkId().toString() + ".ol", Lane.class);
 		super.handleEvent(event);
 		linkChanged(idLink, event.getTime());
 	}
 
 	@Override
 	public void handleEvent(LinkLeaveEvent event) {
-		Id<Link> idLink = event.getLinkId();
+		Id<Lane> idLink = Id.create(event.getLinkId().toString() + ".ol", Lane.class);
 		super.handleEvent(event);
 		linkChanged(idLink, event.getTime());
 	}
 
 	@Override
 	public void handleEvent(LinkEnterEvent event) {
-		Id<Link> idLink = event.getLinkId();
+		Id<Lane> idLink = Id.create(event.getLinkId().toString() + ".ol", Lane.class);
 		super.handleEvent(event);
 		linkChanged(idLink, event.getTime());
 
 	}
 
-	private void linkChanged(Id<Link> idLink, double time) {
+	private void linkChanged(Id<Lane> idLink, double time) {
 		LinkTrafficStatus status = this.getLinkTrafficStatus(idLink);		
 		for (LinkChangedListener listener : this.listeners.get(idLink))
 			listener.publishLinkChanged(idLink, status, time);
@@ -94,8 +98,8 @@ public class ActivePerceptionWrapperImpl extends PerceptionWrapper implements Ac
 	}
 	
 	@Override
-	public void addLinkChangedListener(LinkChangedListener listener, Iterable<Id<Link>> links) {
-		for (Id<Link> link : links) {
+	public void addLinkChangedListener(LinkChangedListener listener, Iterable<Id<Lane>> links) {
+		for (Id<Lane> link : links) {
 			this.listeners.get(link).add(listener);
 		}
 	}

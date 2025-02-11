@@ -24,18 +24,19 @@ import org.matsim.contrib.smartcity.analisys.SemaphorePredictionEvent;
 import org.matsim.contrib.smartcity.comunication.wrapper.ComunicationFixedWrapper;
 import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.utils.collections.Tuple;
+import org.matsim.lanes.Lane;
 
 public class SemaphoreServerPropagated extends SemaphoreServer implements ComunicationServer {
 	private static final Logger log = Logger.getLogger(SemaphoreServerProportional.class);
 
 	private ComunicationFixedWrapper wrapper;
 	private ConcurrentHashMap<Id<SignalGroup>, PriorityQueue<IncomingAgent>> incomingBid;
-	private HashMap<Id<Link>,SignalGroup> signalMap;
+	private HashMap<Id<Lane>, SignalGroup> signalMap;
 	@Inject
     private Network network;
 	@Inject
 	private EventsManager em;
-	private HashMap<Id<Link>,SignalGroupCounter> SGCounter;
+	private HashMap<Id<Lane>,SignalGroupCounter> SGCounter;
 	private Random generator;
 
 	//TODO rendere configurabile
@@ -46,9 +47,9 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 		Set<Coord> positions = data.coord;
 		this.wrapper = wrapper;
 		this.wrapper.addFixedComunicator(this, positions);
-		this.signalMap = new HashMap<Id<Link>,SignalGroup>();
+		this.signalMap = new HashMap<Id<Lane>, SignalGroup>();
 		this.incomingBid = new ConcurrentHashMap<Id<SignalGroup>, PriorityQueue<IncomingAgent>>();
-		this.SGCounter = new HashMap<Id<Link>,SignalGroupCounter>();
+		this.SGCounter = new HashMap<Id<Lane>,SignalGroupCounter>();
 		this.generator = new Random();
 	}
 	
@@ -56,10 +57,10 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 	public void sendToMe(ComunicationMessage message) {
 		if (message instanceof SemaphoreFlowMessage) {
 			double time = ((SemaphoreFlowMessage) message).getTime();
-			List<Tuple<List<Id<Link>>,Integer>> agentsRouteAndBid = ((SemaphoreFlowMessage) message).getAgentsRouteAndBid();
+			List<Tuple<List<Id<Lane>>,Integer>> agentsRouteAndBid = ((SemaphoreFlowMessage) message).getAgentsRouteAndBid();
 			if (!((SemaphoreFlowMessage) message).isEquipped()) {
 				int totalBidOfNEAgent = ((SemaphoreFlowMessage) message).getTotalBidOfNotEquippedAgent();
-				Id<Link> actualLink = ((SemaphoreFlowMessage) message).getActualLink();
+				Id<Lane> actualLink = ((SemaphoreFlowMessage) message).getActualLink();
 				SignalGroupCounter sgc = this.SGCounter.get(actualLink);
 				if (sgc != null) {
 					this.generator.nextInt(100);
@@ -77,14 +78,14 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 				log.error("sendToMe(SemaphoreFlow): " + ((SemaphoreFlowMessage) message).getActualLink() + " set flow of 3640");
 
 			// compute propagation on the following signalsystems
-			Id<Link> actualLink =  ((SemaphoreFlowMessage) message).getActualLink();
+			Id<Lane> actualLink =  ((SemaphoreFlowMessage) message).getActualLink();
 			if (agentsRouteAndBid != null) {
-				for(Tuple<List<Id<Link>>,Integer> routeAndBid : agentsRouteAndBid) {
+				for(Tuple<List<Id<Lane>>,Integer> routeAndBid : agentsRouteAndBid) {
 					double estimatedTripTime = 0;
 					int propagationAdded = 0;
 					if(isFollowedAgent)
 						log.error("sendToMe(SemaphoreFlow): route is " + routeAndBid.getFirst().stream().map(Object::toString).collect(Collectors.joining(",")));
-					for(Id<Link> link : routeAndBid.getFirst()) {
+					for(Id<Lane> link : routeAndBid.getFirst()) {
 						SignalGroup sg = signalMap.get(link);
 						double length = this.network.getLinks().get(link).getLength();
 						double speed = this.network.getLinks().get(link).getFreespeed();
@@ -108,16 +109,16 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 				}
 			}
 		} else if (message instanceof SSBootUpMessage) {
-			HashMap<Id<Link>, SignalGroup> localSignalMap = ((SSBootUpMessage)message).getSignalMap();
+			HashMap<Id<Lane>, SignalGroup> localSignalMap = ((SSBootUpMessage)message).getSignalMap();
 			localSignalMap.forEach((k, v) -> this.signalMap.put(k, v));
 			
 			
 		} else if (message instanceof IncomingRequest) {
 			BidsSemaphoreController sender = (BidsSemaphoreController)((IncomingRequest) message).getSender();
-			Set<Id<Link>> links = ((IncomingRequest) message).getLinks();
-			HashMap<Id<Link>,Integer> incomingAgent = new HashMap<Id<Link>,Integer>();
+			Set<Id<Lane>> links = ((IncomingRequest) message).getLinks();
+			HashMap<Id<Lane>,Integer> incomingAgent = new HashMap<Id<Lane>,Integer>();
 			double time = ((IncomingRequest) message).getTime();
-			for (Id<Link> link : links) {
+			for (Id<Lane> link : links) {
 				SignalGroup sg = this.signalMap.get(link);
 				PriorityQueue<IncomingAgent> queue = this.incomingBid.get(sg.getId());
 				int sum = 0;

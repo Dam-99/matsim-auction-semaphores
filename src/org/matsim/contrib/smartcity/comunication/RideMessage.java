@@ -4,14 +4,15 @@ import java.util.List;
 
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.network.Link;
+import org.matsim.lanes.Lane;
 
 public class RideMessage extends ComunicationMessage {
 
 	private final double time;
     private int index;
-    private List<Id<Link>> route;
+    private List<Id<Lane>> route;
     
-	public RideMessage(ComunicationEntity sender, int index, List<Id<Link>> route, double time) {
+	public RideMessage(ComunicationEntity sender, int index, List<Id<Lane>> route, double time) {
 		super(sender);
 		this.setIndex(index);
         this.time = time;
@@ -22,11 +23,11 @@ public class RideMessage extends ComunicationMessage {
 		return time;
 	}
 
-	public List<Id<Link>> getRoute() {
+	public List<Id<Lane>> getRoute() {
 		return route;
 	}
 
-	public void setRoute(List<Id<Link>> route) {
+	public void setRoute(List<Id<Lane>> route) {
 		this.route = route;
 	}
 

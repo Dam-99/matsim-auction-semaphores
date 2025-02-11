@@ -16,6 +16,7 @@ import org.matsim.contrib.signals.data.SignalsData;
 import org.matsim.contrib.signals.data.signalgroups.v20.SignalData;
 import org.matsim.contrib.signals.data.signalsystems.v20.SignalSystemData;
 import org.matsim.core.population.routes.NetworkRoute;
+import org.matsim.lanes.Lane;
 
 /**
  * This class implements a static logic without smart behavior.
@@ -31,7 +32,7 @@ public class StaticDriverLogic extends AbstractDriverLogic {
 	/* (non-Javadoc)
 	 * @see org.matsim.contrib.smartcity.agent.AbstractDriverLogic#chooseNextLinkId()
 	 */
-	private List<Id<Link>> linksList;
+	private List<Id<Lane>> linksList;
 	private int index;
 	protected long nNodes;
 
@@ -39,7 +40,7 @@ public class StaticDriverLogic extends AbstractDriverLogic {
 	private Scenario scenario;
 
 	@Override
-	public Id<Link> getNextLinkId() {
+	public Id<Lane> getNextLinkId() {
 		if (this.actualLink == this.getDestinationLinkId()) {
 			return null;
 		}
@@ -55,7 +56,7 @@ public class StaticDriverLogic extends AbstractDriverLogic {
 	@Override
 	public void setLeg(Leg leg) {
 		super.setLeg(leg);
-		this.linksList = ((NetworkRoute) this.route).getLinkIds();
+		this.linksList = ((NetworkRoute) this.route).getLinkIds().stream().map(id -> Id.create(id, Lane.class)).collect(Collectors.toList());
 		this.index = 0;
 
 		SignalsData signalsData = (SignalsData) scenario.getScenarioElement(SignalsData.ELEMENT_NAME);
@@ -68,11 +69,11 @@ public class StaticDriverLogic extends AbstractDriverLogic {
 		this.getPerson().getAttributes().putAttribute(N_NODES_ATT, nNodes);
 	}
 	
-	protected List<Id<Link>> getLinksList() {
+	protected List<Id<Lane>> getLinksList() {
 		return this.linksList;
 	}
 	
-	protected void setLinksList(List<Id<Link>> linksList) {
+	protected void setLinksList(List<Id<Lane>> linksList) {
 		this.linksList = linksList;
 	}
 	
@@ -81,7 +82,7 @@ public class StaticDriverLogic extends AbstractDriverLogic {
 	}
 	
 	@Override
-	public void setActualLink(Id<Link> actualLink) {
+	public void setActualLink(Id<Lane> actualLink) {
 		super.setActualLink(actualLink);
 		int newIndex = this.linksList.indexOf(actualLink);
 		if (newIndex == -1) {

@@ -11,6 +11,7 @@ import org.matsim.api.core.v01.events.VehicleEntersTrafficEvent;
 import org.matsim.api.core.v01.events.VehicleLeavesTrafficEvent;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
+import org.matsim.lanes.Lane;
 import org.matsim.vehicles.Vehicle;
 import org.matsim.vehicles.VehicleType;
 
@@ -28,14 +29,17 @@ import com.google.inject.Inject;
  */
 public class PerceptionWrapper {
 	
-	protected HashMap<Id<Link>, LinkTrafficStatus> trafficMap;
+	protected HashMap<Id<Lane>, LinkTrafficStatus> trafficMap;
 	protected Map<Id<Vehicle>, Vehicle> vehicles;
 	
 	@Inject
 	public PerceptionWrapper(Network network, Scenario scenario) {
-		this.trafficMap = new HashMap<Id<Link>, LinkTrafficStatus>();
+		this.trafficMap = new HashMap<Id<Lane>, LinkTrafficStatus>();
 		for (Id<Link> id : network.getLinks().keySet()) {
-			this.trafficMap.put(id, new LinkTrafficStatus());
+			String[] laneExtensions = {".l", ".s", ".r", ".ol"}; // TODO: check if it's not a problem for single lane (shouldn't)
+			for(String lane : laneExtensions) {
+				this.trafficMap.put(Id.create(id.toString() + lane, Lane.class), new LinkTrafficStatus());
+			}
 		}
 		
 		this.vehicles = scenario.getVehicles().getVehicles();
@@ -66,16 +70,16 @@ public class PerceptionWrapper {
 
 	}
 	
-	public LinkTrafficStatus getLinkTrafficStatus(Id<Link> idLink) {
+	public LinkTrafficStatus getLinkTrafficStatus(Id<Lane> idLink) {
 		return this.trafficMap.get(idLink);
 	}
 	
-	public int getTotalVehicleOnLink(Id<Link> idLink) {
+	public int getTotalVehicleOnLink(Id<Lane> idLink) {
 		LinkTrafficStatus linkStatus = this.trafficMap.get(idLink);
 		return linkStatus.getTotal();
 	}
 	
-	public int getTypeVehicleOnLink(Id<Link> idLink, Id<VehicleType> idType) {
+	public int getTypeVehicleOnLink(Id<Lane> idLink, Id<VehicleType> idType) {
 		LinkTrafficStatus linkStatus = this.trafficMap.get(idLink);
 		return linkStatus.getTotalByType(idType);
 	}
@@ -101,7 +105,7 @@ public class PerceptionWrapper {
 	}
 
 	
-	public HashMap<Id<Link>, LinkTrafficStatus> getTrafficMap() {
+	public HashMap<Id<Lane>, LinkTrafficStatus> getTrafficMap() {
 		return this.trafficMap;
 	}
 }

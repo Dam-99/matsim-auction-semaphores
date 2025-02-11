@@ -16,6 +16,7 @@ import org.matsim.contrib.smartcity.perception.camera.CameraListener;
 import org.matsim.contrib.smartcity.perception.camera.CameraStatus;
 import org.matsim.contrib.smartcity.perception.wrapper.ActivePerceptionWrapper;
 import org.matsim.core.api.experimental.events.EventsManager;
+import org.matsim.core.gbl.Gbl;
 import org.matsim.core.gbl.MatsimRandom;
 import org.matsim.core.utils.collections.Tuple;
 
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.log4j.Logger;
+import org.matsim.lanes.Lane;
 
 public class BidsSemaphoreController implements SignalController, ComunicationServer, CameraListener {
 
@@ -42,10 +44,10 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
     private EventsManager em;
 
     private SignalSystem system;
-    private HashMap<Id<Link>, Integer> bidMap;
-    private HashMap<Id<Link>, SignalGroup> signalMap;
-    private HashMap<Id<Link>, List<Bid>> agentMap;
-    private HashMap<Id<Link>, Integer> totalAgents;
+    private HashMap<Id<Lane>, Integer> bidMap;
+    private HashMap<Id<Lane>, SignalGroup> signalMap;
+    private HashMap<Id<Lane>, List<Bid>> agentMap;
+    private HashMap<Id<Lane>, Integer> totalAgents;
     private Id<SignalGroup> actualGreen;
     private double lastChange;
     private float m = 0;
@@ -59,7 +61,7 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
         setBidForStaticAgents();
         NextGreen nextGreen = getNextGreen();
         Id<SignalGroup> nextGreenGroup = nextGreen.getGroup();
-        Id<Link> nextGreenLink = nextGreen.getLink();
+        Id<Lane> nextGreenLink = nextGreen.getLink();
 
         this.system.scheduleOnset(timeSeconds, nextGreenGroup);
         if (this.actualGreen != null && this.actualGreen != nextGreenGroup)
@@ -80,7 +82,7 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
     }
 
     private void setBidForStaticAgents() {
-        for (Map.Entry<Id<Link>, Integer> e : this.bidMap.entrySet()){
+        for (Map.Entry<Id<Lane>, Integer> e : this.bidMap.entrySet()){
             if (this.totalAgents.get(e.getKey()) == null){
                 continue;
             }
@@ -111,11 +113,11 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
 
     private NextGreen getNextGreen() {
         int max = 0;
-        Id<Link> link = null;
-        Id<Link> foundAgentLink = null;
+        Id<Lane> link = null;
+        Id<Lane> foundAgentLink = null;
         boolean foundAgent = false;
         String bids = " and all bids are: ";
-        for (Map.Entry<Id<Link>, Integer> e : this.bidMap.entrySet()){
+        for (Map.Entry<Id<Lane>, Integer> e : this.bidMap.entrySet()){
             if (e.getKey() != null && this.agentMap.get(e.getKey()) != null) {
                 boolean curFoundAgent = this.agentMap.get(e.getKey()).stream().filter(bid -> bid.getAgent() != null && bid.getAgent().getPerson().getId()
                         .toString().equals("3640")).collect(Collectors.toList()).size() > 0;
@@ -191,11 +193,12 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
         signals.forEach(tupla -> {
             Signal s = tupla.getSecond();
             SignalGroup sg = tupla.getFirst();
-            Id<Link> link = s.getLinkId();
+            Gbl.assertIf(s.getLaneIds().size() == 1);
+            Id<Lane> link = s.getLaneIds().iterator().next();
             this.signalMap.put(link, sg);
             this.bidMap.put(link, 0);
 
-            Coord pos = network.getLinks().get(link).getCoord();
+            Coord pos = network.getLinks().get(Id.create(link.toString().split("\\.")[0], Link.class)).getCoord();
             commWrapper.addFixedComunicator(this, Collections.singleton(pos));
             ActiveCamera cam = new ActiveCamera(Id.create(link.toString(), Camera.class), link, percWrapper);
             cam.addCameraListener(this);
@@ -207,7 +210,7 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
     @Override
     public void sendToMe(ComunicationMessage message) {
         if (message instanceof BidMessage) {
-            Id<Link> link = ((BidMessage) message).getLink();
+            Id<Lane> link = ((BidMessage) message).getLink();
             int bid = ((BidMessage) message).getBid();
             BidAgent agent = (BidAgent) ((BidMessage) message).getSender();
             if (agent.getPerson().getId().toString().equals("3640"))
@@ -234,7 +237,7 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
 
             addBidToMap(link, agent, bid, mode);
         } else if (message instanceof RideMessage){ // ricevuto mess in cui agente comunica il suo percorso
-            List<Id<Link>> agentRoute = ((RideMessage) message).getRoute();
+            List<Id<Lane>> agentRoute = ((RideMessage) message).getRoute();
             int index = ((RideMessage) message).getIndex();
             BidAgent agent = (BidAgent) ((RideMessage) message).getSender();
             if (index <= agentRoute.size() && index > 0 ) {
@@ -245,13 +248,13 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
 
         } else if (message instanceof CrossedMessage) { // agente ha attraversato l'incrocio di questo semaforo
             BidAgent senderAgent = (BidAgent) message.getSender();
-            Id<Link> link = ((CrossedMessage) message).getLink();
+            Id<Lane> link = ((CrossedMessage) message).getLink();
             if (senderAgent.getPerson().getId().toString().equals("3640"))
                 log.error("sendToMe(CrossedMessage): 3640 crossed intersection from " + link);
         }
     }
 
-    private void addBidToMap(Id<Link> link, BidAgent agent, int bid, BidAgent.BidAgentMode mode) {
+    private void addBidToMap(Id<Lane> link, BidAgent agent, int bid, BidAgent.BidAgentMode mode) {
         List<Bid> bidForLink = this.agentMap.get(link);
         if (bidForLink == null) {
             bidForLink = new ArrayList<Bid>();
@@ -264,7 +267,7 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
     /**
      * check if link is on this semaphore
      */
-    public boolean controlLink(Id<Link> link) {
+    public boolean controlLink(Id<Lane> link) {
         return this.signalMap.containsKey(link);
     }
 
@@ -309,9 +312,9 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
     private static class NextGreen {
 
         private Id<SignalGroup> group;
-        private Id<Link> link;
+        private Id<Lane> link;
 
-        NextGreen(Id<SignalGroup> group, Id<Link> link) {
+        NextGreen(Id<SignalGroup> group, Id<Lane> link) {
             this.group = group;
             this.link = link;
         }
@@ -324,11 +327,11 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
             this.group = group;
         }
 
-        public Id<Link> getLink() {
+        public Id<Lane> getLink() {
             return link;
         }
 
-        public void setLink(Id<Link> link) {
+        public void setLink(Id<Lane> link) {
             this.link = link;
         }
     }

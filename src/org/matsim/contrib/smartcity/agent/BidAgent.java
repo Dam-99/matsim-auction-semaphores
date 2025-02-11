@@ -6,10 +6,8 @@ import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Leg;
 import org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreController;
-import org.matsim.contrib.smartcity.actuation.semaphore.BidsSemaphoreControllerCommunication;
 import org.matsim.contrib.smartcity.comunication.*;
 import org.matsim.contrib.smartcity.comunication.wrapper.ComunicationWrapper;
-import org.matsim.core.gbl.MatsimRandom;
 import org.matsim.core.mobsim.qsim.QSim;
 import org.matsim.core.utils.collections.Tuple;
 
@@ -17,6 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
+import org.matsim.lanes.Lane;
 
 public class BidAgent extends StaticDriverLogic implements ComunicationClient, ComunicationServer {
 
@@ -82,8 +81,8 @@ public class BidAgent extends StaticDriverLogic implements ComunicationClient, C
     }
 
     @Override
-    public void setActualLink(Id<Link> actualLink) {
-    	Id<Link> previousLink = super.actualLink;
+    public void setActualLink(Id<Lane> actualLink) {
+    	Id<Lane> previousLink = super.actualLink;
     	if (previousLink != null && this.previousSem != null) {
     		if(this.agent.getId().toString().equals(Integer.toString(3640)))
                 log.error("setActualLink: 3640 is changing from link " + previousLink + ", next links: " + this.getLinksList());
@@ -177,7 +176,7 @@ public class BidAgent extends StaticDriverLogic implements ComunicationClient, C
         return new Tuple<Integer, List<Tuple<AbstractDriverLogic, Integer>>>(myBid, sponsrs);
     }
 
-    public Tuple<AbstractDriverLogic, Integer> getSponsor(BidAgent a, Id<Link> actualLink) {
+    public Tuple<AbstractDriverLogic, Integer> getSponsor(BidAgent a, Id<Lane> actualLink) {
         if (actualLink.equals(this.actualLink)){
             return new Tuple<AbstractDriverLogic, Integer>(this, calcSponsorBid());
         }

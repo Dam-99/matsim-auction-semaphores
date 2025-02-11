@@ -8,6 +8,7 @@ import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Leg;
 import org.matsim.api.core.v01.population.Person;
 import org.matsim.core.mobsim.qsim.pt.MobsimDriverPassengerAgent;
+import org.matsim.lanes.Lane;
 
 /**
  * Interface that define the method that can be called for using an agent driver logic.
@@ -30,20 +31,20 @@ public interface SmartDriverLogic {
 	 * 
 	 * @param linkId new Link id
 	 */
-	void setActualLink(Id<Link> linkId);
+	void setActualLink(Id<Lane> linkId);
 
 	/**
 	 * Return the destination
 	 * @return destination
 	 */
-	Id<Link> getDestinationLinkId();
+	Id<Lane> getDestinationLinkId();
 
 	/**
 	 * Return the next link that agent must take.
 	 * 
 	 * @return next link
 	 */
-	Id<Link> getNextLinkId();
+	Id<Lane> getNextLinkId();
 
 	/**
 	 * Set the leg

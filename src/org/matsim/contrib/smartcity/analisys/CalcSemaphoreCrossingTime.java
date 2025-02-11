@@ -208,7 +208,7 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
     @Override
     public void handleEvent(SignalGroupStateChangedEvent event) {
         if (this.signalGroupMap == null){
-            setLink();
+            setLink(); // FIXME: i think there might be some problems here, need to check
         }
         if (event.getNewState() == SignalGroupState.RED) {
             this.signalGroupMap.get(event.getSignalGroupId()).getSignals().values().stream().map(Signal::getLinkId)

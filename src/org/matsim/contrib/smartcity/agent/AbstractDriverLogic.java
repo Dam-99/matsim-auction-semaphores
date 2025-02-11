@@ -9,6 +9,7 @@ import org.matsim.api.core.v01.population.Leg;
 import org.matsim.api.core.v01.population.Person;
 import org.matsim.api.core.v01.population.Route;
 import org.matsim.core.mobsim.qsim.pt.MobsimDriverPassengerAgent;
+import org.matsim.lanes.Lane;
 
 /**
  * Abstract class that implements a standard behavior of SmartDriverLogic.
@@ -25,15 +26,15 @@ import org.matsim.core.mobsim.qsim.pt.MobsimDriverPassengerAgent;
 public abstract class AbstractDriverLogic implements SmartDriverLogic {
 
 	protected Leg leg;
-	protected Id<Link> actualLink;
-	protected Id<Link> startLink;
-	protected Id<Link> endLink;
+	protected Id<Lane> actualLink;
+	protected Id<Lane> startLink;
+	protected Id<Lane> endLink;
 	protected Route route;
 	protected MobsimDriverPassengerAgent agent;
 	protected Person person;
 
 	@Override
-	public abstract Id<Link> getNextLinkId();
+	public abstract Id<Lane> getNextLinkId();
 
 	/* (non-Javadoc)
 	 * @see org.matsim.contrib.smartcity.agent.SmartDriverLogic#finalizeAction(double)
@@ -46,7 +47,7 @@ public abstract class AbstractDriverLogic implements SmartDriverLogic {
 	 * @see org.matsim.contrib.smartcity.agent.SmartDriverLogic#setActualLink(org.matsim.api.core.v01.Id)
 	 */
 	@Override
-	public void setActualLink(Id<Link> linkId) {
+	public void setActualLink(Id<Lane> linkId) {
 		this.actualLink = linkId;		
 	}
 
@@ -54,7 +55,7 @@ public abstract class AbstractDriverLogic implements SmartDriverLogic {
 	 * @see org.matsim.contrib.smartcity.agent.SmartDriverLogic#getDestinationLinkId()
 	 */
 	@Override
-	public Id<Link> getDestinationLinkId() {
+	public Id<Lane> getDestinationLinkId() {
 		return this.endLink;
 	}
 
@@ -65,8 +66,8 @@ public abstract class AbstractDriverLogic implements SmartDriverLogic {
 	public void setLeg(Leg leg) {
 		this.leg = leg;
 		this.route = leg.getRoute();
-		this.startLink = route.getStartLinkId();
-		this.endLink = route.getEndLinkId();
+		this.startLink = Id.create(route.getStartLinkId().toString() + ".ol", Lane.class); // FIXME: check if correct
+		this.endLink = Id.create(route.getEndLinkId().toString() + ".ol", Lane.class);
 	}
 	
 	@Override

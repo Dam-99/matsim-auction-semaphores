@@ -7,6 +7,7 @@ import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Leg;
 import org.matsim.contrib.dynagent.DriverDynLeg;
+import org.matsim.lanes.Lane;
 import org.matsim.vehicles.Vehicle;
 import org.matsim.core.population.routes.NetworkRoute;
 
@@ -54,7 +55,7 @@ public class SmartDriverDynLeg implements DriverDynLeg {
 	 */
 	@Override
 	public void arrivedOnLinkByNonNetworkMode(Id<Link> linkId) {
-		this.logic.setActualLink(linkId);
+		this.logic.setActualLink(Id.create(linkId.toString() + ".ol", Lane.class));
 	}
 
 	/* (non-Javadoc)
@@ -62,7 +63,7 @@ public class SmartDriverDynLeg implements DriverDynLeg {
 	 */
 	@Override
 	public Id<Link> getDestinationLinkId() {
-		return this.logic.getDestinationLinkId();
+		return Id.create(this.logic.getDestinationLinkId().toString().split("\\.")[0], Link.class);
 	}
 
 	/* (non-Javadoc)
@@ -86,7 +87,9 @@ public class SmartDriverDynLeg implements DriverDynLeg {
 	 */
 	@Override
 	public Id<Link> getNextLinkId() {
-		return this.logic.getNextLinkId();
+		// TODO: check if this works when only one lane exists
+		Id<Link> id = Id.create(this.logic.getNextLinkId().toString().split("\\.")[0], Link.class);
+		return id;
 	}
 
 	/* (non-Javadoc)
@@ -94,7 +97,12 @@ public class SmartDriverDynLeg implements DriverDynLeg {
 	 */
 	@Override
 	public void movedOverNode(Id<Link> newLinkId) {
-		this.logic.setActualLink(newLinkId);		
+		// TODO: check if this works when only one lane exists
+		this.movedOverNodeWithLane(Id.create(newLinkId.toString() + ".ol", Lane.class));
+	}
+
+	public void movedOverNodeWithLane(Id<Lane> newLinkId) {
+		this.logic.setActualLink(newLinkId);
 	}
 
 	/* (non-Javadoc)
