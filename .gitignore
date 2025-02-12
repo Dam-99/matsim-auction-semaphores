@@ -8,3 +8,6 @@ target/**
 analisi/**
 output/**
 plans/**
+
+configs/config.xml
+configs/lanes*.xml
