@@ -31,6 +31,7 @@ import org.matsim.core.controler.listener.AfterMobsimListener;
 import org.matsim.core.controler.listener.ShutdownListener;
 import org.matsim.core.mobsim.qsim.interfaces.SignalGroupState;
 import org.matsim.core.utils.collections.Tuple;
+import org.matsim.lanes.Lane;
 import org.matsim.vehicles.Vehicle;
 
 import java.io.FileNotFoundException;
@@ -49,13 +50,13 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
     private static final String SEMAPHORE_CROSSING_TIME_FILENAME = "semaphore_time.txt.gz";
     private static final String GREENWAVE_FILENAME = "greenwave.txt.gz";
 
-    private Set<Id<Link>> links;
+    private Set<Id<Lane>> links;
     private HashMap<Id<Vehicle>, Double>  enteredTime = new HashMap<>();
     private List<AttendingTime> times = new ArrayList<>();
-    private HashMap<Id<Link>, ArrayList<Id<Vehicle>>> possibleGreenWave = new HashMap<>();
+    private HashMap<Id<Lane>, ArrayList<Id<Vehicle>>> possibleGreenWave = new HashMap<>();
     private HashMap<Id<Vehicle>, Integer> greenWaveCounter = new HashMap<>();
     private HashMap<Id<Vehicle>, Integer> trafficLightCounter = new HashMap<>();
-    private Map<Id<Link>, SignalGroup> linkSignalMap = new HashMap<>();
+    private Map<Id<Lane>, SignalGroup> linkSignalMap = new HashMap<>();
 
     private Map<Id<SignalGroup>, SignalGroup> signalGroupMap;
 
@@ -72,13 +73,19 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
     private SignalSystemsManager signalSystemsManager;
 
     private void setLink() {
-        this.links = new HashSet<>(scenario.getNetwork().getLinks().keySet());
+        this.links = new HashSet<>();
+        String[] lanesExtensions = {".ol", ".l", ".s", ".r"};
+        scenario.getNetwork().getLinks().keySet().forEach( linkId -> {
+            for (String ext : lanesExtensions) {
+                this.links.add(Id.create(linkId.toString() + ext, Lane.class));
+            }
+        });
         this.signalSystemsManager = inj.getInstance(SignalSystemsManager.class);
         this.linkSignalMap = signalSystemsManager.getSignalSystems().values().stream().flatMap(s -> s.getSignalGroups().values().stream())
-                .flatMap(g -> g.getSignals().values().stream().map(Signal::getLinkId).map(l -> new Tuple<>(l, g)))
+                .flatMap(g -> g.getSignals().values().stream().map(Signal::getLaneIds).flatMap(Set::stream).map(l -> new Tuple<>(l, g)))
                 .collect(Collectors.toMap(Tuple::getFirst, Tuple::getSecond));
         this.signalGroupMap = signalSystemsManager.getSignalSystems().values().stream().flatMap(s -> s.getSignalGroups().entrySet().stream())
-                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override
@@ -86,7 +93,7 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
         if (this.links == null){
             setLink();
         }
-        vehicleEntered(linkEnterEvent.getVehicleId(), linkEnterEvent.getLinkId(), linkEnterEvent.getTime());
+        vehicleEntered(linkEnterEvent.getVehicleId(), Id.create(linkEnterEvent.getLinkId().toString() + ".ol", Lane.class), linkEnterEvent.getTime());
     }
 
     @Override
@@ -94,7 +101,8 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
         if (this.links == null){
             setLink();
         }
-        vehicleLeaved(linkLeaveEvent.getVehicleId(), linkLeaveEvent.getLinkId(), linkLeaveEvent.getTime());
+        // TODO: might be wrong because i'm adding ol even if the lane that it used was a directional lane
+        vehicleLeaved(linkLeaveEvent.getVehicleId(), Id.create(linkLeaveEvent.getLinkId() + ".ol", Lane.class), linkLeaveEvent.getTime());
     }
 
     @Override
@@ -102,7 +110,7 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
         if (this.links == null){
             setLink();
         }
-        vehicleEntered(vehicleEntersTrafficEvent.getVehicleId(), vehicleEntersTrafficEvent.getLinkId(), vehicleEntersTrafficEvent.getTime());
+        vehicleEntered(vehicleEntersTrafficEvent.getVehicleId(), Id.create(vehicleEntersTrafficEvent.getLinkId().toString() + ".ol", Lane.class), vehicleEntersTrafficEvent.getTime());
     }
 
     @Override
@@ -114,7 +122,7 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
         this.enteredTime.remove(vehicleLeavesTrafficEvent.getVehicleId());
     }
 
-    private void vehicleLeaved(Id<Vehicle> vehicleId, Id<Link> linkId, double time) {
+    private void vehicleLeaved(Id<Vehicle> vehicleId, Id<Lane> linkId, double time) {
         if (this.enteredTime.containsKey(vehicleId)){
         	double start = this.enteredTime.get(vehicleId);
             double totalTime = time - start;
@@ -135,7 +143,7 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
         this.greenWaveCounter.put(vehicleId, this.greenWaveCounter.getOrDefault(vehicleId, 0) + 1);
     }
 
-    private void vehicleEntered(Id<Vehicle> vehicleId, Id<Link> linkId, double time) {
+    private void vehicleEntered(Id<Vehicle> vehicleId, Id<Lane> linkId, double time) {
         if (this.links.contains(linkId)){
             this.enteredTime.put(vehicleId, time);
             updateCache(vehicleId);
@@ -148,15 +156,15 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
         }
     }
 
-    private boolean isTrafficLightGreen(Id<Link> linkId) {
+    private boolean isTrafficLightGreen(Id<Lane> linkId) {
         return this.linkSignalMap.get(linkId).getState() == SignalGroupState.GREEN;
     }
 
-    private boolean linkHasTrafficLight(Id<Link> linkId) {
+    private boolean linkHasTrafficLight(Id<Lane> linkId) {
         return this.linkSignalMap.containsKey(linkId);
     }
 
-    private void addVehicleToPossibleGreenWave(Id<Vehicle> vehicleId, Id<Link> linkId) {
+    private void addVehicleToPossibleGreenWave(Id<Vehicle> vehicleId, Id<Lane> linkId) {
         ArrayList<Id<Vehicle>> oldArray = this.possibleGreenWave.getOrDefault(linkId, new ArrayList<>());
         oldArray.add(vehicleId);
         this.possibleGreenWave.put(linkId, oldArray);
@@ -208,10 +216,11 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
     @Override
     public void handleEvent(SignalGroupStateChangedEvent event) {
         if (this.signalGroupMap == null){
-            setLink(); // FIXME: i think there might be some problems here, need to check
+            setLink();
         }
         if (event.getNewState() == SignalGroupState.RED) {
-            this.signalGroupMap.get(event.getSignalGroupId()).getSignals().values().stream().map(Signal::getLinkId)
+            this.signalGroupMap.get(event.getSignalGroupId()).getSignals().values().stream().map(Signal::getLaneIds)
+                    .flatMap(Set::stream)
                     .forEach(l -> this.possibleGreenWave.remove(l));
         }
     }
@@ -220,12 +229,12 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
     private class AttendingTime {
 
         private final Double start;
-        private Id<Link> link;
+        private Id<Lane> link;
         private Double time;
         private Id<Person> person;
         private Set<String> attrs;
 
-        public AttendingTime(Id<Link> link, Id<Person> person, Double time, Double start) {
+        public AttendingTime(Id<Lane> link, Id<Person> person, Double time, Double start) {
             this.link = link;
             this.time = time;
             this.person = person;
@@ -237,11 +246,11 @@ public class CalcSemaphoreCrossingTime implements LinkEnterEventHandler, LinkLea
             
         }
 
-        public Id<Link> getLink() {
+        public Id<Lane> getLink() {
             return link;
         }
 
-        public void setLink(Id<Link> link) {
+        public void setLink(Id<Lane> link) {
             this.link = link;
         }
 

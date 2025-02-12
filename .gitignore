@@ -11,3 +11,4 @@ plans/**
 
 configs/config.xml
 configs/lanes*.xml
+configs/SignalGroups*.xml

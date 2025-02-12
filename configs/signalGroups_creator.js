@@ -33,7 +33,7 @@ function directLane(system) {
         '@refId': system.id,
         signalGroup: [
             {
-                "@id": "sr1",
+                "@id": `${system.n}-${system.s}-sr`,
                 signal: [
                     { "@refId": `${system.n}.s` },
                     { "@refId": `${system.n}.r` },
@@ -42,7 +42,7 @@ function directLane(system) {
                 ]
             },
             {
-                "@id": "sr2",
+                "@id": `${system.w}-${system.e}-sr`,
                 signal: [
                     { "@refId": `${system.w}.s` },
                     { "@refId": `${system.w}.r` },
@@ -51,14 +51,14 @@ function directLane(system) {
                 ]
             },
             {
-                "@id": "l1",
+                "@id": `${system.n}-${system.s}-sr`,
                 signal: [
                     { "@refId": `${system.n}.l` },
                     { "@refId": `${system.s}.l` },
                 ]
             },
             {
-                "@id": "l2",
+                "@id": `${system.w}-${system.e}-sr`,
                 signal: [
                     { "@refId": `${system.w}.l` },
                     { "@refId": `${system.e}.l` },
