@@ -106,13 +106,15 @@ public class RandomPlansCreationMixed {
 			new_args[5] = "";
 			if (args.length - 2 >= 0) System.arraycopy(args, 2, new_args, 6, args.length - 2);
 			try {
-				Files.createDirectories(Paths.get("plans/" + args[1] + "/" + smartAgents + "agents" + "/"));
+//				Files.createDirectories(Paths.get("plans/" + args[1] + "/" + smartAgents + "agents" + "/"));
+				Files.createDirectories(Paths.get("plans/allEquipped/"+args[1]+"/"+smartAgents+"/"));
 			} catch (IOException e) {
 				System.exit(1);
 			}
 
 			for (int i = 0; i < 20; i++) {
-				new_args[4] = "plans/" + args[1] + "/" + smartAgents + "agents" + "/" + "plans" + i + ".xml";
+//				new_args[4] = "plans/" + args[1] + "/" + smartAgents + "agents" + "/" + "plans" + i + ".xml";
+				new_args[4] = "plans/allEquipped/"+args[1]+"/"+smartAgents+"/plans"+i+".xml";
 
 				main_(new_args, null);
 			}
@@ -203,13 +205,14 @@ public class RandomPlansCreationMixed {
 			new_args[5] = "agent.BidAgent";
 			if (args.length - 2 >= 0) System.arraycopy(args, 2, new_args, 6, args.length - 2);
 			try {
-				Files.createDirectories(Paths.get("plans/" + args[1] + "/" + emergencyBudget + "emergency_budget" + "/"));
+//				Files.createDirectories(Paths.get("plans/" + args[1] + "/" + emergencyBudget + "emergency_budget" + "/"));
+				Files.createDirectories(Paths.get("plans/" + args[1] + "/60/"));
 			} catch (IOException e) {
 				System.exit(1);
 			}
 
 			for (int i = 0; i < 5; i++) {
-				new_args[4] = "plans/" + args[1] + "/" + emergencyBudget + "emergency_budget" + "/" + "plans" + i + ".xml";
+				new_args[4] = "plans/" + args[1] + "/60/plans" + i + ".xml";
 
 				main_(new_args, emergencyBudget);
 			}
@@ -365,9 +368,50 @@ public class RandomPlansCreationMixed {
 		//experiment 3-4
 		if (emergencyBudget != null) {
 			for (int x = 0; x < Integer.parseInt(args[1]); x++) {
-				Person p = getRandomFromSet(population.getPersons().values());
-                System.out.println("eeei " + "emergencyBudget id:" + p.getId());
+				Person p;
+				do {
+					p = getRandomFromSet(population.getPersons().values());
+//				Person p = factory.createPerson(Id.createPersonId(k));
+				}while(p.getAttributes().getAttribute(SmartAgentFactory.DRIVE_LOGIC_NAME).toString().contains("BidAgent"));
+//				p.getAttributes().putAttribute(SmartAgentFactory.DRIVE_LOGIC_NAME, BidAgent.class.getCanonicalName());
+				Link home = network.getLinks().get(Id.create("112", Link.class));
+				Link work = network.getLinks().get(Id.create("112", Link.class));
+				ActivityFacility facHome;
+				ActivityFacility facWork;
+				facHome = activityFac.createActivityFacility(null, home.getId());
+				facWork = activityFac.createActivityFacility(null, work.getId());
+				try {
+					List<? extends PlanElement> morningPlan = routing.calcRoute(facHome, facWork, 0, null);
+					List<? extends PlanElement> afterPlan = routing.calcRoute(facWork, facHome, 0, null);
+					routeDur = ((Leg) morningPlan.get(0)).getTravelTime();
+					afterDur = ((Leg) afterPlan.get(0)).getTravelTime();
+				}catch(RuntimeException e){}
+				double workStart = getWorkStart();
+				double workEnd = getWorkEnd();
+				double morningDep = workStart - routeDur;
+				p.getAttributes().putAttribute("travelTime", ""+(routeDur+afterDur));
 				p.getAttributes().putAttribute("budget", emergencyBudget.toString());
+				//home activity (prima e dopo lavoro)
+				Plan plan = factory.createPlan();
+				Activity homeAct1 = factory.createActivityFromLinkId(HOME_ACT, home.getId());
+				homeAct1.setMaximumDuration(morningDep);
+				Activity homeAct2 = factory.createActivityFromLinkId(HOME_ACT, home.getId());
+				// work activity
+				Activity workAct = factory.createActivityFromLinkId(WORK_ACT, work.getId());
+				//workAct.setMaximumDuration(workDur); // differenza tra maxDuration e start/endTime ?
+				workAct.setStartTime(workStart);
+				workAct.setEndTime(workEnd);
+				Leg legToWork = factory.createLeg(TransportMode.car);
+				Leg legToHome = factory.createLeg(TransportMode.car);
+
+				plan.addActivity(homeAct1);
+				plan.addLeg(legToWork);
+				plan.addActivity(workAct);
+				plan.addLeg(legToHome);
+				plan.addActivity(homeAct2);
+				p.addPlan(plan);
+				population.addPerson(p);
+                System.out.println("eeei " + "emergencyBudget id:" + p.getId());
 			}
 		}
 		PopulationWriter writer = new PopulationWriter(population);
@@ -399,6 +443,7 @@ public class RandomPlansCreationMixed {
 					int max = Integer.parseInt(minMax[1]);
 					//value = String.valueOf((new Random().nextInt()) + min);
 					NormalDistribution dist = new NormalDistribution((double) (max - min) /2, 15);
+//					UniformIntegerDistribution dist = new UniformIntegerDistribution(min, max);
 					value = String.valueOf(dist.sample());
 				}
 			}

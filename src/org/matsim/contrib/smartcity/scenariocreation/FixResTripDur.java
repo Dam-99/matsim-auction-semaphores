@@ -139,28 +139,30 @@ public class FixResTripDur {
                                 // ------ UPDATETRAVELTIME OUTPUT ------
                                 p.getAttributes().putAttribute("travelTime", tripTrav);
                                 Integer pId = Integer.parseInt(p.getId().toString());
-                                String dur = popAttrMap.get(pId).split("\t")[0];
-                                String attrs = popAttrMap.get(pId).split("\t")[1];
-                                String[] newAttrs = new String[6];
-                                int i = 0;
-                                boolean found = false;
-                                for (String attr : attrs.split(";")) {
-                                    String name = attr.split("=")[0];
-                                    String value = attr.split("=")[1];
-                                    if (name.equals("travelTime")) {
-                                        value = "" + tripTrav;
-                                        found = true;
+                                if (!popAttrMap.get(pId).contains("travelTime")) {
+                                    String dur = popAttrMap.get(pId).split("\t")[0];
+                                    String attrs = popAttrMap.get(pId).split("\t")[1];
+                                    String[] newAttrs = new String[6];
+                                    int i = 0;
+                                    boolean found = false;
+                                    for (String attr : attrs.split(";")) {
+                                        String name = attr.split("=")[0];
+                                        String value = attr.split("=")[1];
+                                        if (name.equals("travelTime")) {
+                                            value = "" + tripTrav;
+                                            found = true;
+                                        }
+                                        newAttrs[i] = name + "=" + value;
+                                        i++;
                                     }
-                                    newAttrs[i] = name + "=" + value;
-                                    i++;
+                                    if (!found) {
+                                        newAttrs[i] = "travelTime=" + tripTrav;
+                                    }
+                                    popAttrMap.put(pId, dur + "\t" + String.join(";", newAttrs));
+                                    // -------------------------------------
+                                    updateTravelTime(popAttrMap, Integer.parseInt(x), resDir);
                                 }
-                                if (!found) {
-                                    newAttrs[i] = "travelTime=" + tripTrav;
-                                }
-                                popAttrMap.put(pId, dur + "\t" + String.join(";", newAttrs));
-                                // -------------------------------------
                             }
-                             updateTravelTime(popAttrMap, Integer.parseInt(x), resDir);
                             // PopulationWriter pw = new PopulationWriter(s.getPopulation());
                             // pw.write(plansPath);
                         }
