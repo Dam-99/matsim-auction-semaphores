@@ -121,11 +121,11 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
             if (e.getKey() != null && this.agentMap.get(e.getKey()) != null) {
                 boolean curFoundAgent = this.agentMap.get(e.getKey()).stream().filter(bid -> bid.getAgent() != null && bid.getAgent().getPerson().getId()
                         .toString().equals("3640")).collect(Collectors.toList()).size() > 0;
-                if (curFoundAgent) {
-                    foundAgent = true;
-                    foundAgentLink = e.getKey();
-                    log.error("getNextGreen: found bid by 3640 on link " + e.getKey() + ": " + e.getValue());
-                }
+//                if (curFoundAgent) {
+//                    foundAgent = true;
+//                    foundAgentLink = e.getKey();
+//                    log.error("getNextGreen: found bid by 3640 on link " + e.getKey() + ": " + e.getValue());
+//                }
             }
             bids += " " + e.getValue();
             if (e.getValue() > max){
@@ -135,21 +135,21 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
         }
 
         if (link != null){
-            if (foundAgent) {
-                log.error("getNextGreen: green link is " + link.toString() + " with bid " + max);
-                log.error("getNextGreen: 3640 is on " + (foundAgentLink != null ? foundAgentLink.toString() : null) + bids);
-                if(!link.toString().equals(foundAgentLink.toString())) {
-                    String sgGroupIds = this.signalMap.get(link).getSignals().values().stream()
-                            .map(Signal::getLinkId).map(Id::toString).map(s -> s + " ").reduce(String::concat).orElse("Empty SignalGroup").trim();
-                    log.error("Signal group containing link but not agent's link, all IDs: " + sgGroupIds);
-                }
-            }
+//            if (foundAgent) {
+//                log.error("getNextGreen: green link is " + link.toString() + " with bid " + max);
+//                log.error("getNextGreen: 3640 is on " + (foundAgentLink != null ? foundAgentLink.toString() : null) + bids);
+//                if(!link.toString().equals(foundAgentLink.toString())) {
+//                    String sgGroupIds = this.signalMap.get(link).getSignals().values().stream()
+//                            .map(Signal::getLinkId).map(Id::toString).map(s -> s + " ").reduce(String::concat).orElse("Empty SignalGroup").trim();
+//                    log.error("Signal group containing link but not agent's link, all IDs: " + sgGroupIds);
+//                }
+//            }
             return new NextGreen(this.signalMap.get(link).getId(), link);
         } else {
-            if (foundAgent) {
-                log.error("getNextGreen: green link is null with bid " + max);
-                log.error("getNextGreen: 3640 is on " + (foundAgentLink != null ? foundAgentLink.toString() : null) + bids);
-            }
+//            if (foundAgent) {
+//                log.error("getNextGreen: green link is null with bid " + max);
+//                log.error("getNextGreen: 3640 is on " + (foundAgentLink != null ? foundAgentLink.toString() : null) + bids);
+//            }
             return new NextGreen(getRandomSignal(), null);
         }
     }
@@ -213,8 +213,8 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
             Id<Lane> link = ((BidMessage) message).getLink();
             int bid = ((BidMessage) message).getBid();
             BidAgent agent = (BidAgent) ((BidMessage) message).getSender();
-            if (agent.getPerson().getId().toString().equals("3640"))
-                log.error("sendToMe(BidMessage): 3640 bids " + bid + " on link " + link);
+//            if (agent.getPerson().getId().toString().equals("3640"))
+//                log.error("sendToMe(BidMessage): 3640 bids " + bid + " on link " + lane);
             double time = ((BidMessage) message).getTime();
 
             em.processEvent(new BidEvent(link, agent, bid, time));
@@ -229,9 +229,9 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
             //Scalare la puntata se è richiesta per una strada attualmente verde
             if (this.signalMap.get(link).getId().equals(this.actualGreen)){
                 bid = bid / 10;
-                if(agent.getPerson().getId().toString().equals("3640")) {
-                    log.error("bid is gonna be scaled to 1/10: " + bid);
-                }
+//                if(agent.getPerson().getId().toString().equals("3640")) {
+//                    log.error("bid is gonna be scaled to 1/10: " + bid);
+//                }
             }
             this.bidMap.put(link, actual + bid);
 
@@ -240,17 +240,17 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
             List<Id<Lane>> agentRoute = ((RideMessage) message).getRoute();
             int index = ((RideMessage) message).getIndex();
             BidAgent agent = (BidAgent) ((RideMessage) message).getSender();
-            if (index <= agentRoute.size() && index > 0 ) {
-                if (agent.getPerson().getId().toString().equals("3640"))
-                    log.error("sendToMe(RideMessage): 3640 (on link " + agentRoute.get(index-1) + ") communicates path: " +
-                            agentRoute.stream().map(Id::toString).map(s -> s + " ").reduce(String::concat).orElse("empty path").trim());
-            }
+//            if (indexLanes <= agentRouteLanes.size() && indexLanes > 0 ) {
+//                if (agent.getPerson().getId().toString().equals("3640"))
+//                    log.error("sendToMe(RideMessage): 3640 (on link " + agentRoute.get(index-1) + ") communicates path: " +
+//                            agentRoute.stream().map(Id::toString).map(s -> s + " ").reduce(String::concat).orElse("empty path").trim());
+//            }
 
         } else if (message instanceof CrossedMessage) { // agente ha attraversato l'incrocio di questo semaforo
             BidAgent senderAgent = (BidAgent) message.getSender();
             Id<Lane> link = ((CrossedMessage) message).getLink();
-            if (senderAgent.getPerson().getId().toString().equals("3640"))
-                log.error("sendToMe(CrossedMessage): 3640 crossed intersection from " + link);
+//            if (senderAgent.getPerson().getId().toString().equals("3640"))
+//                log.error("sendToMe(CrossedMessage): 3640 crossed intersection from " + link);
         }
     }
 

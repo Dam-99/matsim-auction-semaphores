@@ -74,23 +74,29 @@ public class BidAgent extends StaticDriverLogic implements ComunicationClient, C
                 this.budget -= this.usedBudgetForSponsor;
                 this.usedBudgetForSponsor = 0;
             }
-            if(this.getPerson().getId().toString().equals("3640")) {
-                log.error("sendToMe(DecriseBudget): 3640 budget " + beforeBudget + "-" + amount + "=" + this.budget + " (og: " + this.originalBudget + ")");
-            }
+//            if(this.getPerson().getId().toString().equals("3640")) {
+//                log.error("sendToMe(DecriseBudget): 3640 budget " + beforeBudget + "-" + amount + "=" + this.budget + " (og: " + this.originalBudget + ")");
+//            }
         }
     }
 
     @Override
     public void setActualLink(Id<Lane> actualLink) {
     	Id<Lane> previousLink = super.actualLink;
+//        log.warn("Agent " + id + " moved from " + super.actualLink + " to " + actualLink);
     	if (previousLink != null && this.previousSem != null) {
-    		if(this.agent.getId().toString().equals(Integer.toString(3640)))
-                log.error("setActualLink: 3640 is changing from link " + previousLink + ", next links: " + this.getLinksList());
+//    		if(this.agent.getId().toString().equals(Integer.toString(3640)))
+//                log.error("setActualLink: 3640 is changing from link " + previousLink + ", next links: " + this.getLinksList());
 	    	this.previousSem.sendToMe(new CrossedMessage(this,this.getBid(),previousLink,this.qSim.getSimTimer().getTimeOfDay()));
 	    	this.previousSem = null;
     	}
-    	
+
         super.setActualLink(actualLink);
+//        log.warn("set actualLink: " + actualLink);
+        if (!this.isDirectedLanes) {
+//            log.warn("LaneEnter Forced: agent: " + this.agent.getId() + " lane: " + actualLink + ".ol time: " + this.qSim.getSimTimer().getTimeOfDay());
+            this.setActualLane(Id.create(actualLink.toString() + ".ol", Lane.class));
+        }
 
         //if remain in the same link don't bid
         if (actualLink.equals(previousLink))
@@ -100,6 +106,15 @@ public class BidAgent extends StaticDriverLogic implements ComunicationClient, C
                 .map(s -> (BidsSemaphoreController) s)
                 .filter(s -> s.controlLink(actualLink))
                 .collect(Collectors.toList());
+        String s = "found semaphores on " + actualBiddingLane + ": [";
+        for (BidsSemaphoreController c : sem) {
+            s = s + sem.toString() + ",";
+        }
+        if (s.charAt(s.length()-1) == ',') {
+            s = s.substring(0, s.length() - 1);
+        }
+        s += "]";
+//        log.warn(s);
 
         if (sem.size() == 0) {
             return;

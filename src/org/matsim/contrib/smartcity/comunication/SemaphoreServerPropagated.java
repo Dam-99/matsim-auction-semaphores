@@ -74,8 +74,8 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 				return;
 			}
 			boolean isFollowedAgent = ((SemaphoreFlowMessage) message).is3640Message;
-			if(isFollowedAgent)
-				log.error("sendToMe(SemaphoreFlow): " + ((SemaphoreFlowMessage) message).getActualLink() + " set flow of 3640");
+//			if(isFollowedAgent)
+//				log.error("sendToMe(SemaphoreFlow): " + ((SemaphoreFlowMessage) message).getActualLink() + " set flow of 3640");
 
 			// compute propagation on the following signalsystems
 			Id<Lane> actualLink =  ((SemaphoreFlowMessage) message).getActualLink();
@@ -83,8 +83,6 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 				for(Tuple<List<Id<Lane>>,Integer> routeAndBid : agentsRouteAndBid) {
 					double estimatedTripTime = 0;
 					int propagationAdded = 0;
-					if(isFollowedAgent)
-						log.error("sendToMe(SemaphoreFlow): route is " + routeAndBid.getFirst().stream().map(Object::toString).collect(Collectors.joining(",")));
 					for(Id<Lane> link : routeAndBid.getFirst()) {
 						SignalGroup sg = signalMap.get(link);
 						double length = this.network.getLinks().get(link).getLength();
@@ -96,6 +94,8 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 							if (actual == null) {
 								actual = new PriorityQueue<IncomingAgent>();
 								this.incomingBid.put(sg.getId(),actual);
+//					if(isFollowedAgent)
+//						log.error("sendToMe(SemaphoreFlow): route is " + routeAndBid.getFirst().stream().map(Object::toString).collect(Collectors.joining(",")));
 							}
 							actual.add(new IncomingAgent((int) Math.round(routeAndBid.getSecond()*Math.pow(0.5,(propagationAdded))),estimatedTripTime + time));
 							propagationAdded++;
@@ -127,8 +127,8 @@ public class SemaphoreServerPropagated extends SemaphoreServer implements Comuni
 						IncomingAgent agent = queue.peek();
 						if (agent.getEstimatedArrivalTime() - time <= 40 || agent.getEstimatedArrivalTime() == 0) {
 							if (agent.is3640agent) {
-								log.error("sendToMe(IncomingRequest): sender is link among " + ((BidsSemaphoreControllerCommunication) sender).getSignalMap().keySet());
-								log.error("sendToMe(IncomingRequest): propagated bid added to the IncomingResponse for link " + link + " (" + queue.peek().getBid() + ")");
+//								log.error("sendToMe(IncomingRequest): sender is link among " + ((BidsSemaphoreControllerCommunication) sender).getSignalMap().keySet());
+//								log.error("sendToMe(IncomingRequest): propagated bid added to the IncomingResponse for link " + link + " (" + queue.peek().getBid() + ")");
 							}
 							sum += queue.poll().getBid();
 						}

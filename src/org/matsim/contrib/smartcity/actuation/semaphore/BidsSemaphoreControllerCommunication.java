@@ -105,7 +105,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         this.lastChange = timeSeconds;
 
         if (this.logActive && this.isSignalSystem) {
-            log.error("green group for problematic system: " + nextGreenLink);
+//            log.error("green group for problematic system: " + nextGreenLink);
 //            if (this.has3640) {
 //                log.error("Agent 3640 __IS__ in system");
 //            } else {
@@ -229,7 +229,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
                     foundAgentLink = e.getKey();
                     this.has3640 = true;
                     this.logActive = true;
-                    log.error("getNextGreen: found bid by 3640 on link " + e.getKey() + ": " + e.getValue());
+//                    log.error("getNextGreen: found bid by 3640 on link " + e.getKey() + ": " + e.getValue());
                 }
                 if (!debug_stop)
                     debug_stop = e.getKey().toString().equals("225");
@@ -239,8 +239,8 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
                     && timeSeconds > this.lastGreen.getOrDefault(e.getKey(), 0.0) + 600
                     && this.agentMap.get(e.getKey()).size() > 0) {
                 starvationBonus = 30000;
-                if (this.isSignalSystem)
-                    log.error("getNextGreen: System is applying starvation bonus");
+//                if (this.isSignalSystem)
+//                    log.error("getNextGreen: System is applying starvation bonus");
             }
             if (e.getValue() > 0) {
                 if (e.getValue() + this.incomingBid.getOrDefault(e.getKey(), 0) + starvationBonus > max) {
@@ -255,14 +255,14 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
         }
         if (link != null) {
             if (foundAgent) {
-                log.error("getNextGreen: green link is " + link.toString() + " with bid " + max);
-                log.error("getNextGreen: 3640 is on " + (foundAgentLink != null ? foundAgentLink.toString() : null)
-                        + " " + bids);
+//                log.error("getNextGreen: green link is " + link.toString() + " with bid " + max);
+//                log.error("getNextGreen: 3640 is on " + (foundAgentLink != null ? foundAgentLink.toString() : null)
+//                        + " " + bids);
                 if (!link.toString().equals(foundAgentLink.toString())) {
                     String sgGroupIds = this.signalMap.get(link).getSignals().values().stream()
                             .map(Signal::getLinkId).map(Id::toString).map(s -> s + " ").reduce(String::concat)
                             .orElse("Empty SignalGroup").trim();
-                    log.error("Signal group containing green link but not agent's link, all IDs: " + sgGroupIds);
+//                    log.error("Signal group containing green link but not agent's link, all IDs: " + sgGroupIds);
                 }
             }
             this.lastGreen.put(link, timeSeconds);
@@ -270,9 +270,9 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             return new NextGreen(this.signalMap.get(link).getId(), link);
         } else {
             if (foundAgent) {
-                log.error("getNextGreen: green link is null with bid ");
-                log.error("getNextGreen: 3640 is on " + (foundAgentLink != null ? foundAgentLink.toString() : null)
-                        + " " + bids);
+//                log.error("getNextGreen: green link is null with bid ");
+//                log.error("getNextGreen: 3640 is on " + (foundAgentLink != null ? foundAgentLink.toString() : null)
+//                        + " " + bids);
             }
             return new NextGreen(getRandomSignal(), null);
         }
@@ -358,17 +358,20 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             Id<Lane> link = ((BidMessage) message).getLink();
             int bid = ((BidMessage) message).getBid();
             BidAgent agent = (BidAgent) ((BidMessage) message).getSender();
-            if (agent.getPerson().getId().toString().equals("3640"))
-                log.error("sendToMe(BidMessage): 3640 bids " + bid + " on link " + link);
-            if (link == agent.getDestinationLinkId())
+            Id<SignalGroup> sgId = this.signalMap.get(lane).getId();
+//            log.error("agent id " + agent.getPerson().getId());
+//            if (agent.getPerson().getId().toString().equals("3640"))
+//                log.error("sendToMe(BidMessage): agent0 bids " + bid + " on link " + lane + " at time: " + ((BidMessage) message).getTime()
+//                    + "signalGroup: " + sgId + "currentGreen: " + this.actualGreen);
+            if (lane == agent.getDestinationLinkId())
                 return;
             double time = ((BidMessage) message).getTime();
 
             em.processEvent(new BidEvent(link, agent, bid, time));
 
             if (bid <= 0) {
-                if (agent.getPerson().getId().toString().equals("3640"))
-                    log.error("sendToMe(BidMessage): bid ignored (<=0)");
+//                if (agent.getPerson().getId().toString().equals("3640"))
+//                    log.error("sendToMe(BidMessage): bid ignored (<=0)");
                 return;
             }
 
@@ -389,14 +392,14 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             List<Id<Lane>> agentRoute = ((RideMessage) message).getRoute();
             int index = ((RideMessage) message).getIndex();
             BidAgent agent = (BidAgent) ((RideMessage) message).getSender();
-            if (index <= agentRoute.size() && index > 0) {
-                if (agent.getPerson().getId().toString().equals("3640"))
-                    log.error("sendToMe(RideMessage): 3640 (on link " + agentRoute.get(index - 1)
-                            + ") communicates path: " +
-                            agentRoute.stream().map(Id::toString).map(s -> s + " ").reduce(String::concat)
-                                    .orElse("empty path").trim());
-                Id<Lane> actualLink = agentRoute.get(index - 1);
-                List<Tuple<List<Id<Lane>>, Integer>> actual = this.agentsRouteAndBid.get(actualLink);
+            if (indexLanes <= agentRouteLanes.size() && indexLanes > 0) {
+//                if (agent.getPerson().getId().toString().equals("0"))
+//                    log.error("sendToMe(RideMessage): agent0 (on link " + agentRouteLanes.get(indexLanes - 1)
+//                            + ") communicates path: " +
+//                            agentRouteLanes.stream().map(Id::toString).map(s -> s + " ").reduce(String::concat)
+//                                    .orElse("empty path").trim());
+                Id<Lane> bidLane = agentRouteLanes.get(indexLanes - 1);
+                List<Tuple<List<Id<Lane>>, Integer>> actual = this.agentsRouteAndBid.get(bidLane);
                 if (actual == null) {
                     actual = new Vector<Tuple<List<Id<Lane>>, Integer>>();
                     this.agentsRouteAndBid.put(actualLink, actual);
@@ -414,7 +417,8 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             Id<Lane> link = ((CrossedMessage) message).getLink();
             boolean isFollowedAgent = senderAgent.getPerson().getId().toString().equals("3640");
             if (isFollowedAgent) {
-                log.error("sendToMe(CrossedMessage): 3640 crossed intersection from " + link);
+//                log.error("sendToMe(CrossedMessage): agent0 crossed intersection from " + lane + " at time: " + ((CrossedMessage) message).getTime()
+//                    + "signalGroup: " + sgId + "currentGreen: " + this.actualGreen);
                 this.has3640 = false;
                 this.logActive = true;
             }
