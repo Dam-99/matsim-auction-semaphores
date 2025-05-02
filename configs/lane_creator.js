@@ -33,67 +33,112 @@ writeFileSync(lanesFile, stringify(xml));
 
 
 function directLane(link) {
-    return { 
-        '@linkIdRef': link.id,
-        lane: [
-            { // LANE TURNING LEFT
-            '@id': link.id + ".l",
-            leadsTo: { toLink: { '@refId': link.left } },
-            representedLanes: { '@number': "1.0" },
-            capacity: { '@vehiclesPerHour': vph },
-            startsAt: { '@meterFromLinkEnd': lenLane },
-            alignment: "1",
-            attributes: {},
-            },
-            { // ORIGINAL LANE
-            '@id': link.id + ".ol",
-            leadsTo: { toLane: [ { '@refId': link.id + ".l" }, { '@refId': link.id + ".s" }, { '@refId': link.id + ".r" } ] },
-            representedLanes: { '@number': "1.0" },
-            capacity: { '@vehiclesPerHour': vphLink },
-            startsAt: { '@meterFromLinkEnd': lenLink },
-            alignment: "0",
-            attributes: {},
-            },
-            { // LANE TURNING RIGHT
-            '@id': link.id + ".r",
-            leadsTo: { toLink: { '@refId': link.right } },
-            representedLanes: { '@number': "1.0" },
-            capacity: { '@vehiclesPerHour': vph },
-            startsAt: { '@meterFromLinkEnd': lenLane },
-            alignment: "-1",
-            attributes: {},
-            },
-            { // LANE GOING STRAIGHT
-            '@id': link.id + ".s",
-            leadsTo: { toLink: { '@refId': link.straight } },
-            representedLanes: { '@number': "1.0" },
-            capacity: { '@vehiclesPerHour': vph },
-            startsAt: { '@meterFromLinkEnd': lenLane },
-            alignment: "0",
-            attributes: {},
-            },
-        ]
-    }
+    if (link.left === undefined)
+        // U-TURNS EDGE OF MAP
+        return { 
+            '@linkIdRef': link.id,
+            lane: [
+                {
+                    '@id': link.id + ".s",
+                    leadsTo: { toLink: { '@refId': link.straight }, },
+                    representedLanes: { '@number': "1.0" },
+                    capacity: { '@vehiclesPerHour': vph },
+                    startsAt: { '@meterFromLinkEnd': lenLane },
+                    alignment: "0",
+                    attributes: {},
+                },
+                {
+                    '@id': link.id + ".ol", // .ol probs needed to not break the code
+                    leadsTo: { toLink: { '@refId': link.straight } },
+                    representedLanes: { '@number': "1.0" },
+                    capacity: { '@vehiclesPerHour': vphLink },
+                    startsAt: { '@meterFromLinkEnd': lenLink },
+                    alignment: "0",
+                    attributes: {},
+
+                },
+            ],
+        }
+        else
+        return { 
+            '@linkIdRef': link.id,
+            lane: [
+                { // LANE TURNING LEFT
+                    '@id': link.id + ".l",
+                    leadsTo: { toLink: { '@refId': link.left } },
+                    representedLanes: { '@number': "1.0" },
+                    capacity: { '@vehiclesPerHour': vph },
+                    startsAt: { '@meterFromLinkEnd': lenLane },
+                    alignment: "1",
+                    attributes: {},
+                },
+                { // ORIGINAL LANE
+                    '@id': link.id + ".ol",
+                    leadsTo: { toLane: [ { '@refId': link.id + ".l" }, { '@refId': link.id + ".s" }, { '@refId': link.id + ".r" } ] },
+                    representedLanes: { '@number': "1.0" },
+                    capacity: { '@vehiclesPerHour': vphLink },
+                    startsAt: { '@meterFromLinkEnd': lenLink },
+                    alignment: "0",
+                    attributes: {},
+                },
+                { // LANE TURNING RIGHT
+                    '@id': link.id + ".r",
+                    leadsTo: { toLink: { '@refId': link.right } },
+                    representedLanes: { '@number': "1.0" },
+                    capacity: { '@vehiclesPerHour': vph },
+                    startsAt: { '@meterFromLinkEnd': lenLane },
+                    alignment: "-1",
+                    attributes: {},
+                },
+                { // LANE GOING STRAIGHT
+                    '@id': link.id + ".s",
+                    leadsTo: { toLink: { '@refId': link.straight } },
+                    representedLanes: { '@number': "1.0" },
+                    capacity: { '@vehiclesPerHour': vph },
+                    startsAt: { '@meterFromLinkEnd': lenLane },
+                    alignment: "0",
+                    attributes: {},
+                },
+            ]
+        }
 }
 
 function singleLane(link) {
-    return { 
-        '@linkIdRef': link.id,
-        lane: {
-            '@id': link.id + ".ol", // .ol probs needed to not break the code
-            leadsTo: {
-                toLink: [
-                    { '@refId': link.left },
-                    { '@refId': link.straight },
-                    { '@refId': link.right } 
-                ],
-            },
-            representedLanes: { '@number': "1.0" },
-            capacity: { '@vehiclesPerHour': vphLink },
-            startsAt: { '@meterFromLinkEnd': lenLink },
-            alignment: "0",
-            attributes: {},
+    if(link.left === undefined) 
+        return { 
+            '@linkIdRef': link.id,
+            lane: {
+                '@id': link.id + ".ol", // .ol probs needed to not break the code
+                leadsTo: {
+                    toLink: [
+                        { '@refId': link.straight },
+                    ],
+                },
+                representedLanes: { '@number': "1.0" },
+                capacity: { '@vehiclesPerHour': vphLink },
+                startsAt: { '@meterFromLinkEnd': lenLink },
+                alignment: "0",
+                attributes: {},
+            }
         }
-    }
+        else
+        return { 
+            '@linkIdRef': link.id,
+            lane: {
+                '@id': link.id + ".ol", // .ol probs needed to not break the code
+                leadsTo: {
+                    toLink: [
+                        { '@refId': link.left },
+                        { '@refId': link.straight },
+                        { '@refId': link.right } 
+                    ],
+                },
+                representedLanes: { '@number': "1.0" },
+                capacity: { '@vehiclesPerHour': vphLink },
+                startsAt: { '@meterFromLinkEnd': lenLink },
+                alignment: "0",
+                attributes: {},
+            }
+        }
 }
 

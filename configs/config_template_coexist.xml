@@ -8,7 +8,7 @@
 		<param name="wrapper" value="org.matsim.contrib.smartcity.comunication.wrapper.ComunicationFixedWrapper" />
 	</module>
 	<module name="controler" >
-		<param name="outputDirectory" value="./output/coexist_TO_SET_TRAFFIC/TO_SET_OUTMODE/TO_SET_AGENTSagents/TO_SET_NUMBER/" />
+		<param name="outputDirectory" value="./output/coexist_TO_SET_TRAFFICTO_SET_OUTLANES/TO_SET_OUTMODE/TO_SET_AGENTSagents/TO_SET_NUMBER/" />
 		<!-- Default=false. If enabled, the router takes travel times needed for turning moves into account. Cannot be used if the (Fast)AStarLandmarks routing or TravelTimeCalculator.separateModes is enabled. -->
 		<param name="enableLinkToLinkRouting" value="true" />
 		<!-- Default=1000;  -->
@@ -138,7 +138,7 @@
 		<!-- Possible values: NONE, CONFLICTING_DIRECTIONS_NO_TURN_RESTRICTIONS, CONFLICTING_DIRECTIONS_AND_TURN_RESTRICTIONS -->
 		<param name="intersectionLogic" value="NONE" />
 		<param name="signalcontrol" value="SignalControl_TO_SET_MODE.xml" />
-		<param name="signalgroups" value="SignalGroups_TO_SET_LANES.xml" />
+		<param name="signalgroups" value="SignalGroups_TO_SET_OUTLANES.xml" />
 		<param name="signalsystems" value="SignalsSystem_TO_SET_LANES.xml" />
 		<param name="useAmbertimes" value="false" />
 		<param name="useIntergreentimes" value="false" />

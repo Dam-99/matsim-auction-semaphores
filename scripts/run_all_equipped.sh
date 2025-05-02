@@ -4,11 +4,15 @@ if [ -z "$1" ]; then
 else
     lanes=$1
 fi
+outlanes=$lanes
+if [ $lanes = "mixed" ]; then
+    lanes="lanes"
+fi
 cp ./configs/config_template_all_equipped.xml ./configs/config.xml
 for mode in 'fixed' 'basic' 'communication' 'proportional'; do
-    for agents in $(seq 1000 500 5000); do
+    for agents in $(seq 500 500 5000); do
         for i in $(seq 0 19); do
-            echo "RUNNING ALL-EQUIPPED ${mode} ${agents} ${i}"
+            echo "RUNNING ALL-EQUIPPED ${outlanes} ${mode} ${agents} ${i}"
             if [ $mode == "fixed" ]; then
                 mode_output="ftc"
             else
@@ -25,6 +29,7 @@ for mode in 'fixed' 'basic' 'communication' 'proportional'; do
             sed -i -e "s/TO_SET_OUTMODE/${mode_output}/g" ./configs/config.xml
             sed -i -e "s/_PROPAGATION/${propagated}/g" ./configs/config.xml
             sed -i -e "s/TO_SET_LANES/${lanes}/g" ./configs/config.xml
+            sed -i -e "s/TO_SET_OUTLANES/${outlanes}/g" ./configs/config.xml
             java -Xmx6g -cp ./target/smartcity-0.0.1-SNAPSHOT.jar org.matsim.contrib.smartcity.RunSmartcity ./configs/config.xml
             cp ./configs/config_template_all_equipped.xml ./configs/config.xml
         done

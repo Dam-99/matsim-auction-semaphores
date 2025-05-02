@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { parse, stringify } from 'jsr:@libs/xml';
 // const parser = new DOMParser();
 
-const ext = process.argv[2] === undefined ? "lanes" : process.argv[2];
+const ext = process.argv[2] === undefined ? "mixed" : process.argv[2];
 const format = ext == "single" ? singleLane : directLane;
 const groupsFile = `SignalGroups_${ext}.xml`;
 if(!existsSync(groupsFile)) {
@@ -29,6 +29,35 @@ writeFileSync(groupsFile, stringify(xml));
 
 
 function directLane(system) {
+    return { 
+        '@refId': system.id,
+        signalGroup: [
+            {
+                "@id": system.n,
+                signal: [ { "@refId": `${system.n}.l` },
+                    { "@refId": `${system.n}.s` },
+                    { "@refId": `${system.n}.r` } ],
+            },
+            {
+                "@id": system.s,
+                signal: [ { "@refId": `${system.s}.l` },
+                    { "@refId": `${system.s}.s` },
+                    { "@refId": `${system.s}.r` } ],
+            },
+            {
+                "@id": system.w,
+                signal: [ { "@refId": `${system.w}.l` },
+                    { "@refId": `${system.w}.s` },
+                    { "@refId": `${system.w}.r` } ],
+            },
+            {
+                "@id": system.e,
+                signal: [ { "@refId": `${system.e}.l` },
+                    { "@refId": `${system.e}.s` },
+                    { "@refId": `${system.e}.r` } ],
+            }
+        ]
+    };
     return { 
         '@refId': system.id,
         signalGroup: [
