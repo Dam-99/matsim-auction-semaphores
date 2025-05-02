@@ -33,6 +33,8 @@ public interface SmartDriverLogic {
 	 */
 	void setActualLink(Id<Lane> linkId);
 
+	void setActualLane(Id<Lane> laneId);
+
 	/**
 	 * Return the destination
 	 * @return destination
@@ -44,7 +46,7 @@ public interface SmartDriverLogic {
 	 * 
 	 * @return next link
 	 */
-	Id<Lane> getNextLinkId();
+	Id<Link> getNextLinkId();
 
 	/**
 	 * Set the leg

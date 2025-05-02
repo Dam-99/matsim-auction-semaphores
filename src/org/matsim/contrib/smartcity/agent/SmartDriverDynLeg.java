@@ -87,8 +87,11 @@ public class SmartDriverDynLeg implements DriverDynLeg {
 	 */
 	@Override
 	public Id<Link> getNextLinkId() {
-		// TODO: check if this works when only one lane exists
-		Id<Link> id = Id.create(this.logic.getNextLinkId().toString().split("\\.")[0], Link.class);
+		// FIXME: should change start/end link in AbstractDriverLogic to not be '.ol' lanes, maybe change to Link altogether
+		Id<Link> nextId = this.logic.getNextLinkId();
+		if (nextId == null)
+			return null;
+		Id<Link> id = Id.create(nextId.toString().split("\\.")[0], Link.class);
 		return id;
 	}
 
@@ -98,9 +101,10 @@ public class SmartDriverDynLeg implements DriverDynLeg {
 	@Override
 	public void movedOverNode(Id<Link> newLinkId) {
 		// TODO: check if this works when only one lane exists
-		this.movedOverNodeWithLane(Id.create(newLinkId.toString() + ".ol", Lane.class));
+		this.movedOverNodeWithLane(Id.create(newLinkId, Lane.class));
 	}
 
+	// FIXME: likely not needed
 	public void movedOverNodeWithLane(Id<Lane> newLinkId) {
 		this.logic.setActualLink(newLinkId);
 	}

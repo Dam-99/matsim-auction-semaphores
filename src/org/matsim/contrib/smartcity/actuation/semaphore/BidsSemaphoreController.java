@@ -210,35 +210,37 @@ public class BidsSemaphoreController implements SignalController, ComunicationSe
     @Override
     public void sendToMe(ComunicationMessage message) {
         if (message instanceof BidMessage) {
-            Id<Lane> link = ((BidMessage) message).getLink();
+            Id<Lane> lane = ((BidMessage) message).getLink();
             int bid = ((BidMessage) message).getBid();
             BidAgent agent = (BidAgent) ((BidMessage) message).getSender();
 //            if (agent.getPerson().getId().toString().equals("3640"))
 //                log.error("sendToMe(BidMessage): 3640 bids " + bid + " on link " + lane);
             double time = ((BidMessage) message).getTime();
 
-            em.processEvent(new BidEvent(link, agent, bid, time));
+            em.processEvent(new BidEvent(lane, agent, bid, time));
 
             if (bid <= 0) {
                 return;
             }
 
             BidAgent.BidAgentMode mode = ((BidMessage) message).getMode();
-            int actual = this.bidMap.get(link);
+            int actual = this.bidMap.get(lane);
 
             //Scalare la puntata se è richiesta per una strada attualmente verde
-            if (this.signalMap.get(link).getId().equals(this.actualGreen)){
+            if (this.signalMap.get(lane).getId().equals(this.actualGreen)){
                 bid = bid / 10;
 //                if(agent.getPerson().getId().toString().equals("3640")) {
 //                    log.error("bid is gonna be scaled to 1/10: " + bid);
 //                }
             }
-            this.bidMap.put(link, actual + bid);
+            this.bidMap.put(lane, actual + bid);
 
-            addBidToMap(link, agent, bid, mode);
+            addBidToMap(lane, agent, bid, mode);
         } else if (message instanceof RideMessage){ // ricevuto mess in cui agente comunica il suo percorso
             List<Id<Lane>> agentRoute = ((RideMessage) message).getRoute();
+            List<Id<Lane>> agentRouteLanes = ((RideMessage) message).getRouteLanes();
             int index = ((RideMessage) message).getIndex();
+            int indexLanes = ((RideMessage) message).getIndexLanes();
             BidAgent agent = (BidAgent) ((RideMessage) message).getSender();
 //            if (indexLanes <= agentRouteLanes.size() && indexLanes > 0 ) {
 //                if (agent.getPerson().getId().toString().equals("3640"))

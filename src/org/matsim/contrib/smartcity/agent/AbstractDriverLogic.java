@@ -8,6 +8,8 @@ import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Leg;
 import org.matsim.api.core.v01.population.Person;
 import org.matsim.api.core.v01.population.Route;
+import org.matsim.core.api.experimental.events.LaneEnterEvent;
+import org.matsim.core.api.experimental.events.handler.LaneEnterEventHandler;
 import org.matsim.core.mobsim.qsim.pt.MobsimDriverPassengerAgent;
 import org.matsim.lanes.Lane;
 
@@ -27,6 +29,7 @@ public abstract class AbstractDriverLogic implements SmartDriverLogic {
 
 	protected Leg leg;
 	protected Id<Lane> actualLink;
+	protected Id<Lane> actualLane;
 	protected Id<Lane> startLink;
 	protected Id<Lane> endLink;
 	protected Route route;
@@ -34,7 +37,7 @@ public abstract class AbstractDriverLogic implements SmartDriverLogic {
 	protected Person person;
 
 	@Override
-	public abstract Id<Lane> getNextLinkId();
+	public abstract Id<Link> getNextLinkId();
 
 	/* (non-Javadoc)
 	 * @see org.matsim.contrib.smartcity.agent.SmartDriverLogic#finalizeAction(double)
@@ -49,6 +52,11 @@ public abstract class AbstractDriverLogic implements SmartDriverLogic {
 	@Override
 	public void setActualLink(Id<Lane> linkId) {
 		this.actualLink = linkId;		
+	}
+
+	@Override
+	public void setActualLane(Id<Lane> laneId) {
+		this.actualLane = laneId;
 	}
 
 	/* (non-Javadoc)
@@ -92,5 +100,9 @@ public abstract class AbstractDriverLogic implements SmartDriverLogic {
 
 	public Person getPerson() {
 		return person;
+	}
+
+	public String toString() {
+		return this.person.toString();
 	}
 }

@@ -85,15 +85,17 @@ public class PerceptionWrapper {
 	}
 	
 	protected void vehicleEntered(Id<Link> idLink, Id<Vehicle> vehicle, double time) {
+		Id<Lane> idLane = Id.create(idLink.toString() + ".ol", Lane.class);
 		Id<VehicleType> idType = typeFromVehicle(vehicle);
-		this.trafficMap.get(idLink).addVehicle(idType, time);
+		this.trafficMap.get(idLane).addVehicle(idType, time);
 		
 	}
 	
 	protected void vehicleLeaved(Id<Link> idLink, Id<Vehicle> vehicle, double time) throws VehicleLeftBeforeEnter {
-		Id<VehicleType> idType = typeFromVehicle(vehicle); 
+		Id<Lane> idLane = Id.create(idLink.toString() + ".ol", Lane.class);
+		Id<VehicleType> idType = typeFromVehicle(vehicle);
 		try {
-			this.trafficMap.get(idLink).subVehicle(idType, time);
+			this.trafficMap.get(idLane).subVehicle(idType, time);
 		} catch (SubOnNull e) {
 			throw new VehicleLeftBeforeEnter(vehicle, idLink);
 		}

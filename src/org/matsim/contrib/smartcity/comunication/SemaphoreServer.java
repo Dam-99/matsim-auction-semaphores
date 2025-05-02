@@ -84,30 +84,33 @@ public class SemaphoreServer implements ComunicationServer {
 				for(Tuple<List<Id<Lane>>,Integer> routeAndBid : agentsRouteAndBid) {
 					double estimatedTripTime = 0;
 					int propagationAdded = 0;
-					for(Id<Lane> link : routeAndBid.getFirst()) {
-						SignalGroup sg = signalMap.get(link);
-						double length = this.network.getLinks().get(link).getLength();
-						double speed = this.network.getLinks().get(link).getFreespeed();
-						double estimatedCrossingTime = length/speed ;
-						estimatedTripTime += estimatedCrossingTime;
-						if (sg != null && estimatedTripTime > 20) {
-							PriorityQueue<IncomingAgent> actual = this.incomingBid.get(sg.getId());
-							if (actual == null) { // crea e aggiungilo se non esisteva
-								actual = new PriorityQueue<IncomingAgent>();
-								this.incomingBid.put(sg.getId(),actual);
 //					if(isFollowedAgent)
 //						log.error("sendToMe(SemaphoreFlow): route is " + routeAndBid.getFirst().stream().map(Object::toString).collect(Collectors.joining(",")));
+					for(Id<Lane> lane : routeAndBid.getFirst()) {
+						SignalGroup sg = signalMap.get(lane);
+						Id<Link> link = Id.create(lane.toString().split("\\.")[0], Link.class);
+						if (sg != null) {
+							double length = this.network.getLinks().get(link).getLength();
+							double speed = this.network.getLinks().get(link).getFreespeed();
+							double estimatedCrossingTime = length / speed;
+							estimatedTripTime += estimatedCrossingTime;
+							if (sg != null && estimatedTripTime > 20) {
+								PriorityQueue<IncomingAgent> actual = this.incomingBid.get(sg.getId());
+								if (actual == null) { // crea e aggiungilo se non esisteva
+									actual = new PriorityQueue<IncomingAgent>();
+									this.incomingBid.put(sg.getId(), actual);
+								}
+								Integer propagatedBid = (int) Math.round(routeAndBid.getSecond() * Math.pow(0.5, propagationAdded));
 //								if (isFollowedAgent)
 //									log.error("sendToMe(SemaphoreFlow): creating propagated bid for link " + lane + ", " + routeAndBid.getSecond() + "->" + propagatedBid.toString());
+								actual.add(new IncomingAgent(propagatedBid, estimatedTripTime + time, isFollowedAgent));
+								propagationAdded++;
+								if (this.SGCounter.get(actualLink) == null)
+									this.SGCounter.put(actualLink, new SignalGroupCounter());
+								this.SGCounter.get(actualLink).add(sg.getId());
+								if (propagationAdded >= maxPropagation)
+									break;
 							}
-							Integer propagatedBid = (int) Math.round(routeAndBid.getSecond()*Math.pow(0.5,propagationAdded));
-							actual.add(new IncomingAgent(propagatedBid,estimatedTripTime + time, isFollowedAgent));
-							propagationAdded++;
-							if (this.SGCounter.get(actualLink) == null)
-								this.SGCounter.put(actualLink,new SignalGroupCounter());
-							this.SGCounter.get(actualLink).add(sg.getId());
-							if (propagationAdded >= maxPropagation)
-								break;
 						}
 					}
 				}

@@ -355,7 +355,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
     @Override
     public void sendToMe(ComunicationMessage message) {
         if (message instanceof BidMessage) {
-            Id<Lane> link = ((BidMessage) message).getLink();
+            Id<Lane> lane = ((BidMessage) message).getLink();
             int bid = ((BidMessage) message).getBid();
             BidAgent agent = (BidAgent) ((BidMessage) message).getSender();
             Id<SignalGroup> sgId = this.signalMap.get(lane).getId();
@@ -367,7 +367,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
                 return;
             double time = ((BidMessage) message).getTime();
 
-            em.processEvent(new BidEvent(link, agent, bid, time));
+            em.processEvent(new BidEvent(lane, agent, bid, time));
 
             if (bid <= 0) {
 //                if (agent.getPerson().getId().toString().equals("3640"))
@@ -377,8 +377,8 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
 
             BidAgent.BidAgentMode mode = ((BidMessage) message).getMode();
             // this.bidMap.put(link, this.bidMap.get(link) + bid);
-            addOrRemoveBidToBidMap(true, bid, link);
-            addBidToMap(link, agent, bid, mode);
+            addOrRemoveBidToBidMap(true, bid, lane);
+            addBidToMap(lane, agent, bid, mode);
             // per evitare problemi di coerenza dati dal fatto che prima gli agenti mandando
             // le puntate
             // e poi viene notificato il LinkEnter e LinkLeave
@@ -387,9 +387,11 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             // if (this.lastCameraUpdate.get(link) <= ((BidMessage) message).getTime())
             // this.changeTotalAgent(link,this.totalAgents.getOrDefault(link,0) + 1);
             // Object a = new Object();
-            this.changeFromLastUpdate(link, true, ((BidMessage) message).getTime());
+            this.changeFromLastUpdate(lane, true, ((BidMessage) message).getTime());
         } else if (message instanceof RideMessage) { // ricevuto mess in cui agente comunica il suo percorso
             List<Id<Lane>> agentRoute = ((RideMessage) message).getRoute();
+            List<Id<Lane>> agentRouteLanes = ((RideMessage) message).getRouteLanes();
+            int indexLanes = ((RideMessage) message).getIndexLanes();
             int index = ((RideMessage) message).getIndex();
             BidAgent agent = (BidAgent) ((RideMessage) message).getSender();
             if (indexLanes <= agentRouteLanes.size() && indexLanes > 0) {
@@ -402,9 +404,9 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
                 List<Tuple<List<Id<Lane>>, Integer>> actual = this.agentsRouteAndBid.get(bidLane);
                 if (actual == null) {
                     actual = new Vector<Tuple<List<Id<Lane>>, Integer>>();
-                    this.agentsRouteAndBid.put(actualLink, actual);
+                    this.agentsRouteAndBid.put(bidLane, actual);
                 }
-                actual.add(new Tuple<List<Id<Lane>>, Integer>(agentRoute.subList(index, agentRoute.size()),
+                actual.add(new Tuple<List<Id<Lane>>, Integer>(agentRouteLanes.subList(indexLanes, agentRouteLanes.size()),
                         agent.getBid()));
             }
 
@@ -414,21 +416,23 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
             this.wait = false; // sblocca while in getNextGreen (riga 187 circa)
         } else if (message instanceof CrossedMessage) { // agente ha attraversato l'incrocio di questo semaforo
             BidAgent senderAgent = (BidAgent) message.getSender();
-            Id<Lane> link = ((CrossedMessage) message).getLink();
+            Id<Lane> lane = ((CrossedMessage) message).getLink();
+            Id<Lane> link = Id.create(lane.toString().split("\\.")[0], Lane.class);
             boolean isFollowedAgent = senderAgent.getPerson().getId().toString().equals("3640");
             if (isFollowedAgent) {
+                Id<SignalGroup> sgId = this.signalMap.get(lane).getId();
 //                log.error("sendToMe(CrossedMessage): agent0 crossed intersection from " + lane + " at time: " + ((CrossedMessage) message).getTime()
 //                    + "signalGroup: " + sgId + "currentGreen: " + this.actualGreen);
                 this.has3640 = false;
                 this.logActive = true;
             }
             double time = ((CrossedMessage) message).getTime();
-            synchronized (this.agentMap.get(link)) {
-                addOrRemoveBidToBidMap(false, ((CrossedMessage) message).getBid(), link);
-                if (this.agentMap != null && this.agentMap.get(link) != null && this.agentMap.get(link).size() > 0) {
+            synchronized (this.agentMap.get(lane)) {
+                addOrRemoveBidToBidMap(false, ((CrossedMessage) message).getBid(), lane);
+                if (this.agentMap != null && this.agentMap.get(lane) != null && this.agentMap.get(lane).size() > 0) {
                     List<Tuple<List<Id<Lane>>, Integer>> flow = new ArrayList<Tuple<List<Id<Lane>>, Integer>>();
-                    List<Tuple<List<Id<Lane>>, Integer>> actualRouteAndBid = this.agentsRouteAndBid.get(link);
-                    if (this.agentMap.get(link).get(0).getAgent() == null) {
+                    List<Tuple<List<Id<Lane>>, Integer>> actualRouteAndBid = this.agentsRouteAndBid.get(lane);
+                    if (this.agentMap.get(lane).get(0).getAgent() == null) {
                         /*
                          * A causa della concorrenza può succedere che un agente statico abbia già
                          * attraversato
@@ -439,15 +443,15 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
                          * a rimuovere l'agente sbagliato.
                          * Questa soluzione è semplice ma funzionante
                          */
-                        for (int i = 0; i < this.agentMap.get(link).size(); i++) {
-                            if (this.agentMap.get(link).get(i).getAgent() != null) {
-                                this.agentMap.get(link).remove(i);
+                        for (int i = 0; i < this.agentMap.get(lane).size(); i++) {
+                            if (this.agentMap.get(lane).get(i).getAgent() != null) {
+                                this.agentMap.get(lane).remove(i);
                                 flow.add(actualRouteAndBid.remove(i));
                                 break;
                             }
                         }
                     } else {
-                        Bid agent = this.agentMap.get(link).remove(0);
+                        Bid agent = this.agentMap.get(lane).remove(0);
                         agent.getAgent().sendToMe(new DecriseBudget(this, agent.getBid()));
                         flow.add(actualRouteAndBid.remove(0));
                     }
@@ -461,7 +465,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
                     //     log.error("has3640 changed from " + before + " to " + this.has3640);
                     // }
                     // this.logActive = true;
-                    this.semaphoreServer.sendToMe(new SemaphoreFlowMessage(this, flow, link, time, isFollowedAgent));
+                    this.semaphoreServer.sendToMe(new SemaphoreFlowMessage(this, flow, lane, time, isFollowedAgent));
                 }
                 // per evitare problemi di coerenza dati dal fatto che prima gli agenti mandando
                 // le puntate
@@ -469,7 +473,7 @@ public class BidsSemaphoreControllerCommunication extends BidsSemaphoreControlle
                 // this.updateTotalAgents(link);
                 // if (this.lastCameraUpdate.get(link) < ((CrossedMessage) message).getTime())
                 // this.changeTotalAgent(link,this.totalAgents.getOrDefault(link,1) - 1);
-                this.changeFromLastUpdate(link, false, ((CrossedMessage) message).getTime());
+                this.changeFromLastUpdate(lane, false, ((CrossedMessage) message).getTime());
             }
         }
     }

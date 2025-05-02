@@ -69,25 +69,28 @@ public class SemaphoreServerProportionalPropagated extends SemaphoreServer imple
 				for(Tuple<List<Id<Lane>>,Integer> routeAndBid : agentsRouteAndBid) {
 					double estimatedTripTime = 0;
 					int propagationAdded = 0;
-					for(Id<Lane> link : routeAndBid.getFirst()) {
-						SignalGroup sg = signalMap.get(link);
-						double length = this.network.getLinks().get(link).getLength();
-						double speed = this.network.getLinks().get(link).getFreespeed();
-						double estimatedCrossingTime = length/speed ;
-						estimatedTripTime += estimatedCrossingTime;
-						if (sg != null && estimatedTripTime > 20) {
-							PriorityQueue<IncomingAgent> actual = this.incomingBid.get(sg.getId());
-							if (actual == null) {
-								actual = new PriorityQueue<IncomingAgent>();
-								this.incomingBid.put(sg.getId(),actual);
+					for(Id<Lane> lane : routeAndBid.getFirst()) {
+						SignalGroup sg = signalMap.get(lane);
+						Id<Link> link = Id.create(lane.toString().split("\\.")[0], Link.class);
+						if(sg != null) {
+							double length = this.network.getLinks().get(link).getLength();
+							double speed = this.network.getLinks().get(link).getFreespeed();
+							double estimatedCrossingTime = length / speed;
+							estimatedTripTime += estimatedCrossingTime;
+							if (sg != null && estimatedTripTime > 20) {
+								PriorityQueue<IncomingAgent> actual = this.incomingBid.get(sg.getId());
+								if (actual == null) {
+									actual = new PriorityQueue<IncomingAgent>();
+									this.incomingBid.put(sg.getId(), actual);
+								}
+								actual.add(new IncomingAgent((int) Math.round(routeAndBid.getSecond() * Math.pow(0.5, (propagationAdded - 1))), estimatedTripTime + time));
+								propagationAdded++;
+								if (this.SGCounter.get(actualLink) == null)
+									this.SGCounter.put(actualLink, new SignalGroupCounter());
+								this.SGCounter.get(actualLink).add(sg.getId());
+								if (propagationAdded >= maxPropagation)
+									break;
 							}
-							actual.add(new IncomingAgent((int) Math.round(routeAndBid.getSecond()*Math.pow(0.5,(propagationAdded-1))),estimatedTripTime + time));
-							propagationAdded++;
-							if (this.SGCounter.get(actualLink) == null)
-								this.SGCounter.put(actualLink,new SignalGroupCounter());
-							this.SGCounter.get(actualLink).add(sg.getId());
-							if (propagationAdded >= maxPropagation)
-								break;
 						}
 					}
 				}
